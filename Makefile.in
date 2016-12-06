@@ -1,0 +1,146 @@
+#
+# "Software pw3270, desenvolvido com base nos códigos fontes do WC3270  e X3270
+# (Paul Mattes Paul.Mattes@usa.net), de emulação de terminal 3270 para acesso a
+# aplicativos mainframe. Registro no INPI sob o nome G3270.
+#
+# Copyright (C) <2008> <Banco do Brasil S.A.>
+#
+# Este programa é software livre. Você pode redistribuí-lo e/ou modificá-lo sob
+# os termos da GPL v.2 - Licença Pública Geral  GNU,  conforme  publicado  pela
+# Free Software Foundation.
+#
+# Este programa é distribuído na expectativa de  ser  útil,  mas  SEM  QUALQUER
+# GARANTIA; sem mesmo a garantia implícita de COMERCIALIZAÇÃO ou  de  ADEQUAÇÃO
+# A QUALQUER PROPÓSITO EM PARTICULAR. Consulte a Licença Pública Geral GNU para
+# obter mais detalhes.
+#
+# Você deve ter recebido uma cópia da Licença Pública Geral GNU junto com este
+# programa;  se  não, escreva para a Free Software Foundation, Inc., 59 Temple
+# Place, Suite 330, Boston, MA, 02111-1307, USA
+#
+# Contatos:
+#
+# perry.werneck@gmail.com	(Alexandre Perry de Souza Werneck)
+# erico.mendonca@gmail.com	(Erico Mascarenhas de Mendonça)
+#
+
+GLUELIB=lib3270-mono@DLLEXT@
+LIBNAME=tn3270-sharp.dll
+
+#---[ Configuration values ]-------------------------------------------------------------
+
+PACKAGE_NAME=@PACKAGE_NAME@
+PACKAGE_VERSION=@PACKAGE_VERSION@
+PACKAGE_TARNAME=@PACKAGE_TARNAME@
+
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+bindir=@bindir@
+sbindir=@sbindir@
+libdir=@libdir@
+
+BASEDIR=@BASEDIR@
+SRCDIR=$(BASEDIR)/.src/$(PACKAGE_TARNAME)-$(PACKAGE_VERSION)
+
+OBJDIR=$(BASEDIR)/.obj
+OBJDBG=$(OBJDIR)/Debug
+OBJRLS=$(OBJDIR)/Release
+
+BINDIR=$(BASEDIR)/.bin
+BINDBG=$(BINDIR)/Debug
+BINRLS=$(BINDIR)/Release
+
+INSTALL=@INSTALL@
+INSTALL_DATA=@INSTALL_DATA@
+INSTALL_PROGRAM=@INSTALL_PROGRAM@
+
+LN_S=@LN_S@
+
+MCS=@MCS@
+MONO=@MONO@
+MKDIR=@MKDIR_P@
+
+#---[ Rules ]----------------------------------------------------------------------------
+
+$(BINDBG)/%.exe: \
+	testprograms/%.cs \
+	$(BINDBG)/$(LIBNAME)
+	
+	$(MCS) -reference:$(BINDBG)/$(LIBNAME) -debug -out:$@ $<
+
+$(BINRLS)/%.exe: \
+	testprograms/%.cs
+
+	$(MCS) -reference:$(BINRLS)/$(LIBNAME) -out:$@ $<
+
+#---[ Targets ]--------------------------------------------------------------------------
+
+all: \
+	$(BINRLS)/$(GLUELIB) \
+	$(BINRLS)/$(LIBNAME)
+
+Release: \
+	$(BINRLS)/$(GLUELIB) \
+	$(BINRLS)/$(LIBNAME)
+
+zip: \
+	tn3270-sharp-@PACKAGE_VERSION@.@host@.zip
+
+tn3270-sharp-@PACKAGE_VERSION@.@host@.zip: \
+	$(BINRLS)/$(GLUELIB) \
+	$(BINRLS)/$(LIBNAME) \
+	$(BINRLS)/sample.exe
+
+	@zip -9 -j $@ \
+		$(BINRLS)/$(GLUELIB) \
+		$(BINRLS)/$(LIBNAME) \
+		testprograms/sample.cs \
+		src/tn3270-sharp/tn3270-sharp.cs \
+		$(BINRLS)/sample.exe
+
+
+$(BINRLS)/$(GLUELIB): \
+	src/native/*.cc \
+	src/native/*.h \
+	src/include/*.h
+
+	@make -C src/native $@
+
+$(BINRLS)/$(LIBNAME): \
+	src/tn3270-sharp/*.cs \
+	src/include/*.h
+
+	@make -C src/tn3270-sharp $@
+
+Debug: \
+	$(BINDBG)/$(GLUELIB) \
+	$(BINDBG)/$(LIBNAME) \
+	$(BINDBG)/sample.exe
+
+
+run: \
+	$(BINDBG)/$(GLUELIB) \
+	$(BINDBG)/$(LIBNAME) \
+	$(BINDBG)/sample.exe
+
+	@$(MONO) $(BINDBG)/sample.exe
+
+$(BINDBG)/$(GLUELIB): \
+	src/native/*.cc \
+	src/native/*.h \
+	src/include/*.h
+
+	@make -C src/native $@
+
+$(BINDBG)/$(LIBNAME): \
+	src/tn3270-sharp/*.cs \
+	src/include/*.h
+
+	@make -C src/tn3270-sharp $@
+
+clean:
+	@rm -fr $(BINDIR)
+	@rm -fr $(OBJDIR)
+
+
+
