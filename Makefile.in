@@ -94,6 +94,7 @@ tn3270-sharp-@PACKAGE_VERSION@.@host@.zip: \
 	@zip -9 -j $@ \
 		$(BINRLS)/$(GLUELIB) \
 		$(BINRLS)/$(LIBNAME) \
+		$(BINRLS)/*.xml \
 		testprograms/sample.cs \
 		src/tn3270-sharp/tn3270-sharp.cs \
 		$(BINRLS)/sample.exe

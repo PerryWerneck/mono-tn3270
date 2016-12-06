@@ -36,8 +36,14 @@ using System.Runtime.InteropServices;
 
 namespace tn3270 {
 
+	/// <summary>
+	/// Session with 3270 HOST.
+	/// </summary>
 	public class Session {
 
+		/// <summary>
+		/// lib3270 session handle
+		/// </summary>
 		private IntPtr hSession;
 
 		[DllImport ("lib3270-mono")]
@@ -109,34 +115,82 @@ namespace tn3270 {
 		[DllImport ("lib3270-mono")]
 		extern static int tn3270_pakey(IntPtr Session, int key);
 
+		/// <summary>
+		/// Create a new session with lib3270/pw3270
+		/// </summary>
+		///
+		/// <param name="name">Session name or empty string for a hidden session</param>
+		///
 		public Session(string name) {
 			hSession = tn3270_create_session(name);
 		}
 
+		/// <summary>
+		/// Disconnect from host, destroy session.
+		/// </summary>
+		///
 		~Session() {
 			tn3270_destroy_session(hSession);
 		}
 
+		/// <summary>
+		/// Get lib3270/pw3270 Version identifier
+		/// </summary>
+		///
+		/// <returns>
+		/// The version of the active instance.
+		/// </returns>
+		///
 		public string GetVersion() {
 			StringBuilder str = new StringBuilder(10);
 			tn3270_get_version(hSession, str, 10);
 			return str.ToString();
 		}
 
+		/// <summary>
+		/// Get lib3270/pw3270 Revision number
+		/// </summary>
+		///
+		/// <returns>
+		/// The revision of the active instance.
+		/// </returns>
+		///
 		public string GetRevision() {
 			StringBuilder str = new StringBuilder(10);
 			tn3270_get_revision(hSession, str, 10);
 			return str.ToString();
 		}
 
+		/// <summary>
+		/// Connect to 3270 host.
+		/// </summary>
+		///
+		/// <param name="host">URL of the target host (tn3270://hostname:port)</param>
+		/// <param name="wait">How many seconds should the call wait for the connection becomes ready</param>
+		///
+		/// <returns>
+		/// </returns>
+		///
 		public int Connect(string host, int wait) {
 			return tn3270_connect(hSession, host, wait);
 		}
 
+		/// <summary>
+		/// Get connection statue
+		/// </summary>
+		///
+		/// <returns>
+		/// true if the session is connected to a remote host.
+		/// </returns>
+		///
 		public bool IsConnected() {
 			return tn3270_is_connected(hSession) != 0;
 		}
 
+		/// <summary>
+		/// Disconnect from 3270 host.
+		/// </summary>
+		///
 		public int Disconnect() {
 			return tn3270_disconnect(hSession);
 		}

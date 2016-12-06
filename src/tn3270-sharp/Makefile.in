@@ -80,6 +80,6 @@ $(BINRLS)/$(LIBNAME): \
 	$(SOURCES)
 
 	@$(MKDIR) `dirname $@`
-	@$(MCS) -target:library -out:$@ $<
+	@$(MCS) -doc:$(basename $@).xml -target:library -out:$@ $<
 
 
