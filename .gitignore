@@ -11,3 +11,5 @@ config.h
 stamp-h1
 .bin
 .obj
+*.zip
+
