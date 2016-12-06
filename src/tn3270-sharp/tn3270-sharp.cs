@@ -27,6 +27,7 @@
  *
  * Referências:
  *
+ * https://msdn.microsoft.com/en-us/library/5ast78ax.aspx
  *
  */
 
