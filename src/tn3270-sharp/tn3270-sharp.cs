@@ -177,7 +177,7 @@ namespace tn3270 {
 		}
 
 		/// <summary>
-		/// Get connection statue
+		/// Get connection state
 		/// </summary>
 		///
 		/// <returns>
@@ -196,54 +196,171 @@ namespace tn3270 {
 			return tn3270_disconnect(hSession);
 		}
 
+		/// <summary>
+		/// Wait for network activity
+		/// </summary>
+		///
+		/// <param name="seconds">Seconds to wait</param>
+		///
+		/// <returns>
+		///
+		/// </returns>
+		///
 		public int WaitForReady(int seconds) {
 			return tn3270_wait_for_ready(hSession, seconds);
 		}
 
+		/// <summary>
+		/// "Sleep" keeping the network activity.
+		/// </summary>
+		///
+		/// <param name="seconds">Number of seconds to wait</param>
+		///
+		/// <returns>
+		///
+		/// </returns>
+		///
 		public int Wait(int seconds) {
 			return tn3270_wait(hSession, seconds);
 		}
 
+		/// <summary>
+		/// Get contents at address
+		/// </summary>
+		///
+		/// <param name="addr">Address of text in the screen buffer</param>
+		/// <param name="strlen">Number of characters to get</param>
+		///
+		/// <returns>
+		/// Contents from terminal screen.
+		/// </returns>
+		///
 		public string GetString(int addr, int strlen) {
 			StringBuilder str = new StringBuilder(strlen+1);
 			tn3270_get_string(hSession, addr, str, strlen);
 			return str.ToString(0,strlen);
 		}
 
+		/// <summary>
+		/// Get contents at position.
+		/// </summary>
+		///
+		/// <param name="row">Start row</param>
+		/// <param name="col">Start col</param>
+		/// <param name="strlen">Number of characters to get</param>
+		///
+		/// <returns>
+		/// Contents from terminal screen.
+		/// </returns>
+		///
 		public string GetStringAt(int row, int col, int strlen) {
 			StringBuilder str = new StringBuilder(strlen+1);
 			tn3270_get_string_at(hSession, row, col, str, strlen);
 			return str.ToString(0,strlen);
 		}
 
+		/// <summary>
+		/// Set contents at position
+		/// </summary>
+		///
+		/// <param name="row">Start row</param>
+		/// <param name="col">Start col</param>
+		/// <param name="str">Text to set</param>
+		///
 		public void SetStringAg(int row, int col, string str) {
 			tn3270_set_string_at(hSession, row, col, str);
 		}
 
+		/// <summary>
+		/// Wait for text at position.
+		/// </summary>
+		///
+		/// <param name="row">Start row</param>
+		/// <param name="col">Start col</param>
+		/// <param name="str">Text to wait</param>
+		/// <param name="timeout">Seconds to wait</param>
+		///
+		/// <returns>
+		///
+		/// </returns>
+		///
 		public int WaitForStringAt(int row, int col, string str, int timeout) {
 			return tn3270_wait_for_string_at(hSession, row, col, str, timeout);
 		}
 
+		/// <summary>
+		/// Compare contents at position
+		/// </summary>
+		///
+		/// <param name="row">Start row</param>
+		/// <param name="col">Start col</param>
+		/// <param name="str">Text to compare</param>
+		///
+		/// <returns>
+		/// Result (0 = The strings are the same).
+		/// </returns>
+		///
 		public int CmpStringAt(int row, int col, string str) {
 			return tn3270_cmp_string_at(hSession, row, col, str);
 		}
 
+		/// <summary>
+		/// Set cursor position.
+		/// </summary>
+		///
+		/// <param name="row">New cursor row</param>
+		/// <param name="col">New cursor column</param>
+		///
 		public void SetCursorPosition(int row, int col) {
 			tn3270_set_cursor_position(hSession, row, col);
 		}
 
-		public void SetCursorAddr(int addr) {
+		/// <summary>
+		/// Set cursor position based on address.
+		/// </summary>
+		///
+		/// <param name="addr">Address of the new cursor position</param>
+		///
+		public void SetCursorPosition(int addr) {
 			tn3270_set_cursor_addr(hSession, addr);
 		}
 
+		/// <summary>
+		/// Send "Enter" key
+		/// </summary>
+		///
+		/// <returns>
+		///
+		/// </returns>
+		///
 		public int Enter() {
 			return tn3270_enter(hSession);
 		}
 
+		/// <summary>
+		/// Send "PF" key
+		/// </summary>
+		///
+		/// <param name="key">Key identifier 1=PF1, 2=PF2, ...</param>
+		///
+		/// <returns>
+		///
+		/// </returns>
+		///
 		public int PfKey(int key) {
 			return tn3270_pfkey(hSession, key);
 		}
 
+		/// <summary>
+		/// Send "PA" key
+		/// </summary>
+		///
+		/// <param name="key">Key identifier 1=PA1, 2=PA2, ...</param>
+		///
+		/// <returns>
+		///
+		/// </returns>
+		///
 		public int PaKey(int key) {
 			return tn3270_pakey(hSession, key);
 		}
