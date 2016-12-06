@@ -40,7 +40,7 @@
 		#include <windows.h>
 
 		#define DLL_PRIVATE	extern
-		#define DLL_PUBLIC	extern __declspec (dllexport)
+		#define DLL_PUBLIC	extern __declspec (dllexport) __attribute__((cdecl))
 
 	#elif defined(__SUNPRO_C) && (__SUNPRO_C >= 0x550)
 
@@ -61,6 +61,7 @@
 	extern "C" {
 
  		DLL_PUBLIC h3270::session * tn3270_create_session(const char *name);
+
 		DLL_PUBLIC void tn3270_destroy_session(h3270::session *ses);
 
 		DLL_PUBLIC void tn3270_get_version(h3270::session *ses, char* str, int strlen);

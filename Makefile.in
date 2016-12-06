@@ -66,12 +66,12 @@ $(BINDBG)/%.exe: \
 	testprograms/%.cs \
 	$(BINDBG)/$(LIBNAME)
 	
-	$(MCS) -reference:$(BINDBG)/$(LIBNAME) -debug -out:$@ $<
+	@$(MCS) -reference:$(BINDBG)/$(LIBNAME) -debug -out:$@ $<
 
 $(BINRLS)/%.exe: \
 	testprograms/%.cs
 
-	$(MCS) -reference:$(BINRLS)/$(LIBNAME) -out:$@ $<
+	@$(MCS) -reference:$(BINRLS)/$(LIBNAME) -out:$@ $<
 
 #---[ Targets ]--------------------------------------------------------------------------
 
