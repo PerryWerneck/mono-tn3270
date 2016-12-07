@@ -35,7 +35,7 @@ using System;
 using System.Text;
 using System.Runtime.InteropServices;
 
-namespace tn3270 {
+namespace pw3270 {
 
 	/// <summary>
 	/// Session with 3270 HOST.

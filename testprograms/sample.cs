@@ -27,28 +27,27 @@
  *
  */
 
-using tn3270;
+using pw3270;
 
 class sample {
 
 	static void Main(string[] args) {
 
-		tn3270.Session host = new tn3270.Session("");
-		
+		pw3270.Session host = new pw3270.Session("");
+
 		System.Console.WriteLine("Using pw3270 version " + host.GetVersion() + " revision " + host.GetRevision());
 
 		host.Connect("tn3270://zos.efglobe.com:telnet",10);
-	
+
 		if(host.IsConnected()) {
-			
+
 			System.Console.WriteLine("Connected to host");
-		
+
 			System.Console.WriteLine(host.GetStringAt(14,19,38));
-			
+
 			host.Disconnect();
 		}
-		
-	}
-	
-}
 
+	}
+
+}
