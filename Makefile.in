@@ -25,7 +25,7 @@
 #
 
 GLUELIB=lib3270-mono@DLLEXT@
-LIBNAME=tn3270-sharp.dll
+LIBNAME=pw3270-sharp.dll
 
 #---[ Configuration values ]-------------------------------------------------------------
 
@@ -84,9 +84,9 @@ Release: \
 	$(BINRLS)/$(LIBNAME)
 
 zip: \
-	tn3270-sharp-@PACKAGE_VERSION@.@host@.zip
+	pw3270-sharp-@PACKAGE_VERSION@.@host@.zip
 
-tn3270-sharp-@PACKAGE_VERSION@.@host@.zip: \
+pw3270-sharp-@PACKAGE_VERSION@.@host@.zip: \
 	$(BINRLS)/$(GLUELIB) \
 	$(BINRLS)/$(LIBNAME) \
 	$(BINRLS)/sample.exe
@@ -96,7 +96,7 @@ tn3270-sharp-@PACKAGE_VERSION@.@host@.zip: \
 		$(BINRLS)/$(LIBNAME) \
 		$(BINRLS)/*.xml \
 		testprograms/sample.cs \
-		src/tn3270-sharp/tn3270-sharp.cs \
+		src/pw3270-sharp/pw3270-sharp.cs \
 		$(BINRLS)/sample.exe
 
 
@@ -108,10 +108,10 @@ $(BINRLS)/$(GLUELIB): \
 	@make -C src/native $@
 
 $(BINRLS)/$(LIBNAME): \
-	src/tn3270-sharp/*.cs \
+	src/pw3270-sharp/*.cs \
 	src/include/*.h
 
-	@make -C src/tn3270-sharp $@
+	@make -C src/pw3270-sharp $@
 
 Debug: \
 	$(BINDBG)/$(GLUELIB) \
@@ -134,10 +134,10 @@ $(BINDBG)/$(GLUELIB): \
 	@make -C src/native $@
 
 $(BINDBG)/$(LIBNAME): \
-	src/tn3270-sharp/*.cs \
+	src/pw3270-sharp/*.cs \
 	src/include/*.h
 
-	@make -C src/tn3270-sharp $@
+	@make -C src/pw3270-sharp $@
 
 clean:
 	@rm -fr $(BINDIR)

@@ -24,8 +24,8 @@
 # erico.mendonca@gmail.com	(Erico Mascarenhas de Mendonça)
 #
 
-SOURCES=tn3270-sharp.cs
-LIBNAME=tn3270-sharp.dll
+SOURCES=pw3270-sharp.cs
+LIBNAME=pw3270-sharp.dll
 
 #---[ Configuration values ]-------------------------------------------------------------
 
