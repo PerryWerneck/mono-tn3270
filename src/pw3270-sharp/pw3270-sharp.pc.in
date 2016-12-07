@@ -1,0 +1,11 @@
+prefix=${pcfiledir}/../..
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+gapidir=${prefix}/share/pw3270-sharp-1.0
+
+
+Name: pw3270-sharp
+Description: Mono Bindings for pw3270
+Version: @PACKAGE_MAJOR_VERSION@.@PACKAGE_MINOR_VERSION@
+Cflags: -I:${gapidir}/pw3270-sharp.xml
+Libs: -r:${libdir}/mono/pw3270-sharp-@PACKAGE_MAJOR_VERSION@.@PACKAGE_MINOR_VERSION@/pw3270-sharp.dll

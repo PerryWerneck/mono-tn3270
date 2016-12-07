@@ -54,6 +54,10 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root)
 %{_libdir}/lib3270-mono.*
+/usr/lib/mono/gac/%{name}
+/usr/share/gapi-2.0/%{name}/%{name}.xml
+%{_libdir}/pkgconfig/%{name}.pc
+/usr/lib/mono/%{name}-%{version}
 
 %changelog
 

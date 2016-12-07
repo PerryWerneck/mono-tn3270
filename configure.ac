@@ -116,7 +116,8 @@ AC_PATH_TOOL([VALGRIND], [valgrind], [no])
 AC_PATH_TOOL([WINDRES], [windres], [no])
 AC_PATH_TOOL([ZIP], [zip], [zip])
 AC_PATH_TOOL([MCS], [mcs], [mcs])
-
+AC_PATH_TOOL([GACUTIL], [gacutil], [gacutil])
+AC_PATH_TOOL([SN], [sn], [sn])
 AC_PATH_PROG([MONO], [mono], [no])
 
 dnl ---------------------------------------------------------------------------
@@ -333,6 +334,7 @@ dnl ---------------------------------------------------------------------------
 AC_CONFIG_FILES(Makefile)
 AC_CONFIG_FILES(src/native/Makefile)
 AC_CONFIG_FILES(src/pw3270-sharp/Makefile)
+AC_CONFIG_FILES(src/pw3270-sharp/pw3270-sharp.pc)
 
 dnl ---------------------------------------------------------------------------
 dnl Output the generated config.status script.

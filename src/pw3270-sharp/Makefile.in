@@ -24,8 +24,10 @@
 # erico.mendonca@gmail.com	(Erico Mascarenhas de Mendonça)
 #
 
-SOURCES=pw3270-sharp.cs
-LIBNAME=pw3270-sharp.dll
+MODULE_NAME=pw3270-sharp
+
+SOURCES=$(MODULE_NAME).cs
+LIBNAME=$(MODULE_NAME).dll
 
 #---[ Configuration values ]-------------------------------------------------------------
 
@@ -58,6 +60,8 @@ LN_S=@LN_S@
 
 MCS=@MCS@
 MKDIR=@MKDIR_P@
+GACUTIL=@GACUTIL@
+SN=@SN@
 
 #---[ Targets ]--------------------------------------------------------------------------
 
@@ -70,8 +74,23 @@ Release: \
 install: \
 	$(BINRLS)/$(LIBNAME)
 
+	@$(GACUTIL) -i $(BINRLS)/$(LIBNAME) -root $(DESTDIR)/usr/lib
+
+	@$(MKDIR) $(DESTDIR)/usr/share/gapi-2.0/$(MODULE_NAME)
+	@$(INSTALL_DATA) $(BINRLS)/$(MODULE_NAME).xml $(DESTDIR)/usr/share/gapi-2.0/$(MODULE_NAME)
+
+	@$(MKDIR) $(DESTDIR)/usr/lib/mono/$(MODULE_NAME)-@PACKAGE_MAJOR_VERSION@.@PACKAGE_MINOR_VERSION@
+	@$(INSTALL_PROGRAM) $(BINRLS)/$(LIBNAME) $(DESTDIR)/usr/lib/mono/$(MODULE_NAME)-@PACKAGE_MAJOR_VERSION@.@PACKAGE_MINOR_VERSION@
+
+	@$(MKDIR) $(DESTDIR)/$(libdir)/pkgconfig
+	@$(INSTALL_DATA) $(MODULE_NAME).pc $(DESTDIR)/$(libdir)/pkgconfig
+
 Debug: \
 	$(BINDBG)/$(LIBNAME)
+
+$(BINRLS)/$(MODULE_NAME).key:
+
+	@$(SN) -k $@
 
 $(BINDBG)/$(LIBNAME): \
 	$(SOURCES)
@@ -80,9 +99,10 @@ $(BINDBG)/$(LIBNAME): \
 	@$(MCS) -debug -target:library -out:$@ $<
 
 $(BINRLS)/$(LIBNAME): \
-	$(SOURCES)
+	$(SOURCES) \
+	$(BINRLS)/$(MODULE_NAME).key
 
 	@$(MKDIR) `dirname $@`
-	@$(MCS) -doc:$(basename $@).xml -target:library -out:$@ $<
+	@$(MCS) -doc:$(BINRLS)/$(MODULE_NAME).xml -keyfile:$(BINRLS)/$(MODULE_NAME).key -target:library -out:$@ $(SOURCES)
 
 
