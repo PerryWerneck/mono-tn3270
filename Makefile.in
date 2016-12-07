@@ -59,6 +59,8 @@ LN_S=@LN_S@
 MCS=@MCS@
 MONO=@MONO@
 MKDIR=@MKDIR_P@
+AMTAR=@AMTAR@
+RPMBUILD=@RPMBUILD@
 
 #---[ Rules ]----------------------------------------------------------------------------
 
@@ -72,6 +74,20 @@ $(BINRLS)/%.exe: \
 	testprograms/%.cs
 
 	@$(MCS) -reference:$(BINRLS)/$(LIBNAME) -out:$@ $<
+
+%.tar.bz2: \
+	%.tar
+
+	@echo $< ...
+	@bzip2 --compress -9 --stdout $< > $@
+	@chmod 0644 $@
+
+%.tar.gz: \
+	%.tar
+
+	@echo $< ...
+	@gzip -9 --stdout $< > $@
+	@chmod 0644 $@
 
 #---[ Targets ]--------------------------------------------------------------------------
 
@@ -98,6 +114,73 @@ pw3270-sharp-@PACKAGE_VERSION@.@host@.zip: \
 		testprograms/sample.cs \
 		src/pw3270-sharp/pw3270-sharp.cs \
 		$(BINRLS)/sample.exe
+
+rpm: \
+	$(PACKAGE_TARNAME)-$(PACKAGE_VERSION).tar.bz2
+
+ifneq ($(RPMBUILD),no)
+	@$(MKDIR) $(BASEDIR)/rpm
+	@$(MKDIR) $(BASEDIR)/rpm/SPECS
+	@$(MKDIR) $(BASEDIR)/rpm/SOURCES
+	@$(MKDIR) $(BASEDIR)/rpm/SRPMS
+	@$(MKDIR) $(BASEDIR)/rpm/RPMS
+	@$(MKDIR) $(BASEDIR)/rpm/BUILD
+	@$(MKDIR) $(BASEDIR)/rpm/BUILDROOT
+	@umask 002 ; $(RPMBUILD) \
+		--define="_topdir $(BASEDIR)/rpm" \
+		--define="_packager $(USER)@$(HOSTNAME)" \
+		--clean \
+		-ta $(PACKAGE_TARNAME)-$(PACKAGE_VERSION).tar.bz2
+endif
+
+bz2: \
+	$(PACKAGE_TARNAME)-$(PACKAGE_VERSION).tar.bz2
+
+$(PACKAGE_TARNAME)-$(PACKAGE_VERSION).tar: \
+	$(SRCDIR)
+
+	@$(AMTAR) \
+		--verbose \
+		--format=ustar \
+		--create \
+		--exclude-vcs \
+		--directory $(BASEDIR)/.src \
+		--owner=root \
+		--group=root \
+		--file=$@ \
+		$(PACKAGE_TARNAME)-@PACKAGE_VERSION@
+
+
+$(SRCDIR): \
+	clean
+
+	@$(MKDIR) $(SRCDIR)
+	@cp *.ac $(SRCDIR)
+	@cp *.in $(SRCDIR)
+	@cp *.cbp $(SRCDIR)
+	@cp *.sh $(SRCDIR)
+	@cp *.spec $(SRCDIR)
+	@cp README.md $(SRCDIR)
+	@cp LICENCA $(SRCDIR)
+	@cp LICENSE $(SRCDIR)
+
+	@$(MKDIR) $(SRCDIR)/testprograms
+	@cp testprograms/* $(SRCDIR)/testprograms
+
+	@$(MKDIR) $(SRCDIR)/scripts
+	@cp scripts/* $(SRCDIR)/scripts
+
+	@$(MKDIR) $(SRCDIR)/src/include
+	@cp src/include/*.in $(SRCDIR)/src/include
+
+	@$(MKDIR) $(SRCDIR)/src/native  
+	@cp src/native/*.in $(SRCDIR)/src/native
+	@cp src/native/*.cc $(SRCDIR)/src/native
+	@cp src/native/*.h $(SRCDIR)/src/native
+
+	@$(MKDIR) $(SRCDIR)/src/pw3270-sharp
+	@cp src/pw3270-sharp/*.in $(SRCDIR)/src/pw3270-sharp
+	@cp src/pw3270-sharp/*.cs $(SRCDIR)/src/pw3270-sharp
 
 
 $(BINRLS)/$(GLUELIB): \
@@ -142,6 +225,7 @@ $(BINDBG)/$(LIBNAME): \
 clean:
 	@rm -fr $(BINDIR)
 	@rm -fr $(OBJDIR)
+	@rm -fr $(SRCDIR)
 
 
 
