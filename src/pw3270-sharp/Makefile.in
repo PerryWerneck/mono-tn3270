@@ -67,6 +67,9 @@ all: \
 Release: \
 	$(BINRLS)/$(LIBNAME)
 
+install: \
+	$(BINRLS)/$(LIBNAME)
+
 Debug: \
 	$(BINDBG)/$(LIBNAME)
 

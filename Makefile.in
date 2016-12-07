@@ -89,11 +89,22 @@ $(BINRLS)/%.exe: \
 	@gzip -9 --stdout $< > $@
 	@chmod 0644 $@
 
+install-%: \
+	src/%/Makefile \
+	all
+
+	@make -C `dirname $<` DESTDIR=$(DESTDIR) install
+
 #---[ Targets ]--------------------------------------------------------------------------
 
 all: \
 	$(BINRLS)/$(GLUELIB) \
 	$(BINRLS)/$(LIBNAME)
+
+install: \
+	install-native \
+	install-pw3270-sharp
+
 
 Release: \
 	$(BINRLS)/$(GLUELIB) \
