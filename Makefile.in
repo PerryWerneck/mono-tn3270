@@ -57,6 +57,7 @@ INSTALL_PROGRAM=@INSTALL_PROGRAM@
 LN_S=@LN_S@
 
 MCS=@MCS@
+VBNC=@VBNC@
 MONO=@MONO@
 MKDIR=@MKDIR_P@
 AMTAR=@AMTAR@
@@ -69,6 +70,12 @@ $(BINDBG)/%.exe: \
 	$(BINDBG)/$(LIBNAME)
 	
 	@$(MCS) -reference:$(BINDBG)/$(LIBNAME) -debug -out:$@ $<
+
+$(BINDBG)/%.exe: \
+	testprograms/%.vb \
+	$(BINDBG)/$(LIBNAME)
+
+	@$(VBNC) -debug -out:$@ $<
 
 $(BINRLS)/%.exe: \
 	testprograms/%.cs
