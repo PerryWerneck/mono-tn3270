@@ -131,6 +131,7 @@ pw3270-sharp-@PACKAGE_VERSION@.@host@.zip: \
 		$(BINRLS)/$(LIBNAME) \
 		$(BINRLS)/*.xml \
 		testprograms/sample.cs \
+		testprograms/vbclass.vb \
 		src/pw3270-sharp/pw3270-sharp.cs \
 		$(BINRLS)/sample.exe
 
