@@ -54,6 +54,14 @@
 
 	#endif
 
+	#include <cstdio>
+
+	#ifdef DEBUG
+		#define debug( fmt, ... )	fprintf(stderr, "%s(%d) " fmt "\n" , __FILE__, (int) __LINE__, __VA_ARGS__ ); fflush(stderr);
+	#else
+		#define debug( fmt, ... )	/* */
+	#endif // DEBUG
+
 	#include <pw3270cpp.h>
 	#include <cerrno>
 	#include <cstring>

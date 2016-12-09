@@ -26,6 +26,7 @@
 
 GLUELIB=lib3270-mono@DLLEXT@
 LIBNAME=pw3270-sharp.dll
+TESTPROGRAM?=vbtest
 
 #---[ Configuration values ]-------------------------------------------------------------
 
@@ -223,9 +224,9 @@ Debug: \
 run: \
 	$(BINDBG)/$(GLUELIB) \
 	$(BINDBG)/$(LIBNAME) \
-	$(BINDBG)/sample.exe
+	$(BINDBG)/$(TESTPROGRAM).exe
 
-	@$(MONO) $(BINDBG)/sample.exe
+	@$(MONO) $(BINDBG)/$(TESTPROGRAM).exe
 
 $(BINDBG)/$(GLUELIB): \
 	src/native/*.cc \
