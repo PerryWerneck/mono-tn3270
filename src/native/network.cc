@@ -32,6 +32,7 @@
 /*---[ Implement ]----------------------------------------------------------------------------------*/
 
 int tn3270_connect(h3270::session *ses, const char *host, time_t wait) {
+	debug("%s(%s,%d)",__FUNCTION__,host,(int) wait);
 	return ses->connect(host,wait);
 }
 

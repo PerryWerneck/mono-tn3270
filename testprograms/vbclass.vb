@@ -49,7 +49,7 @@ Public Class pw3270
 	End Function
 
 	<DllImport("lib3270-mono", CallingConvention := CallingConvention.Cdecl)> _
-	Private Shared Function tn3270_connect(ByVal hSession As IntPtr, ByVal buffer As StringBuilder, ByVal seconds as Integer) as Integer
+	Private Shared Function tn3270_connect(ByVal hSession As IntPtr, ByVal buffer As String, ByVal seconds as Integer) as Integer
 	End Function
 
 	<DllImport("lib3270-mono", CallingConvention := CallingConvention.Cdecl)> _
@@ -89,15 +89,15 @@ Public Class pw3270
 	End Function
 
 	<DllImport("lib3270-mono", CallingConvention := CallingConvention.Cdecl)> _
-	Private Shared Function tn3270_set_string_at(ByVal hSession As IntPtr, ByVal row as Integer, ByVal col as Integer, ByVal buffer As StringBuilder) as Integer
+	Private Shared Function tn3270_set_string_at(ByVal hSession As IntPtr, ByVal row as Integer, ByVal col as Integer, ByVal buffer As String) as Integer
 	End Function
 
 	<DllImport("lib3270-mono", CallingConvention := CallingConvention.Cdecl)> _
-	Private Shared Function tn3270_wait_for_string_at(ByVal hSession As IntPtr, ByVal row as Integer, ByVal col as Integer, ByVal key As StringBuilder, ByVal timeout as Integer) as Integer
+	Private Shared Function tn3270_wait_for_string_at(ByVal hSession As IntPtr, ByVal row as Integer, ByVal col as Integer, ByVal key As String, ByVal timeout as Integer) as Integer
 	End Function
 
 	<DllImport("lib3270-mono", CallingConvention := CallingConvention.Cdecl)> _
-	Private Shared Function tn3270_cmp_string_at(ByVal hSession As IntPtr, ByVal row as Integer, ByVal col as Integer, ByVal buffer As StringBuilder) as Integer
+	Private Shared Function tn3270_cmp_string_at(ByVal hSession As IntPtr, ByVal row as Integer, ByVal col as Integer, ByVal buffer As String) as Integer
 	End Function
 
 	<DllImport("lib3270-mono", CallingConvention := CallingConvention.Cdecl)> _
@@ -130,6 +130,14 @@ Public Class pw3270
 		hSession = tn3270_create_session(name)
 	End Sub
 
+	Public Sub Connect(ByRef url as String, ByVal seconds as Integer)
+		tn3270_connect(hSession, url, seconds)
+	End Sub
+
+	Public Sub Disconnect()
+		tn3270_disconnect(hSession)
+	End Sub
+
 	Public Sub Finalize()
 		tn3270_destroy_session(hSession)
 	End Sub
@@ -150,6 +158,21 @@ Public Class pw3270
 		End Get
 	End Property
 
+	Public ReadOnly Property Connected As Boolean
+		Get
+			return tn3270_is_connected(hSession)
+		End Get
+	End Property
+
+	Public Function GetStringAt(ByVal row as Integer, ByVal col as Integer, ByVal strlen as Integer)
+		dim buffer As New StringBuilder(strlen)
+		tn3270_get_string_at(hSession, row, col, buffer, strlen)
+		return buffer.toString
+	End Function
+
+	Public Sub WaitForReady(ByVal seconds as Integer)
+		tn3270_wait_for_ready(hSession, seconds)
+	End Sub
 
 
 End Class
@@ -161,8 +184,16 @@ Public Module modmain
 
 		dim host as new pw3270("")
 
-		Console.WriteLine ("Using pw3270 version " + host.Version + " revision " + host.Revision)
+		Console.WriteLine("Using pw3270 version " + host.Version + " revision " + host.Revision)
 
+		host.Connect("tn3270://zos.efglobe.com:telnet",10)
+
+		if host.Connected Then
+
+			Console.WriteLine(host.GetStringAt(14,19,38))
+
+			host.Disconnect()
+		End If
 
 	End Sub
 
