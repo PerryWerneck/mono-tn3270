@@ -18,7 +18,7 @@
  * programa; se não, escreva para a Free Software Foundation, Inc., 51 Franklin
  * St, Fifth Floor, Boston, MA  02110-1301  USA
  *
- * Este programa está nomeado como private.h e possui - linhas de código.
+ * Este programa está nomeado como init.cc e possui - linhas de código.
  *
  * Contatos:
  *
@@ -47,7 +47,8 @@
   * @brief Destrói uma sessão.
   *
   */
- void tn3270_destroy_session(h3270::session *ses) {
+ int tn3270_destroy_session(h3270::session *ses) {
 	delete ses;
+	return 0;
  }
 

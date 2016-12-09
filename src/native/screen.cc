@@ -18,7 +18,7 @@
  * programa; se não, escreva para a Free Software Foundation, Inc., 51 Franklin
  * St, Fifth Floor, Boston, MA  02110-1301  USA
  *
- * Este programa está nomeado como set.cc e possui - linhas de código.
+ * Este programa está nomeado como screen.cc e possui - linhas de código.
  *
  * Contatos:
  *
@@ -31,18 +31,21 @@
 
 /*---[ Implement ]----------------------------------------------------------------------------------*/
 
-void tn3270_get_string(h3270::session *ses, int addr, char* str, int strlen) {
+int tn3270_get_string(h3270::session *ses, int addr, char* str, int strlen) {
 	memset(str,0,strlen);
 	strncpy(str,ses->get_string(addr,strlen).c_str(),strlen);
+	return 0;
 }
 
-void tn3270_get_string_at(h3270::session *ses, int row, int col, char* str, int strlen) {
+int tn3270_get_string_at(h3270::session *ses, int row, int col, char* str, int strlen) {
 	memset(str,0,strlen);
 	strncpy(str,ses->get_string_at(row,col,strlen).c_str(),strlen);
+	return 0;
 }
 
-void tn3270_set_string_at(h3270::session *ses, int row, int col, const char* str) {
+int tn3270_set_string_at(h3270::session *ses, int row, int col, const char* str) {
 	ses->set_string_at(row,col,str);
+	return 0;
 }
 
 int tn3270_wait_for_string_at(h3270::session *ses, int row, int col, const char *key, int timeout) {

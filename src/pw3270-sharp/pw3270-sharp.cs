@@ -51,13 +51,13 @@ namespace pw3270 {
 		extern static IntPtr tn3270_create_session(string name);
 
 		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
-		extern static void tn3270_destroy_session(IntPtr session);
+		extern static int tn3270_destroy_session(IntPtr session);
 
 		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
-		extern static void tn3270_get_version(IntPtr session, StringBuilder str, int strlen);
+		extern static int tn3270_get_version(IntPtr session, StringBuilder str, int strlen);
 
 		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
-		extern static void tn3270_get_revision(IntPtr session, StringBuilder str, int strlen);
+		extern static int tn3270_get_revision(IntPtr session, StringBuilder str, int strlen);
 
 		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
 		extern static int tn3270_connect(IntPtr Session, string host, int wait);
@@ -84,13 +84,13 @@ namespace pw3270 {
 		extern static int tn3270_get_secure(IntPtr Session);
 
 		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
-		extern static void tn3270_get_string(IntPtr Session, int addr, StringBuilder str, int strlen);
+		extern static int tn3270_get_string(IntPtr Session, int addr, StringBuilder str, int strlen);
 
 		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
-		extern static void tn3270_get_string_at(IntPtr Session, int row, int col, StringBuilder str, int strlen);
+		extern static int tn3270_get_string_at(IntPtr Session, int row, int col, StringBuilder str, int strlen);
 
 		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
-		extern static void tn3270_set_string_at(IntPtr Session, int row, int col, string str);
+		extern static int tn3270_set_string_at(IntPtr Session, int row, int col, string str);
 
 		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
 		extern static int tn3270_wait_for_string_at(IntPtr Session, int row, int col, string key, int timeout);
@@ -99,13 +99,13 @@ namespace pw3270 {
 		extern static int tn3270_cmp_string_at(IntPtr Session, int row, int col, string str);
 
 		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
-		extern static void tn3270_set_unlock_delay(IntPtr Session, int ms);
+		extern static int tn3270_set_unlock_delay(IntPtr Session, int ms);
 
 		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
-		extern static void tn3270_set_cursor_position(IntPtr Session, int row, int col);
+		extern static int tn3270_set_cursor_position(IntPtr Session, int row, int col);
 
 		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
- 		extern static void tn3270_set_cursor_addr(IntPtr Session, int addr);
+ 		extern static int tn3270_set_cursor_addr(IntPtr Session, int addr);
 
 		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
 		extern static int tn3270_enter(IntPtr Session);

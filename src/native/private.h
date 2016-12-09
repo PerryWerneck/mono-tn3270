@@ -70,10 +70,10 @@
 
  		DLL_PUBLIC h3270::session * tn3270_create_session(const char *name);
 
-		DLL_PUBLIC void tn3270_destroy_session(h3270::session *ses);
+		DLL_PUBLIC int tn3270_destroy_session(h3270::session *ses);
 
-		DLL_PUBLIC void tn3270_get_version(h3270::session *ses, char* str, int strlen);
-		DLL_PUBLIC void tn3270_get_revision(h3270::session *ses, char* str, int strlen);
+		DLL_PUBLIC int tn3270_get_version(h3270::session *ses, char* str, int strlen);
+		DLL_PUBLIC int tn3270_get_revision(h3270::session *ses, char* str, int strlen);
 
 		DLL_PUBLIC int tn3270_connect(h3270::session *ses, const char *host, time_t wait);
 		DLL_PUBLIC int tn3270_disconnect(h3270::session *ses);
@@ -86,17 +86,17 @@
 		DLL_PUBLIC int tn3270_get_program_message(h3270::session *ses);
 		DLL_PUBLIC int tn3270_get_secure(h3270::session *ses);
 
-		DLL_PUBLIC void tn3270_get_string(h3270::session *ses, int addr, char* str, int strlen);
-		DLL_PUBLIC void tn3270_get_string_at(h3270::session *ses, int row, int col, char* str, int strlen);
+		DLL_PUBLIC int tn3270_get_string(h3270::session *ses, int addr, char* str, int strlen);
+		DLL_PUBLIC int tn3270_get_string_at(h3270::session *ses, int row, int col, char* str, int strlen);
 
-		DLL_PUBLIC void tn3270_set_string_at(h3270::session *ses, int row, int col, const char* str);
+		DLL_PUBLIC int tn3270_set_string_at(h3270::session *ses, int row, int col, const char* str);
 
 		DLL_PUBLIC int tn3270_wait_for_string_at(h3270::session *ses, int row, int col, const char *key, int timeout);
 		DLL_PUBLIC int tn3270_cmp_string_at(h3270::session *ses, int row, int col, const char* str);
 
-		DLL_PUBLIC void tn3270_set_unlock_delay(h3270::session *ses, int ms);
-		DLL_PUBLIC void tn3270_set_cursor_position(h3270::session *ses, int row, int col);
- 		DLL_PUBLIC void tn3270_set_cursor_addr(h3270::session *ses, int addr);
+		DLL_PUBLIC int tn3270_set_unlock_delay(h3270::session *ses, int ms);
+		DLL_PUBLIC int tn3270_set_cursor_position(h3270::session *ses, int row, int col);
+ 		DLL_PUBLIC int tn3270_set_cursor_addr(h3270::session *ses, int addr);
 
 		DLL_PUBLIC int tn3270_enter(h3270::session *ses);
 		DLL_PUBLIC int tn3270_pfkey(h3270::session *ses, int key);

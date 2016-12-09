@@ -36,16 +36,18 @@
   * @brief Obtém a versão da biblioteca.
   *
   */
- void tn3270_get_version(h3270::session *ses, char* str, int strlen) {
+ int tn3270_get_version(h3270::session *ses, char* str, int strlen) {
  	strncpy(str,ses->get_version().c_str(),strlen);
+ 	return 0;
  }
 
  /**
   * @brief Obtém a revisão da biblioteca.
   *
   */
- void tn3270_get_revision(h3270::session *ses, char* str, int strlen) {
+ int tn3270_get_revision(h3270::session *ses, char* str, int strlen) {
 	strncpy(str,ses->get_revision().c_str(),strlen);
+ 	return 0;
  }
 
  int tn3270_get_cstate(h3270::session *ses) {

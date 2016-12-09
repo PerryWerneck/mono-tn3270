@@ -31,15 +31,19 @@
 
 /*---[ Implement ]----------------------------------------------------------------------------------*/
 
-void tn3270_set_unlock_delay(h3270::session *ses, int ms) {
+int tn3270_set_unlock_delay(h3270::session *ses, int ms) {
 	ses->set_unlock_delay((unsigned short) ms);
+	return 0;
 }
 
-void tn3270_set_cursor_position(h3270::session *ses, int row, int col) {
+int tn3270_set_cursor_position(h3270::session *ses, int row, int col) {
 	ses->set_cursor_position(row,col);
+	return 0;
 }
 
-void tn3270_set_cursor_addr(h3270::session *ses, int addr) {
+int tn3270_set_cursor_addr(h3270::session *ses, int addr) {
 	ses->set_cursor_addr(addr);
+	return 0;
 }
+
 
