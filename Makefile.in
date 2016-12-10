@@ -26,7 +26,7 @@
 
 GLUELIB=lib3270-mono@DLLEXT@
 LIBNAME=pw3270-sharp.dll
-TESTPROGRAM?=vbclass
+TESTPROGRAM?=vbsample
 
 #---[ Configuration values ]-------------------------------------------------------------
 
@@ -76,7 +76,7 @@ $(BINDBG)/%.exe: \
 	testprograms/%.vb \
 	$(BINDBG)/$(LIBNAME)
 
-	@$(VBNC) -debug -out:$@ $<
+	@$(VBNC) -reference:$(BINDBG)/$(LIBNAME) -debug -out:$@ $<
 
 $(BINRLS)/%.exe: \
 	testprograms/%.cs
@@ -131,7 +131,7 @@ pw3270-sharp-@PACKAGE_VERSION@.@host@.zip: \
 		$(BINRLS)/$(LIBNAME) \
 		$(BINRLS)/*.xml \
 		testprograms/sample.cs \
-		testprograms/vbclass.vb \
+		testprograms/vbsample.vb \
 		src/pw3270-sharp/pw3270-sharp.cs \
 		$(BINRLS)/sample.exe
 
