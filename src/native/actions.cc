@@ -43,3 +43,23 @@ int tn3270_pakey(h3270::session *ses, int key) {
 	return ses->pakey(key);
 }
 
+int tn3270_action(h3270::session *ses, const char *name) {
+	return ses->action(name);
+}
+
+int tn3270_erase(h3270::session *ses) {
+	return ses->erase();
+}
+
+int tn3270_erase_eof(h3270::session *ses) {
+	return ses->erase_eof();
+}
+
+int tn3270_erase_eol(h3270::session *ses) {
+	return ses->erase_eol();
+}
+
+int tn3270_erase_input(h3270::session *ses) {
+	return ses->erase_input();
+}
+

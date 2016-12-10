@@ -78,6 +78,17 @@
 		DLL_PUBLIC int tn3270_connect(h3270::session *ses, const char *host, time_t wait);
 		DLL_PUBLIC int tn3270_disconnect(h3270::session *ses);
 		DLL_PUBLIC int tn3270_is_connected(h3270::session *ses);
+		DLL_PUBLIC int tn3270_is_ready(h3270::session *ses);
+
+		DLL_PUBLIC int tn3270_set_cursor_addr(h3270::session *ses, int addr);
+ 		DLL_PUBLIC int tn3270_get_cursor_addr(h3270::session *ses);
+
+		DLL_PUBLIC int tn3270_action(h3270::session *ses, const char *name);
+
+		DLL_PUBLIC int tn3270_erase(h3270::session *ses);
+		DLL_PUBLIC int tn3270_erase_eof(h3270::session *ses);
+		DLL_PUBLIC int tn3270_erase_eol(h3270::session *ses);
+		DLL_PUBLIC int tn3270_erase_input(h3270::session *ses);
 
 		DLL_PUBLIC int tn3270_wait_for_ready(h3270::session *ses, int seconds);
 		DLL_PUBLIC int tn3270_wait(h3270::session *ses, int seconds);
@@ -96,7 +107,6 @@
 
 		DLL_PUBLIC int tn3270_set_unlock_delay(h3270::session *ses, int ms);
 		DLL_PUBLIC int tn3270_set_cursor_position(h3270::session *ses, int row, int col);
- 		DLL_PUBLIC int tn3270_set_cursor_addr(h3270::session *ses, int addr);
 
 		DLL_PUBLIC int tn3270_enter(h3270::session *ses);
 		DLL_PUBLIC int tn3270_pfkey(h3270::session *ses, int key);

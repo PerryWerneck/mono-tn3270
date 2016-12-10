@@ -44,4 +44,7 @@ int tn3270_is_connected(h3270::session *ses) {
 	return (int) ses->is_connected();
 }
 
+int tn3270_is_ready(h3270::session *ses) {
+	return (int) ses->is_ready();
+}
 
