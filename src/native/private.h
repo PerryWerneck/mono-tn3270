@@ -80,6 +80,9 @@
 		DLL_PUBLIC int tn3270_is_connected(h3270::session *ses);
 		DLL_PUBLIC int tn3270_is_ready(h3270::session *ses);
 
+		DLL_PUBLIC int tn3270_set_url(h3270::session *ses, const char *url);
+		DLL_PUBLIC int tn3270_get_url(h3270::session *ses, char* str, int strlen);
+
 		DLL_PUBLIC int tn3270_set_cursor_addr(h3270::session *ses, int addr);
  		DLL_PUBLIC int tn3270_get_cursor_addr(h3270::session *ses);
 
@@ -116,8 +119,7 @@
 		DLL_PUBLIC int tn3270_get_height(h3270::session *ses);
 		DLL_PUBLIC int tn3270_get_length(h3270::session *ses);
 
-		DLL_PUBLIC int tn3270_set_display_charset(h3270::session *ses, const char* str);
-		DLL_PUBLIC int tn3270_get_display_charset(h3270::session *ses, char* str, int strlen);
+		DLL_PUBLIC int tn3270_set_charset(h3270::session *ses, const char* str);
 
 	}
 

@@ -129,10 +129,13 @@ namespace pw3270 {
 		extern static int tn3270_get_length(IntPtr Session);
 
 		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
-		extern static int tn3270_set_display_charset(IntPtr Session, string str);
+		extern static int tn3270_set_charset(IntPtr Session, string str);
 
 		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
-		extern static int tn3270_get_display_charset(IntPtr session, StringBuilder str, int strlen);
+		extern static int tn3270_set_url(IntPtr Session, string str);
+
+		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
+		extern static int tn3270_get_url(IntPtr Session, StringBuilder str, int strlen);
 
 		/// <summary>
 		/// Create a new session with lib3270/pw3270
@@ -142,6 +145,7 @@ namespace pw3270 {
 		///
 		public Session(string name) {
 			hSession = tn3270_create_session(name);
+			tn3270_set_charset(hSession,"UTF-8");
 		}
 
 		/// <summary>
@@ -442,16 +446,21 @@ namespace pw3270 {
 		}
 		
 		public string CharSet {
-			get {
-				StringBuilder str = new StringBuilder(31);
-				tn3270_get_display_charset(hSession,str,30);				
-				return str.ToString();
-			}
 			set {
-				tn3270_set_display_charset(hSession,value);				
+				tn3270_set_charset(hSession,value);				
 			}
 		}
 
+		public string Url {
+			set {
+				tn3270_set_charset(hSession,value);				
+			}
+			get {
+				StringBuilder str = new StringBuilder(1025);
+				tn3270_get_url(hSession, str, 1024);
+				return str.ToString();
+			}
+		}
 		
 	}
 

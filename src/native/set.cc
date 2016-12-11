@@ -46,10 +46,15 @@ int tn3270_set_cursor_addr(h3270::session *ses, int addr) {
 	return 0;
 }
 
-int tn3270_set_display_charset(h3270::session *ses, const char* str) {
+int tn3270_set_charset(h3270::session *ses, const char* str) {
 	debug("%s(%s)",__FUNCTION__,str);
-	ses->set_display_charset(0,str);
+	ses->set_display_charset(NULL, str);
 	return 0;
 }
 
+int tn3270_set_url(h3270::session *ses, const char *url) {
+	debug("%s(%s)",__FUNCTION__,url);
+	ses->set_url(url);
+	return 0;
+}
 

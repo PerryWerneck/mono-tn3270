@@ -74,7 +74,7 @@
  	return (int) ses->get_length();
  }
 
- int tn3270_get_display_charset(h3270::session *ses, char* str, int len) {
- 	strncpy(str,ses->get_display_charset().c_str(),len);
+ int tn3270_get_url(h3270::session *ses, char* str, int strlen) {
+	strncpy(str,ses->get_url().c_str(),strlen);
 	return 0;
  }
