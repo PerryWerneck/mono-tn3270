@@ -115,6 +115,10 @@
 		DLL_PUBLIC int tn3270_get_width(h3270::session *ses);
 		DLL_PUBLIC int tn3270_get_height(h3270::session *ses);
 		DLL_PUBLIC int tn3270_get_length(h3270::session *ses);
+
+		DLL_PUBLIC int tn3270_set_display_charset(h3270::session *ses, const char* str);
+		DLL_PUBLIC int tn3270_get_display_charset(h3270::session *ses, char* str, int strlen);
+
 	}
 
 

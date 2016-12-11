@@ -128,6 +128,12 @@ namespace pw3270 {
 		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
 		extern static int tn3270_get_length(IntPtr Session);
 
+		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
+		extern static int tn3270_set_display_charset(IntPtr Session, string str);
+
+		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
+		extern static int tn3270_get_display_charset(IntPtr session, StringBuilder str, int strlen);
+
 		/// <summary>
 		/// Create a new session with lib3270/pw3270
 		/// </summary>
@@ -434,6 +440,18 @@ namespace pw3270 {
 				return tn3270_get_length(hSession);				
 			}
 		}
+		
+		public string CharSet {
+			get {
+				StringBuilder str = new StringBuilder(31);
+				tn3270_get_display_charset(hSession,str,30);				
+				return str.ToString();
+			}
+			set {
+				tn3270_set_display_charset(hSession,value);				
+			}
+		}
+
 		
 	}
 

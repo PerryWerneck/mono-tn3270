@@ -46,4 +46,10 @@ int tn3270_set_cursor_addr(h3270::session *ses, int addr) {
 	return 0;
 }
 
+int tn3270_set_display_charset(h3270::session *ses, const char* str) {
+	debug("%s(%s)",__FUNCTION__,str);
+	ses->set_display_charset(0,str);
+	return 0;
+}
+
 

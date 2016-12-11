@@ -37,6 +37,7 @@ class sample {
 
 		System.Console.WriteLine("Using pw3270 version " + host.Version + " revision " + host.Revision);
 		System.Console.WriteLine("Screen size is " + host.Width + "x" + host.Height + " (" + host.Length + ")");
+		System.Console.WriteLine("The Charset is " + host.CharSet);
 
 		host.Connect("tn3270://zos.efglobe.com:telnet",10);
 
