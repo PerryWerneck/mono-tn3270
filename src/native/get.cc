@@ -61,3 +61,15 @@
  int tn3270_get_secure(h3270::session *ses) {
 	return (int) ses->get_secure();
  }
+
+ int tn3270_get_width(h3270::session *ses) {
+	return (int) ses->get_width();
+ }
+
+ int tn3270_get_height(h3270::session *ses) {
+	return (int) ses->get_height();
+ }
+
+ int tn3270_get_length(h3270::session *ses) {
+ 	return (int) ses->get_length();
+}

@@ -35,11 +35,12 @@ class sample {
 
 		pw3270.Session host = new pw3270.Session("");
 
-		System.Console.WriteLine("Using pw3270 version " + host.GetVersion() + " revision " + host.GetRevision());
+		System.Console.WriteLine("Using pw3270 version " + host.Version + " revision " + host.Revision);
+		System.Console.WriteLine("Screen size is " + host.Width + "x" + host.Height + " (" + host.Length + ")");
 
 		host.Connect("tn3270://zos.efglobe.com:telnet",10);
 
-		if(host.IsConnected()) {
+		if(host.Connected) {
 
 			System.Console.WriteLine("Connected to host");
 

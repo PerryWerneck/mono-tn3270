@@ -37,6 +37,7 @@ Public Module modmain
 		dim host as new pw3270.Session("")
 
 		Console.WriteLine("Using pw3270 version " + host.getVersion() + " revision " + host.GetRevision())
+		Console.WriteLine("Screen size is " + host.GetWidth() + "x" + host.GetHeigth())
 
 		host.Connect("tn3270://zos.efglobe.com:telnet",10)
 

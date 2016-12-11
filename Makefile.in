@@ -26,7 +26,7 @@
 
 GLUELIB=lib3270-mono@DLLEXT@
 LIBNAME=pw3270-sharp.dll
-TESTPROGRAM?=vbsample
+TESTPROGRAM?=sample
 
 #---[ Configuration values ]-------------------------------------------------------------
 

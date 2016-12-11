@@ -66,6 +66,9 @@ namespace pw3270 {
 		extern static int tn3270_is_connected(IntPtr Session);
 
 		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
+		extern static int tn3270_is_ready(IntPtr Session);
+
+		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
 		extern static int tn3270_disconnect(IntPtr Session);
 
 		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
@@ -116,6 +119,15 @@ namespace pw3270 {
 		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
 		extern static int tn3270_pakey(IntPtr Session, int key);
 
+		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
+		extern static int tn3270_get_width(IntPtr Session);
+
+		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
+		extern static int tn3270_get_height(IntPtr Session);
+
+		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
+		extern static int tn3270_get_length(IntPtr Session);
+
 		/// <summary>
 		/// Create a new session with lib3270/pw3270
 		/// </summary>
@@ -148,6 +160,12 @@ namespace pw3270 {
 			return str.ToString();
 		}
 
+		public string Version {
+			get {
+				return GetVersion();
+			}
+		}
+
 		/// <summary>
 		/// Get lib3270/pw3270 Revision number
 		/// </summary>
@@ -160,6 +178,12 @@ namespace pw3270 {
 			StringBuilder str = new StringBuilder(10);
 			tn3270_get_revision(hSession, str, 10);
 			return str.ToString();
+		}
+
+		public string Revision {
+			get {
+				return GetRevision();
+			}
 		}
 
 		/// <summary>
@@ -186,6 +210,22 @@ namespace pw3270 {
 		///
 		public bool IsConnected() {
 			return tn3270_is_connected(hSession) != 0;
+		}
+
+		public bool Connected {
+			get {
+				return tn3270_is_connected(hSession) != 0;
+			}
+		}
+
+		public bool IsReady() {
+			return tn3270_is_ready(hSession) != 0;
+		}
+
+		public bool Ready {
+			get {
+				return tn3270_is_ready(hSession) != 0;
+			}
 		}
 
 		/// <summary>
@@ -365,7 +405,36 @@ namespace pw3270 {
 			return tn3270_pakey(hSession, key);
 		}
 
+		public int GetWidth() {
+			return tn3270_get_width(hSession);				
+		}
 
+		public int Width {
+			get {
+				return tn3270_get_width(hSession);				
+			}
+		}
+
+		public int GetHeight() {
+			return tn3270_get_height(hSession);				
+		}
+
+		public int Height {
+			get {
+				return tn3270_get_height(hSession);				
+			}
+		}
+
+		public int GetLength() {
+			return tn3270_get_length(hSession);				
+		}
+
+		public int Length {
+			get {
+				return tn3270_get_length(hSession);				
+			}
+		}
+		
 	}
 
 }
