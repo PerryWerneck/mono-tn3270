@@ -453,7 +453,7 @@ namespace pw3270 {
 
 		public string Url {
 			set {
-				tn3270_set_charset(hSession,value);				
+				tn3270_set_url(hSession,value);				
 			}
 			get {
 				StringBuilder str = new StringBuilder(1025);
