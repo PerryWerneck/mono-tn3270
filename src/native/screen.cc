@@ -44,6 +44,7 @@ int tn3270_get_string_at(h3270::session *ses, int row, int col, char* str, int s
 }
 
 int tn3270_set_string_at(h3270::session *ses, int row, int col, const char* str) {
+	debug("%s(%d,%d,\"%s\")",__FUNCTION__,row,col,str);
 	ses->set_string_at(row,col,str);
 	return 0;
 }

@@ -307,7 +307,7 @@ namespace pw3270 {
 		/// <param name="col">Start col</param>
 		/// <param name="str">Text to set</param>
 		///
-		public void SetStringAg(int row, int col, string str) {
+		public void SetStringAt(int row, int col, string str) {
 			tn3270_set_string_at(hSession, row, col, str);
 		}
 
