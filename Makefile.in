@@ -179,7 +179,7 @@ $(SRCDIR): \
 	@cp *.in $(SRCDIR)
 	@cp *.cbp $(SRCDIR)
 	@cp *.sh $(SRCDIR)
-	@cp *.spec $(SRCDIR)
+	@cp rpm/*.spec $(SRCDIR)
 	@cp README.md $(SRCDIR)
 	@cp LICENCA $(SRCDIR)
 	@cp LICENSE $(SRCDIR)

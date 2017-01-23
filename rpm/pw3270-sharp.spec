@@ -9,7 +9,7 @@ Group: 			Development/Languages/Mono
 
 BuildRoot:		/var/tmp/%{name}-%{version}
 
-BuildRequires:	mono-core
+BuildRequires:	mono-devel
 BuildRequires:  autoconf >= 2.61
 BuildRequires:  automake
 BuildRequires:  binutils
@@ -17,6 +17,7 @@ BuildRequires:  coreutils
 BuildRequires:  gcc-c++
 BuildRequires:  m4
 BuildRequires:  pkgconfig
+BuildRequires:  fdupes
 BuildRequires:	pw3270-devel >= 5.1
 
 Requires:		lib3270 >= 5.1
@@ -38,6 +39,8 @@ autoconf
 %configure
 
 %build
+%define debug_package %{nil}
+
 make clean
 make Release
 
@@ -55,9 +58,13 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root)
 %{_libdir}/lib3270-mono.*
 /usr/lib/mono/gac/%{name}
+
+%dir /usr/share/gapi-2.0
+%dir /usr/share/gapi-2.0/%{name}
 /usr/share/gapi-2.0/%{name}/%{name}.xml
+
 %{_libdir}/pkgconfig/%{name}.pc
-/usr/lib/mono/%{name}-%{version}
+/usr/lib/mono/%{name}-*
 
 %changelog
 
