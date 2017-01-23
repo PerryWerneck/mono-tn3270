@@ -242,6 +242,12 @@ $(BINDBG)/$(LIBNAME): \
 
 	@make -C src/pw3270-sharp $@
 
+cleanDebug: \
+	clean
+
+cleanRelease: \
+	clean
+
 clean:
 	@rm -fr $(BINDIR)
 	@rm -fr $(OBJDIR)
