@@ -19,6 +19,7 @@ BuildRequires:  m4
 BuildRequires:  pkgconfig
 BuildRequires:  fdupes
 BuildRequires:	pw3270-devel >= 5.1
+BuildRequires:	gettext-devel
 
 Requires:		lib3270 >= 5.1
 
