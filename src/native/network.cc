@@ -48,3 +48,11 @@ int tn3270_is_ready(h3270::session *ses) {
 	return (int) ses->is_ready();
 }
 
+int tn3270_wait_for_ready(h3270::session *ses, int seconds) {
+	return (int) ses->wait_for_ready(seconds);
+}
+
+int tn3270_wait(h3270::session *ses, int seconds) {
+	return (int) ses->wait(seconds);
+}
+
