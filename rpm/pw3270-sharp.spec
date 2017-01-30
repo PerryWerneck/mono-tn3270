@@ -66,6 +66,14 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/pkgconfig/%{name}.pc
 /usr/lib/mono/%{name}-*
 
+%post
+/sbin/ldconfig
+exit 0
+
+%postun
+/sbin/ldconfig
+exit 0
+
 %changelog
 
 
