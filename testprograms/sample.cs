@@ -44,6 +44,8 @@ class sample {
 
 			System.Console.WriteLine("Connected to " + host.Url);
 
+			System.Console.WriteLine("Wait for ready returned " + host.WaitForReady(5));
+
 			System.Console.WriteLine(host.GetStringAt(14,19,38));
 
 			host.Disconnect();

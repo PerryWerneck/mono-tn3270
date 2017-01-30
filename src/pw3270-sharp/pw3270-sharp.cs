@@ -416,44 +416,44 @@ namespace pw3270 {
 		}
 
 		public int GetWidth() {
-			return tn3270_get_width(hSession);				
+			return tn3270_get_width(hSession);
 		}
 
 		public int Width {
 			get {
-				return tn3270_get_width(hSession);				
+				return tn3270_get_width(hSession);
 			}
 		}
 
 		public int GetHeight() {
-			return tn3270_get_height(hSession);				
+			return tn3270_get_height(hSession);
 		}
 
 		public int Height {
 			get {
-				return tn3270_get_height(hSession);				
+				return tn3270_get_height(hSession);
 			}
 		}
 
 		public int GetLength() {
-			return tn3270_get_length(hSession);				
+			return tn3270_get_length(hSession);
 		}
 
 		public int Length {
 			get {
-				return tn3270_get_length(hSession);				
+				return tn3270_get_length(hSession);
 			}
 		}
-		
+
 		public string CharSet {
 			set {
-				tn3270_set_charset(hSession,value);				
+				tn3270_set_charset(hSession,value);
 			}
 		}
 
 		public string Url {
 			set {
-				tn3270_set_url(hSession,value);				
+				tn3270_set_url(hSession,value);
 			}
 			get {
 				StringBuilder str = new StringBuilder(1025);
@@ -461,7 +461,7 @@ namespace pw3270 {
 				return str.ToString();
 			}
 		}
-		
+
 	}
 
 }
