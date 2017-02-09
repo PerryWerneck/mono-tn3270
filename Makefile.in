@@ -183,6 +183,7 @@ $(SRCDIR): \
 	@cp README.md $(SRCDIR)
 	@cp LICENCA $(SRCDIR)
 	@cp LICENSE $(SRCDIR)
+	@cp AUTHORS $(SRCDIR)
 
 	@$(MKDIR) $(SRCDIR)/testprograms
 	@cp testprograms/* $(SRCDIR)/testprograms
