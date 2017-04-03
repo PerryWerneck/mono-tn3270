@@ -38,6 +38,7 @@ class sample {
 		System.Console.WriteLine("Using pw3270 version " + host.Version + " revision " + host.Revision);
 		System.Console.WriteLine("Screen size is " + host.Width + "x" + host.Height + " (" + host.Length + ")");
 
+		// host.Connect("tn3270://zos.efglobe.com:telnet",10);
 		host.Connect("tn3270://zos.efglobe.com:telnet",10);
 
 		if(host.Connected) {
@@ -46,7 +47,7 @@ class sample {
 
 			System.Console.WriteLine("Wait for ready returned " + host.WaitForReady(5));
 
-			System.Console.WriteLine(host.GetStringAt(14,19,38));
+			System.Console.WriteLine(host);
 
 			host.Disconnect();
 		}

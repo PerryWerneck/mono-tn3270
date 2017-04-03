@@ -87,6 +87,9 @@ namespace pw3270 {
 		extern static int tn3270_get_secure(IntPtr Session);
 
 		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
+		extern static int tn3270_get_contents(IntPtr Session, StringBuilder str, int strlen);
+
+		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
 		extern static int tn3270_get_string(IntPtr Session, int addr, StringBuilder str, int strlen);
 
 		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
@@ -275,6 +278,22 @@ namespace pw3270 {
 		}
 
 		/// <summary>
+		/// Get contents
+		/// </summary>
+		///
+		/// <returns>
+		/// Contents from terminal screen.
+		/// </returns>
+		///
+		public override string ToString() {
+			int strlen = (tn3270_get_width(hSession)+1) * (tn3270_get_height(hSession)+1);
+			StringBuilder str = new StringBuilder(strlen+1);
+			strlen = tn3270_get_contents(hSession, str, strlen);
+			return str.ToString();
+		}
+
+
+		/// <summary>
 		/// Get contents at address
 		/// </summary>
 		///
@@ -288,7 +307,7 @@ namespace pw3270 {
 		public string GetString(int addr, int strlen) {
 			StringBuilder str = new StringBuilder(strlen+1);
 			tn3270_get_string(hSession, addr, str, strlen);
-			return str.ToString(0,strlen);
+			return str.ToString();
 		}
 
 		/// <summary>

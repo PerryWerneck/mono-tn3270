@@ -100,6 +100,7 @@
 		DLL_PUBLIC int tn3270_get_program_message(h3270::session *ses);
 		DLL_PUBLIC int tn3270_get_secure(h3270::session *ses);
 
+		DLL_PUBLIC int tn3270_get_contents(h3270::session *ses, char* str, int strlen);
 		DLL_PUBLIC int tn3270_get_string(h3270::session *ses, int addr, char* str, int strlen);
 		DLL_PUBLIC int tn3270_get_string_at(h3270::session *ses, int row, int col, char* str, int strlen);
 

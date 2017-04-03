@@ -31,6 +31,21 @@
 
 /*---[ Implement ]----------------------------------------------------------------------------------*/
 
+int tn3270_get_contents(h3270::session *ses, char* str, int sz) {
+
+	std::string contents = ses->get_contents();
+
+	memset(str,0,sz);
+	strncpy(str,contents.c_str(),sz);
+	if(contents.size() < ((size_t) sz)) {
+		str[contents.size()] = 0;
+		return contents.size();
+	}
+
+	return sz;
+
+}
+
 int tn3270_get_string(h3270::session *ses, int addr, char* str, int strlen) {
 	memset(str,0,strlen);
 	strncpy(str,ses->get_string(addr,strlen).c_str(),strlen);
@@ -38,10 +53,8 @@ int tn3270_get_string(h3270::session *ses, int addr, char* str, int strlen) {
 }
 
 int tn3270_get_string_at(h3270::session *ses, int row, int col, char* str, int sz) {
-	memset(str,0,sz);
+	memset(str,0,sz+1);
 	strncpy(str,ses->get_string_at(row,col,sz).c_str(),sz);
-	str[sz] = 0;
-	debug("%s(%d,%d) len=%u (Required=%d)\n",__FUNCTION__,row,col,(unsigned int) strlen(str), sz);
 	return (int) strlen(str);
 }
 
