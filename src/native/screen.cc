@@ -37,10 +37,12 @@ int tn3270_get_string(h3270::session *ses, int addr, char* str, int strlen) {
 	return 0;
 }
 
-int tn3270_get_string_at(h3270::session *ses, int row, int col, char* str, int strlen) {
-	memset(str,0,strlen);
-	strncpy(str,ses->get_string_at(row,col,strlen).c_str(),strlen);
-	return 0;
+int tn3270_get_string_at(h3270::session *ses, int row, int col, char* str, int sz) {
+	memset(str,0,sz);
+	strncpy(str,ses->get_string_at(row,col,sz).c_str(),sz);
+	str[sz] = 0;
+	debug("%s(%d,%d) len=%u (Required=%d)\n",__FUNCTION__,row,col,(unsigned int) strlen(str), sz);
+	return (int) strlen(str);
 }
 
 int tn3270_set_string_at(h3270::session *ses, int row, int col, const char* str) {

@@ -306,7 +306,7 @@ namespace pw3270 {
 		public string GetStringAt(int row, int col, int strlen) {
 			StringBuilder str = new StringBuilder(strlen+1);
 			tn3270_get_string_at(hSession, row, col, str, strlen);
-			return str.ToString(0,strlen);
+			return str.ToString();
 		}
 
 		/// <summary>
