@@ -1,3 +1,23 @@
+#
+# spec file for package pw3270-sharp
+#
+# Copyright (c) 2015 SUSE LINUX GmbH, Nuernberg, Germany.
+# Copyright (C) <2008> <Banco do Brasil S.A.>
+#
+# All modifications and additions to the file contributed by third parties
+# remain the property of their copyright owners, unless otherwise agreed
+# upon. The license for this file, and modifications and additions to the
+# file, is the same license as for the pristine package itself (unless the
+# license for the pristine package is not an Open Source License, in which
+# case the license is the MIT License). An "Open Source License" is a
+# license that conforms to the Open Source Definition (Version 1.9)
+# published by the Open Source Initiative.
+
+# Please submit bugfixes or comments via http://bugs.opensuse.org/
+#
+
+%define vrslib %(pkg-config --modversion lib3270)
+
 Summary:		C-Sharp API for pw3270/lib3270
 Name:			pw3270-sharp
 Version:		1.0
@@ -18,10 +38,11 @@ BuildRequires:  gcc-c++
 BuildRequires:  m4
 BuildRequires:  pkgconfig
 BuildRequires:  fdupes
-BuildRequires:	pw3270-devel >= 5.1
+BuildRequires:	pkgconfig(pw3270)
+BuildRequires:	pkgconfig(lib3270)
 BuildRequires:	gettext-devel
 
-Requires:		lib3270 >= 5.1
+Requires:		lib3270 = %{vrslib}
 
 %description
 
