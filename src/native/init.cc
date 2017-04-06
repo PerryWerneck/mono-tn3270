@@ -31,6 +31,8 @@
 
 /*---[ Implement ]----------------------------------------------------------------------------------*/
 
+ std::string tn3270_lasterror = "";
+
 /**
  * @brief Cria uma sessão tn3270.
  *
@@ -40,7 +42,12 @@
  *
  */
  h3270::session * tn3270_create_session(const char *name) {
-	return h3270::session::create(name);
+ 	try {
+		return h3270::session::create(name);
+ 	} catch(std::exception &e) {
+ 		tn3270_lasterror = e.what();
+ 	}
+ 	return nullptr;
  }
 
  /**
@@ -48,7 +55,12 @@
   *
   */
  int tn3270_destroy_session(h3270::session *ses) {
-	delete ses;
+ 	try {
+		delete ses;
+ 	} catch(std::exception &e) {
+ 		tn3270_lasterror = e.what();
+ 		return -1;
+ 	}
 	return 0;
  }
 

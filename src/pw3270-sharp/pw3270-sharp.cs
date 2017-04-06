@@ -140,6 +140,12 @@ namespace pw3270 {
 		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
 		extern static int tn3270_get_url(IntPtr Session, StringBuilder str, int strlen);
 
+		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
+		extern static int tn3270_set_error_message(IntPtr Session, string str);
+
+		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
+		extern static int tn3270_get_error_message(IntPtr Session, StringBuilder str, int strlen);
+
 		/// <summary>
 		/// Create a new session with lib3270/pw3270
 		/// </summary>
@@ -477,6 +483,17 @@ namespace pw3270 {
 			get {
 				StringBuilder str = new StringBuilder(1025);
 				tn3270_get_url(hSession, str, 1024);
+				return str.ToString();
+			}
+		}
+
+		public string Error {
+			set {
+				tn3270_set_error_message(hSession,value);
+			}
+			get {
+				StringBuilder str = new StringBuilder(1025);
+				tn3270_get_error_message(hSession, str, 1024);
 				return str.ToString();
 			}
 		}

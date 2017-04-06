@@ -33,13 +33,20 @@
 
 int tn3270_get_contents(h3270::session *ses, char* str, int sz) {
 
-	std::string contents = ses->get_contents();
+	try {
 
-	memset(str,0,sz);
-	strncpy(str,contents.c_str(),sz);
-	if(contents.size() < ((size_t) sz)) {
-		str[contents.size()] = 0;
-		return contents.size();
+		std::string contents = ses->get_contents();
+
+		memset(str,0,sz);
+		strncpy(str,contents.c_str(),sz);
+		if(contents.size() < ((size_t) sz)) {
+			str[contents.size()] = 0;
+			return contents.size();
+		}
+
+	} catch(std::exception &e) {
+		tn3270_lasterror = e.what();
+		return -1;
 	}
 
 	return sz;
@@ -47,27 +54,55 @@ int tn3270_get_contents(h3270::session *ses, char* str, int sz) {
 }
 
 int tn3270_get_string(h3270::session *ses, int addr, char* str, int strlen) {
-	memset(str,0,strlen);
-	strncpy(str,ses->get_string(addr,strlen).c_str(),strlen);
+
+	try {
+		memset(str,0,strlen);
+		strncpy(str,ses->get_string(addr,strlen).c_str(),strlen);
+	} catch(std::exception &e) {
+		tn3270_lasterror = e.what();
+		return -1;
+	}
+
 	return 0;
 }
 
 int tn3270_get_string_at(h3270::session *ses, int row, int col, char* str, int sz) {
-	memset(str,0,sz+1);
-	strncpy(str,ses->get_string_at(row,col,sz).c_str(),sz);
+	try {
+		memset(str,0,sz+1);
+		strncpy(str,ses->get_string_at(row,col,sz).c_str(),sz);
+	} catch(std::exception &e) {
+		tn3270_lasterror = e.what();
+		return -1;
+	}
 	return (int) strlen(str);
 }
 
 int tn3270_set_string_at(h3270::session *ses, int row, int col, const char* str) {
-	debug("%s(%d,%d,\"%s\")",__FUNCTION__,row,col,str);
-	ses->set_string_at(row,col,str);
+	try {
+		debug("%s(%d,%d,\"%s\")",__FUNCTION__,row,col,str);
+		ses->set_string_at(row,col,str);
+	} catch(std::exception &e) {
+		tn3270_lasterror = e.what();
+		return -1;
+	}
 	return 0;
 }
 
 int tn3270_wait_for_string_at(h3270::session *ses, int row, int col, const char *key, int timeout) {
-	return ses->wait_for_string_at(row,col,key,timeout);
+	try {
+		return ses->wait_for_string_at(row,col,key,timeout);
+	} catch(std::exception &e) {
+		tn3270_lasterror = e.what();
+	}
+	return -1;
+
 }
 
 int tn3270_cmp_string_at(h3270::session *ses, int row, int col, const char* str) {
-	return ses->cmp_string_at(row,col,str);
+	try {
+		return ses->cmp_string_at(row,col,str);
+	} catch(std::exception &e) {
+		tn3270_lasterror = e.what();
+	}
+	return -1;
 }

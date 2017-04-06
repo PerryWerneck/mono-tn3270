@@ -55,6 +55,7 @@
 	#endif
 
 	#include <cstdio>
+	#include <string>
 
 	#ifdef DEBUG
 		#define debug( fmt, ... )	fprintf(stderr, "%s(%d) " fmt "\n" , __FILE__, (int) __LINE__, __VA_ARGS__ ); fflush(stderr);
@@ -65,6 +66,8 @@
 	#include <pw3270cpp.h>
 	#include <cerrno>
 	#include <cstring>
+
+	DLL_PRIVATE std::string tn3270_lasterror;
 
 	extern "C" {
 
@@ -82,6 +85,9 @@
 
 		DLL_PUBLIC int tn3270_set_url(h3270::session *ses, const char *url);
 		DLL_PUBLIC int tn3270_get_url(h3270::session *ses, char* str, int strlen);
+
+		DLL_PUBLIC int tn3270_set_error_message(h3270::session *ses, const char *url);
+		DLL_PUBLIC int tn3270_get_error_message(h3270::session *ses, char* str, int strlen);
 
 		DLL_PUBLIC int tn3270_set_cursor_addr(h3270::session *ses, int addr);
  		DLL_PUBLIC int tn3270_get_cursor_addr(h3270::session *ses);

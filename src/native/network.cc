@@ -32,27 +32,58 @@
 /*---[ Implement ]----------------------------------------------------------------------------------*/
 
 int tn3270_connect(h3270::session *ses, const char *host, time_t wait) {
-	debug("%s(%s,%d)",__FUNCTION__,host,(int) wait);
-	return ses->connect(host,wait);
+	try {
+		debug("%s(%s,%d)",__FUNCTION__,host,(int) wait);
+		return ses->connect(host,wait);
+	} catch(std::exception &e) {
+		tn3270_lasterror = e.what();
+	}
+	return -1;
 }
 
 int tn3270_disconnect(h3270::session *ses) {
-	return ses->disconnect();
+	try {
+		return ses->disconnect();
+	} catch(std::exception &e) {
+		tn3270_lasterror = e.what();
+	}
+	return -1;
 }
 
 int tn3270_is_connected(h3270::session *ses) {
-	return (int) ses->is_connected();
+	try {
+		return (int) ses->is_connected();
+	} catch(std::exception &e) {
+		tn3270_lasterror = e.what();
+	}
+	return -1;
 }
 
 int tn3270_is_ready(h3270::session *ses) {
-	return (int) ses->is_ready();
+	try {
+		return (int) ses->is_ready();
+	} catch(std::exception &e) {
+		tn3270_lasterror = e.what();
+	}
+	return -1;
 }
 
 int tn3270_wait_for_ready(h3270::session *ses, int seconds) {
-	return (int) ses->wait_for_ready(seconds);
+	try {
+		return (int) ses->wait_for_ready(seconds);
+	} catch(std::exception &e) {
+		tn3270_lasterror = e.what();
+	}
+	return -1;
+
 }
 
 int tn3270_wait(h3270::session *ses, int seconds) {
-	return (int) ses->wait(seconds);
+	try {
+		return (int) ses->wait(seconds);
+	} catch(std::exception &e) {
+		tn3270_lasterror = e.what();
+	}
+	return -1;
 }
 

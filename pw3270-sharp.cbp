@@ -50,7 +50,7 @@
 		<Unit filename="src/native/private.h" />
 		<Unit filename="src/native/screen.cc" />
 		<Unit filename="src/native/set.cc" />
-		<Unit filename="src/tn3270-sharp/tn3270-sharp.cs" />
+		<Unit filename="src/pw3270-sharp/pw3270-sharp.cs" />
 		<Extensions>
 			<code_completion />
 			<envvars />

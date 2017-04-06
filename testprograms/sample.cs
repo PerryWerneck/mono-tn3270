@@ -51,6 +51,9 @@ class sample {
 
 			host.Disconnect();
 		}
+		
+		System.Console.WriteLine("Error: " + host.Error);
+
 
 	}
 

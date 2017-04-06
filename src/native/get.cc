@@ -37,7 +37,12 @@
   *
   */
  int tn3270_get_version(h3270::session *ses, char* str, int strlen) {
- 	strncpy(str,ses->get_version().c_str(),strlen);
+ 	try {
+		strncpy(str,ses->get_version().c_str(),strlen);
+ 	} catch(std::exception &e) {
+ 		tn3270_lasterror = e.what();
+ 		return -1;
+ 	}
  	return 0;
  }
 
@@ -46,35 +51,98 @@
   *
   */
  int tn3270_get_revision(h3270::session *ses, char* str, int strlen) {
-	strncpy(str,ses->get_revision().c_str(),strlen);
+
+ 	try {
+		strncpy(str,ses->get_revision().c_str(),strlen);
+ 	} catch(std::exception &e) {
+ 		tn3270_lasterror = e.what();
+ 		return -1;
+ 	}
  	return 0;
  }
 
  int tn3270_get_cstate(h3270::session *ses) {
-	return (int) ses->get_cstate();
+
+	try {
+		return (int) ses->get_cstate();
+ 	} catch(std::exception &e) {
+ 		tn3270_lasterror = e.what();
+ 	}
+	return -1;
+
  }
 
  int tn3270_get_program_message(h3270::session *ses) {
-	return (int) ses->get_program_message();
+
+	try {
+		return (int) ses->get_program_message();
+ 	} catch(std::exception &e) {
+ 		tn3270_lasterror = e.what();
+ 	}
+	return -1;
+
  }
 
  int tn3270_get_secure(h3270::session *ses) {
-	return (int) ses->get_secure();
+	try {
+		return (int) ses->get_secure();
+ 	} catch(std::exception &e) {
+ 		tn3270_lasterror = e.what();
+ 	}
+	return -1;
+
  }
 
  int tn3270_get_width(h3270::session *ses) {
-	return (int) ses->get_width();
+
+	try {
+		return (int) ses->get_width();
+ 	} catch(std::exception &e) {
+ 		tn3270_lasterror = e.what();
+ 	}
+	return -1;
+
  }
 
  int tn3270_get_height(h3270::session *ses) {
-	return (int) ses->get_height();
+
+	try {
+		return (int) ses->get_height();
+ 	} catch(std::exception &e) {
+ 		tn3270_lasterror = e.what();
+ 	}
+	return -1;
+
  }
 
  int tn3270_get_length(h3270::session *ses) {
- 	return (int) ses->get_length();
+
+	try {
+		return (int) ses->get_length();
+ 	} catch(std::exception &e) {
+ 		tn3270_lasterror = e.what();
+ 	}
+	return -1;
+
  }
 
  int tn3270_get_url(h3270::session *ses, char* str, int strlen) {
-	strncpy(str,ses->get_url().c_str(),strlen);
+
+ 	try {
+
+		strncpy(str,ses->get_url().c_str(),strlen);
+		return 0;
+
+ 	} catch(std::exception &e) {
+ 		tn3270_lasterror = e.what();
+ 	}
+	return -1;
+
+ }
+
+ int tn3270_get_error_message(h3270::session *ses, char* str, int strlen) {
+
+	strncpy(str,tn3270_lasterror.c_str(),strlen);
 	return 0;
+
  }

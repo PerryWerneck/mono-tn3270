@@ -32,29 +32,57 @@
 /*---[ Implement ]----------------------------------------------------------------------------------*/
 
 int tn3270_set_unlock_delay(h3270::session *ses, int ms) {
-	ses->set_unlock_delay((unsigned short) ms);
+	try {
+		ses->set_unlock_delay((unsigned short) ms);
+	} catch(std::exception &e) {
+		tn3270_lasterror = e.what();
+		return -1;
+	}
 	return 0;
 }
 
 int tn3270_set_cursor_position(h3270::session *ses, int row, int col) {
-	ses->set_cursor_position(row,col);
+	try {
+		ses->set_cursor_position(row,col);
+	} catch(std::exception &e) {
+		tn3270_lasterror = e.what();
+		return -1;
+	}
 	return 0;
 }
 
 int tn3270_set_cursor_addr(h3270::session *ses, int addr) {
-	ses->set_cursor_addr(addr);
+	try {
+		ses->set_cursor_addr(addr);
+	} catch(std::exception &e) {
+		tn3270_lasterror = e.what();
+		return -1;
+	}
 	return 0;
 }
 
 int tn3270_set_charset(h3270::session *ses, const char* str) {
-	debug("%s(%s)",__FUNCTION__,str);
-	ses->set_display_charset(NULL, str);
+	try {
+		ses->set_display_charset(NULL, str);
+	} catch(std::exception &e) {
+		tn3270_lasterror = e.what();
+		return -1;
+	}
 	return 0;
 }
 
 int tn3270_set_url(h3270::session *ses, const char *url) {
-	debug("%s(%s)",__FUNCTION__,url);
-	ses->set_url(url);
+	try {
+		debug("%s(%s)",__FUNCTION__,url);
+		ses->set_url(url);
+	} catch(std::exception &e) {
+		tn3270_lasterror = e.what();
+		return -1;
+	}
 	return 0;
 }
 
+int tn3270_set_error_message(h3270::session *ses, const char *str) {
+	tn3270_lasterror = str;
+	return 0;
+}
