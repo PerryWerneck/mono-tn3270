@@ -179,6 +179,14 @@ namespace pw3270 {
 			return str.ToString();
 		}
 
+		/// <summary>
+		/// Lib3270 version.
+		/// </summary>
+		///
+		/// <returns>
+		/// Lib3270 version string
+		/// </returns>
+		///
 		public string Version {
 			get {
 				return GetVersion();
@@ -440,30 +448,78 @@ namespace pw3270 {
 			return tn3270_pakey(hSession, key);
 		}
 
+		/// <summary>
+		/// Get screen width
+		/// </summary>
+		///
+		/// <returns>
+		/// Screen width in characters (negative on error)
+		/// </returns>
+		///
 		public int GetWidth() {
 			return tn3270_get_width(hSession);
 		}
 
+		/// <summary>
+		/// Screen width in characters
+		/// </summary>
+		///
+		/// <returns>
+		/// Screen width in characters (negative on error)
+		/// </returns>
+		///
 		public int Width {
 			get {
 				return tn3270_get_width(hSession);
 			}
 		}
 
+		/// <summary>
+		/// Get screen height
+		/// </summary>
+		///
+		/// <returns>
+		/// Screen width in characters (negative on error)
+		/// </returns>
+		///
 		public int GetHeight() {
 			return tn3270_get_height(hSession);
 		}
 
+		/// <summary>
+		/// Screen height in characters
+		/// </summary>
+		///
+		/// <returns>
+		/// Screen height in characters (negative on error)
+		/// </returns>
+		///
 		public int Height {
 			get {
 				return tn3270_get_height(hSession);
 			}
 		}
 
+		/// <summary>
+		/// Get length of terminal buffer (width * height)
+		/// </summary>
+		///
+		/// <returns>
+		/// Terminal length in characters (negative on error)
+		/// </returns>
+		///
 		public int GetLength() {
 			return tn3270_get_length(hSession);
 		}
 
+		/// <summary>
+		/// Length of terminal buffer (width * height)
+		/// </summary>
+		///
+		/// <returns>
+		/// Terminal length in characters (negative on error)
+		/// </returns>
+		///
 		public int Length {
 			get {
 				return tn3270_get_length(hSession);
@@ -476,6 +532,14 @@ namespace pw3270 {
 			}
 		}
 
+		/// <summary>
+		/// 3270 host URL
+		/// </summary>
+		///
+		/// <returns>
+		/// 3270 host URL
+		/// </returns>
+		///
 		public string Url {
 			set {
 				tn3270_set_url(hSession,value);
@@ -487,6 +551,14 @@ namespace pw3270 {
 			}
 		}
 
+		/// <summary>
+		/// Last lib3270 error message
+		/// </summary>
+		///
+		/// <returns>
+		/// Last lib3270 error message
+		/// </returns>
+		///
 		public string Error {
 			set {
 				tn3270_set_error_message(hSession,value);
