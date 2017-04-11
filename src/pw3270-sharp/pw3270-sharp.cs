@@ -432,6 +432,24 @@ namespace pw3270 {
 			}
 		}
 
+		/// <summary>
+		/// Set the "screen ready" delay
+		/// </summary>
+		///
+		public int SetUnlockDelay(int ms) {
+			return tn3270_set_unlock_delay(hSession, ms);
+		}
+
+		/// <summary>
+		/// Set the "screen ready" delay
+		/// </summary>
+		///
+		public int UnlockDelay {
+			set {
+				tn3270_set_unlock_delay(hSession, value);
+			}
+		}
+
 
 		/// <summary>
 		/// Send "Enter" key
