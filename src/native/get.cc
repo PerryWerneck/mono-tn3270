@@ -126,6 +126,17 @@
 
  }
 
+ int tn3270_get_cursor_addr(h3270::session *ses) {
+
+	try {
+		return (int) ses->get_cursor_addr();
+ 	} catch(std::exception &e) {
+ 		tn3270_lasterror = e.what();
+ 	}
+	return -1;
+
+ }
+
  int tn3270_get_url(h3270::session *ses, char* str, int strlen) {
 
  	try {

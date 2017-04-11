@@ -114,6 +114,9 @@ namespace pw3270 {
  		extern static int tn3270_set_cursor_addr(IntPtr Session, int addr);
 
 		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
+ 		extern static int tn3270_get_cursor_addr(IntPtr Session);
+
+		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
 		extern static int tn3270_enter(IntPtr Session);
 
 		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
@@ -407,6 +410,28 @@ namespace pw3270 {
 		public void SetCursorPosition(int addr) {
 			tn3270_set_cursor_addr(hSession, addr);
 		}
+
+		/// <summary>
+		/// Get cursor address
+		/// </summary>
+		///
+		public int GetCursorPosition() {
+			return tn3270_get_cursor_addr(hSession);
+		}
+
+		/// <summary>
+		/// Cursor address
+		/// </summary>
+		///
+		public int CursorPosition {
+			set {
+				tn3270_set_cursor_addr(hSession, value);
+			}
+			get {
+				return tn3270_get_cursor_addr(hSession);
+			}
+		}
+
 
 		/// <summary>
 		/// Send "Enter" key
