@@ -78,6 +78,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(-,root,root)
+
+%doc README.md
+
 %{_libdir}/lib3270-mono.*
 /usr/lib/mono/gac/%{name}
 
