@@ -1,4 +1,5 @@
 Makefile
+*.trace
 *~
 *.bak
 *.layout
