@@ -335,6 +335,15 @@ if test "$app_cv_pic" == "yes"; then
 fi
 
 dnl ---------------------------------------------------------------------------
+dnl Enable/Disable trace file
+dnl ---------------------------------------------------------------------------
+AC_ARG_ENABLE([trace],[AS_HELP_STRING([--enable-trace], [Enable creation of trace file])],[app_cv_trace="$enableval"],[app_cv_trace="no"])
+
+if test "$app_cv_trace" == "yes"; then
+	AC_DEFINE(ENABLE_TRACE_TO_FILE)
+fi
+
+dnl ---------------------------------------------------------------------------
 dnl Output config
 dnl ---------------------------------------------------------------------------
 

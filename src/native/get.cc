@@ -63,6 +63,8 @@
 
  int tn3270_get_cstate(h3270::session *ses) {
 
+ 	trace_to_file("%s: %d",__FUNCTION__,(int) ses->get_cstate());
+
 	try {
 		return (int) ses->get_cstate();
  	} catch(std::exception &e) {

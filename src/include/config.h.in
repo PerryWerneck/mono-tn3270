@@ -43,5 +43,12 @@
 	 */
 	#undef HAVE_GNUC_VISIBILITY
 
+	/**
+	 * @brief Ativa trace em um arquivo texto.
+	 *
+	 */
+	#undef ENABLE_TRACE_TO_FILE
+
+
 
 #endif // CONFIG_H_INCLUDED

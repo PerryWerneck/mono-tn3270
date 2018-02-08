@@ -63,6 +63,7 @@ int tn3270_set_cursor_addr(h3270::session *ses, int addr) {
 
 int tn3270_set_charset(h3270::session *ses, const char* str) {
 	try {
+		trace_to_file("%s: \"%s\" -> \"%s\"",__FUNCTION__,ses->get_display_charset().c_str(),str);
 		ses->set_display_charset(NULL, str);
 	} catch(std::exception &e) {
 		tn3270_lasterror = e.what();

@@ -43,6 +43,7 @@
 		<Linker>
 			<Add library="pw3270cpp" />
 		</Linker>
+		<Unit filename="src/include/config.h.in" />
 		<Unit filename="src/native/actions.cc" />
 		<Unit filename="src/native/get.cc" />
 		<Unit filename="src/native/init.cc" />

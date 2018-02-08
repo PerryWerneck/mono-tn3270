@@ -67,7 +67,7 @@ CC=@CC@
 LD=@CXX@
 
 LIBS=-lpw3270cpp @LIBS@ @LIBICONV@
-CFLAGS=@CFLAGS@
+CFLAGS=-I../include @CFLAGS@
 LDFLAGS=@LDFLAGS@
 
 #---[ Rules ]----------------------------------------------------------------------------

@@ -35,6 +35,8 @@
 
 	#define PRIVATE_H_INCLUDED
 
+	#include <config.h>
+
 	#if defined(_WIN32)
 
 		#include <windows.h>
@@ -62,6 +64,13 @@
 	#else
 		#define debug( fmt, ... )	/* */
 	#endif // DEBUG
+
+	#ifdef ENABLE_TRACE_TO_FILE
+		DLL_PRIVATE void write_trace(const char *fmt, ...);
+		#define trace_to_file( ... )	write_trace(__VA_ARGS__)
+	#else
+		#define trace( ... )	/* */
+	#endif // ENABLE_TRACE_TO_FILE
 
 	#include <pw3270cpp.h>
 	#include <cerrno>

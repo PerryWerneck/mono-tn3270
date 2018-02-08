@@ -70,6 +70,7 @@ int tn3270_get_string_at(h3270::session *ses, int row, int col, char* str, int s
 	try {
 		memset(str,0,sz+1);
 		strncpy(str,ses->get_string_at(row,col,sz).c_str(),sz);
+		trace_to_file("%s(%d,%d,%d):\n%s\n",__FUNCTION__,row,col,sz,str);
 	} catch(std::exception &e) {
 		tn3270_lasterror = e.what();
 		return -1;
@@ -79,6 +80,7 @@ int tn3270_get_string_at(h3270::session *ses, int row, int col, char* str, int s
 
 int tn3270_set_string_at(h3270::session *ses, int row, int col, const char* str) {
 	try {
+		trace_to_file("%s(%d,%d):\n%s\n",__FUNCTION__,row,col,str);
 		debug("%s(%d,%d,\"%s\")",__FUNCTION__,row,col,str);
 		ses->set_string_at(row,col,str);
 	} catch(std::exception &e) {
