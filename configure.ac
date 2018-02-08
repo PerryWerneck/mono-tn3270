@@ -141,6 +141,7 @@ AC_SUBST(PACKAGE_MAJOR_VERSION,$app_vrs_major)
 AC_SUBST(PACKAGE_MINOR_VERSION,$app_vrs_minor)
 
 app_cv_description="C# Bindings for lib3270/pw3270"
+app_cv_zipname=$PACKAGE
 
 AC_DEFINE_UNQUOTED(PACKAGE_DESCRIPTION,"$app_cv_description")
 AC_SUBST(PACKAGE_DESCRIPTION,"$app_cv_description")
@@ -340,6 +341,7 @@ dnl ---------------------------------------------------------------------------
 AC_ARG_ENABLE([trace],[AS_HELP_STRING([--enable-trace], [Enable creation of trace file])],[app_cv_trace="$enableval"],[app_cv_trace="no"])
 
 if test "$app_cv_trace" == "yes"; then
+	app_cv_zipname=${app_cv_zipname}-with-trace
 	AC_DEFINE(ENABLE_TRACE_TO_FILE)
 fi
 
@@ -349,6 +351,10 @@ dnl ---------------------------------------------------------------------------
 
 AC_SUBST(DLLFLAGS)
 AC_SUBST(BASEDIR,$ac_pwd)
+
+AC_DEFINE_UNQUOTED(ZIPNAME, $app_cv_zipname)
+AC_SUBST(ZIPNAME,$app_cv_zipname)
+
 
 dnl ---------------------------------------------------------------------------
 dnl Configure which files to generate.

@@ -119,9 +119,9 @@ Release: \
 	$(BINRLS)/$(LIBNAME)
 
 zip: \
-	pw3270-sharp-@PACKAGE_VERSION@.@host@.zip
+	@ZIPNAME@-@PACKAGE_VERSION@.@host@.zip
 
-pw3270-sharp-@PACKAGE_VERSION@.@host@.zip: \
+@ZIPNAME@-@PACKAGE_VERSION@.@host@.zip: \
 	$(BINRLS)/$(GLUELIB) \
 	$(BINRLS)/$(LIBNAME) \
 	$(BINRLS)/sample.exe
