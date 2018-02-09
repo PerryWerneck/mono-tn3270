@@ -308,6 +308,14 @@ if test $app_cv_fvisibility_ok = yes; then
 fi
 
 dnl ---------------------------------------------------------------------------
+dnl Check for D-Bus
+dnl ---------------------------------------------------------------------------
+
+PKG_CHECK_MODULES( [DBUS], [dbus-1], AC_DEFINE(HAVE_DBUS), AC_MSG_NOTICE([ No DBUS support.]) )
+AC_SUBST(DBUS_LIBS)
+AC_SUBST(DBUS_CFLAGS)
+
+dnl ---------------------------------------------------------------------------
 dnl Check for pic
 dnl ---------------------------------------------------------------------------
 AC_ARG_ENABLE([pic],
