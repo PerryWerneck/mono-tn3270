@@ -58,7 +58,8 @@ case "$host" in
 		DLLEXT=".dll"
 
 		CFLAGS="$CFLAGS -Wall -Werror -D_WIN32_WINNT=0x0600"
-		LDSTATIC="-static-libgcc -static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic"
+		LDFLAGS="-static-libgcc -static-libstdc++ $LDFLAGS"
+		LDSTATIC="-Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic"
 		LIBS="$LIBS -lws2_32 -lntdll -lwtsapi32"
 
 		LOGDIR=.
