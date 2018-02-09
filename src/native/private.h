@@ -69,7 +69,7 @@
 		DLL_PRIVATE void write_trace(const char *fmt, ...);
 		#define trace_to_file( ... )	write_trace(__VA_ARGS__)
 	#else
-		#define trace( ... )	/* */
+		#define trace_to_file( ... )	/* */
 	#endif // ENABLE_TRACE_TO_FILE
 
 	#include <pw3270cpp.h>

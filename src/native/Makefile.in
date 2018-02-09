@@ -69,6 +69,7 @@ LD=@CXX@
 LIBS=-lpw3270cpp @LIBS@ @LIBICONV@
 CFLAGS=-I../include @CFLAGS@
 LDFLAGS=@LDFLAGS@
+LDSTATIC=@LDSTATIC@
 
 #---[ Rules ]----------------------------------------------------------------------------
 
@@ -133,7 +134,7 @@ $(BINRLS)/$(LIBNAME).@PACKAGE_MAJOR_VERSION@.@PACKAGE_MINOR_VERSION@: \
 
 	@echo $(basename $@) ...
 	@$(MKDIR) `dirname $@`
-	@$(LD) -shared -Wl,-soname,$(LIBNAME) $(LDFLAGS) -o $@ $^ $(LIBS)
+	@$(LD) -shared -Wl,-soname,$(LIBNAME) $(LDFLAGS) -o $@ $^ $(LIBS) $(LDSTATIC)
 
 #---[ Debug Targets ]--------------------------------------------------------------------
 
@@ -159,6 +160,6 @@ $(BINDBG)/$(LIBNAME).@PACKAGE_MAJOR_VERSION@.@PACKAGE_MINOR_VERSION@: \
 
 	@echo $(basename $@) ...
 	@$(MKDIR) `dirname $@`
-	@$(LD) -shared -Wl,-soname,$(LIBNAME) $(LDFLAGS) -o $@ $^ $(LIBS)
+	@$(LD) -shared -Wl,-soname,$(LIBNAME) $(LDFLAGS) -o $@ $^ $(LIBS) $(LDSTATIC)
 
 

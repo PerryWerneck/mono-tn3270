@@ -35,6 +35,7 @@ dnl ---------------------------------------------------------------------------
 dnl Initialize defaults
 dnl ---------------------------------------------------------------------------
 DLLFLAGS="-shared -Wl,-soname,\$(@F)"
+LDSTATIC=""
 DBG_CFLAGS="-DDEBUG=1"
 RLS_CFLAGS="-DNDEBUG=1"
 
@@ -57,7 +58,7 @@ case "$host" in
 		DLLEXT=".dll"
 
 		CFLAGS="$CFLAGS -Wall -Werror -D_WIN32_WINNT=0x0600"
-		LDFLAGS="-static-libstdc++ -static-libgcc $LDFLAGS"
+		LDSTATIC="-static-libgcc -static-libstdc++ -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic"
 		LIBS="$LIBS -lws2_32 -lntdll -lwtsapi32"
 
 		LOGDIR=.
@@ -105,6 +106,7 @@ AC_SUBST(DLLEXT)
 AC_SUBST(DLLPREFIX)
 
 AC_SUBST(LOGDIR)
+AC_SUBST(LDSTATIC)
 
 dnl ---------------------------------------------------------------------------
 dnl Check for other programs
