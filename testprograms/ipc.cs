@@ -45,7 +45,8 @@ class ipc {
 			System.Console.WriteLine("Connected to " + host.Url);
 			System.Console.WriteLine("Wait for ready returned " + host.WaitForReady(5));
 
-			System.Console.WriteLine(host.GetStringAt(1,1,1920));
+			// System.Console.WriteLine(host.GetStringAt(1,1,1920));
+			System.Console.WriteLine(host.GetString(1,1920));
 			// System.Console.WriteLine(host);
 
 		} else {
