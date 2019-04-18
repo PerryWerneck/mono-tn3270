@@ -52,6 +52,7 @@
 		<Unit filename="src/native/screen.cc" />
 		<Unit filename="src/native/set.cc" />
 		<Unit filename="src/pw3270-sharp/pw3270-sharp.cs" />
+		<Unit filename="testprograms/sample.cs" />
 		<Extensions>
 			<code_completion />
 			<envvars />
