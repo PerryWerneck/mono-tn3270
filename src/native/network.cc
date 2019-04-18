@@ -32,57 +32,91 @@
 /*---[ Implement ]----------------------------------------------------------------------------------*/
 
 int tn3270_connect(h3270::session *ses, const char *host, time_t wait) {
-	try {
-		debug("%s(%s,%d)",__FUNCTION__,host,(int) wait);
-		return ses->connect(host,wait);
-	} catch(std::exception &e) {
-		tn3270_lasterror = e.what();
+
+	if(ses) {
+
+		try {
+			debug("%s(%s,%d)",__FUNCTION__,host,(int) wait);
+			return ses->connect(host,wait);
+		} catch(std::exception &e) {
+			tn3270_lasterror = e.what();
+		}
+
 	}
+
 	return -1;
 }
 
 int tn3270_disconnect(h3270::session *ses) {
-	try {
-		return ses->disconnect();
-	} catch(std::exception &e) {
-		tn3270_lasterror = e.what();
+
+	if(ses) {
+
+		try {
+			return ses->disconnect();
+		} catch(std::exception &e) {
+			tn3270_lasterror = e.what();
+		}
+
 	}
+
 	return -1;
 }
 
 int tn3270_is_connected(h3270::session *ses) {
-	try {
-		return (int) ses->is_connected();
-	} catch(std::exception &e) {
-		tn3270_lasterror = e.what();
+
+	if(ses) {
+
+		try {
+			return (int) ses->is_connected();
+		} catch(std::exception &e) {
+			tn3270_lasterror = e.what();
+		}
+
 	}
+
 	return -1;
 }
 
 int tn3270_is_ready(h3270::session *ses) {
-	try {
-		return (int) ses->is_ready();
-	} catch(std::exception &e) {
-		tn3270_lasterror = e.what();
+
+	if(ses) {
+
+		try {
+			return (int) ses->is_ready();
+		} catch(std::exception &e) {
+			tn3270_lasterror = e.what();
+		}
+
 	}
+
 	return -1;
 }
 
 int tn3270_wait_for_ready(h3270::session *ses, int seconds) {
-	try {
-		return (int) ses->wait_for_ready(seconds);
-	} catch(std::exception &e) {
-		tn3270_lasterror = e.what();
+
+	if(ses) {
+
+		try {
+			return (int) ses->wait_for_ready(seconds);
+		} catch(std::exception &e) {
+			tn3270_lasterror = e.what();
+		}
+
 	}
 	return -1;
 
 }
 
 int tn3270_wait(h3270::session *ses, int seconds) {
-	try {
-		return (int) ses->wait(seconds);
-	} catch(std::exception &e) {
-		tn3270_lasterror = e.what();
+
+	if(ses) {
+
+		try {
+			return (int) ses->wait(seconds);
+		} catch(std::exception &e) {
+			tn3270_lasterror = e.what();
+		}
+
 	}
 	return -1;
 }

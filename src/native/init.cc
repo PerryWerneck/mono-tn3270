@@ -49,6 +49,7 @@
 		return h3270::session::create(name);
  	} catch(std::exception &e) {
  		tn3270_lasterror = e.what();
+		trace_to_file("%s(%s)",__FUNCTION__,e.what());
  	}
  	return nullptr;
  }

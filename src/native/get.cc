@@ -37,6 +37,11 @@
   *
   */
  int tn3270_get_version(h3270::session *ses, char* str, int strlen) {
+
+ 	if(!ses) {
+		return -1;
+ 	}
+
  	try {
 		strncpy(str,ses->get_version().c_str(),strlen);
  	} catch(std::exception &e) {
@@ -52,6 +57,10 @@
   */
  int tn3270_get_revision(h3270::session *ses, char* str, int strlen) {
 
+ 	if(!ses) {
+		return -1;
+ 	}
+
  	try {
 		strncpy(str,ses->get_revision().c_str(),strlen);
  	} catch(std::exception &e) {
@@ -62,6 +71,10 @@
  }
 
  int tn3270_get_cstate(h3270::session *ses) {
+
+ 	if(!ses) {
+		return -1;
+ 	}
 
  	trace_to_file("%s: %d",__FUNCTION__,(int) ses->get_cstate());
 
@@ -76,6 +89,10 @@
 
  int tn3270_get_program_message(h3270::session *ses) {
 
+ 	if(!ses) {
+		return -1;
+ 	}
+
 	try {
 		return (int) ses->get_program_message();
  	} catch(std::exception &e) {
@@ -86,6 +103,11 @@
  }
 
  int tn3270_get_secure(h3270::session *ses) {
+
+ 	if(!ses) {
+		return -1;
+ 	}
+
 	try {
 		return (int) ses->get_secure();
  	} catch(std::exception &e) {
@@ -96,6 +118,10 @@
  }
 
  int tn3270_get_width(h3270::session *ses) {
+
+ 	if(!ses) {
+		return 0;
+ 	}
 
 	try {
 		return (int) ses->get_width();
@@ -108,6 +134,10 @@
 
  int tn3270_get_height(h3270::session *ses) {
 
+ 	if(!ses) {
+		return 0;
+ 	}
+
 	try {
 		return (int) ses->get_height();
  	} catch(std::exception &e) {
@@ -118,6 +148,10 @@
  }
 
  int tn3270_get_length(h3270::session *ses) {
+
+ 	if(!ses) {
+		return 0;
+ 	}
 
 	try {
 		return (int) ses->get_length();
@@ -130,25 +164,33 @@
 
  int tn3270_get_cursor_addr(h3270::session *ses) {
 
-	try {
-		return (int) ses->get_cursor_addr();
- 	} catch(std::exception &e) {
- 		tn3270_lasterror = e.what();
- 	}
+	if(ses) {
+
+		try {
+			return (int) ses->get_cursor_addr();
+		} catch(std::exception &e) {
+			tn3270_lasterror = e.what();
+		}
+
+	}
 	return -1;
 
  }
 
  int tn3270_get_url(h3270::session *ses, char* str, int strlen) {
 
- 	try {
+	if(ses) {
 
-		strncpy(str,ses->get_url().c_str(),strlen);
-		return 0;
+		try {
 
- 	} catch(std::exception &e) {
- 		tn3270_lasterror = e.what();
- 	}
+			strncpy(str,ses->get_url().c_str(),strlen);
+			return 0;
+
+		} catch(std::exception &e) {
+			tn3270_lasterror = e.what();
+		}
+
+	}
 	return -1;
 
  }
