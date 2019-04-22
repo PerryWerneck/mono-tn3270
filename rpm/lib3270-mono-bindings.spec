@@ -18,7 +18,7 @@
 
 %define vrslib %(pkg-config --modversion lib3270)
 
-Summary:		C-Sharp API for pw3270/lib3270
+Summary:		Mono binding for pw3270/lib3270
 Name:			lib3270-mono-bindings
 Version:		1.0
 Release:		0
@@ -46,7 +46,7 @@ Requires:	lib3270 = %{vrslib}
 
 %description
 
-C-Sharp API for tn3270 acesss using pw3270 ou lib3270.
+Mono bindings for tn3270 acesss using lib3270 or pw3270.
 
 %prep
 
