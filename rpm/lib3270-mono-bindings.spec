@@ -19,7 +19,7 @@
 %define vrslib %(pkg-config --modversion lib3270)
 
 Summary:		C-Sharp API for pw3270/lib3270
-Name:			pw3270-sharp
+Name:			lib3270-mono-bindings
 Version:		1.0
 Release:		0
 License:		GPL-2.0
@@ -42,7 +42,7 @@ BuildRequires:	pkgconfig(pw3270)
 BuildRequires:	pkgconfig(lib3270)
 BuildRequires:	gettext-devel
 
-Requires:		lib3270 = %{vrslib}
+Requires:	lib3270 = %{vrslib}
 
 %description
 
