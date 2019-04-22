@@ -18,16 +18,16 @@
 
 %define vrslib %(pkg-config --modversion lib3270)
 
-Summary:		Mono binding for pw3270/lib3270
-Name:			lib3270-mono-bindings
-Version:		1.0
-Release:		0
-License:		GPL-2.0
-Source:			%{name}-%{version}.tar.bz2
-URL:			https://portal.softwarepublico.gov.br/social/pw3270/
-Group: 			Development/Languages/Mono
+Summary:	Mono binding for pw3270/lib3270
+Name:		lib3270-mono-bindings
+Version:	1.0
+Release:	0
+License:	GPL-2.0
+Source:		%{name}-%{version}.tar.xz
+URL:		https://portal.softwarepublico.gov.br/social/pw3270/
+Group: 		Development/Languages/Mono
 
-BuildRoot:		/var/tmp/%{name}-%{version}
+BuildRoot:	/var/tmp/%{name}-%{version}
 
 BuildRequires:	mono-devel
 BuildRequires:  autoconf >= 2.61
