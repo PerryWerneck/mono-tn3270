@@ -17,10 +17,11 @@
 #
 
 %define vrslib %(pkg-config --modversion lib3270)
+%define libname pw3270-sharp
 
 Summary:	Mono binding for pw3270/lib3270
 Name:		lib3270-mono-bindings
-Version:	1.0
+Version:	5.1
 Release:	0
 License:	GPL-2.0
 Source:		%{name}-%{version}.tar.xz
@@ -82,13 +83,13 @@ rm -rf $RPM_BUILD_ROOT
 %doc README.md
 
 %{_libdir}/lib3270-mono.*
-/usr/lib/mono/gac/%{name}
+/usr/lib/mono/gac/%{libname}
 
 %dir /usr/share/gapi-2.0
-%dir /usr/share/gapi-2.0/%{name}
-/usr/share/gapi-2.0/%{name}/%{name}.xml
+%dir /usr/share/gapi-2.0/%{libname}
+/usr/share/gapi-2.0/%{libname}/%{libname}.xml
 
-%{_libdir}/pkgconfig/%{name}.pc
+%{_libdir}/pkgconfig/%{libname}.pc
 /usr/lib/mono/%{name}-*
 
 %post
