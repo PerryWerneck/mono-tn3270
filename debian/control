@@ -1,10 +1,10 @@
-Source: pw3270-sharp
+Source: lib3270-mono-bindings
 Section: unknown
 Priority: optional
 Maintainer: Perry Werneck <perry.werneck@gmail.com>
 Build-Depends: debhelper (>= 7), autotools-dev, autoconf, gettext, pw3270-dev, libmono-2.0-dev, mono-devel
 
-Package: pw3270-sharp
+Package: lib3270-mono-bindings
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, lib3270
 Description: Mono Extension Module implementing tn3270 protocol.
