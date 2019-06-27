@@ -72,7 +72,7 @@
 		#define trace_to_file( ... )	/* */
 	#endif // ENABLE_TRACE_TO_FILE
 
-	#include <pw3270cpp.h>
+	#include <pw3270/pw3270cpp.h>
 	#include <cerrno>
 	#include <cstring>
 
