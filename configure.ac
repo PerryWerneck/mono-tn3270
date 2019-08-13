@@ -1,12 +1,37 @@
+dnl
+dnl Software pw3270, desenvolvido com base nos códigos fontes do  C3270  e  X3270
+dnl (Paul Mattes Paul.Mattes@usa.net), de emulação de terminal 3270 para acesso a
+dnl aplicativos mainframe. Registro no INPI sob o nome G3270.
+dnl
+dnl Copyright (C) <2008> <Banco do Brasil S.A.>
+dnl
+dnl Este programa é software livre. Você pode redistribuí-lo e/ou modificá-lo sob
+dnl os termos da GPL v.2 - Licença Pública Geral  GNU,  conforme  publicado  pela
+dnl Free Software Foundation.
+dnl
+dnl Este programa é distribuído na expectativa de  ser  útil,  mas  SEM  QUALQUER
+dnl GARANTIA; sem mesmo a garantia implícita de COMERCIALIZAÇÃO ou  de  ADEQUAÇÃO
+dnl A QUALQUER PROPÓSITO EM PARTICULAR. Consulte a Licença Pública Geral GNU para
+dnl obter mais detalhes.
+dnl
+dnl Você deve ter recebido uma cópia da Licença Pública Geral GNU junto com este
+dnl programa;  se  não, escreva para a Free Software Foundation, Inc., 59 Temple
+dnl Place, Suite 330, Boston, MA, 02111-1307, USA
+dnl
+dnl Contatos:
+dnl
+dnl perry.werneck@gmail.com	(Alexandre Perry de Souza Werneck)
+dnl erico.mendonca@gmail.com	(Erico Mascarenhas de Mendonça)
+dnl
 
 dnl Process this file with autoconf to produce a configure script.
 
 dnl The minimum version of autoconf required.
-AC_PREREQ(2.59)
+AC_PREREQ(2.61)
 
 dnl Initialise automake with the package name, version and
 dnl bug-reporting address.
-AC_INIT([lib3270-mono-bindings], [5.1], [perry.werneck@gmail.com])
+AC_INIT([lib3270-mono-bindings], [5.2], [perry.werneck@gmail.com])
 
 dnl Place auxilliary scripts here.
 AC_CONFIG_AUX_DIR([scripts])
@@ -24,8 +49,8 @@ dnl Check for iconv
 AM_ICONV
 
 dnl Checks for programs.
-AC_PROG_CXX
 AC_PROG_CC
+AC_PROG_CXX
 AC_PROG_SED
 AC_PROG_LN_S
 
@@ -34,108 +59,86 @@ AC_LANG([C++])
 dnl ---------------------------------------------------------------------------
 dnl Initialize defaults
 dnl ---------------------------------------------------------------------------
-DLLFLAGS="-shared -Wl,-soname,\$(@F)"
-LDSTATIC=""
-DBG_CFLAGS="-DDEBUG=1"
+
+DBG_CFLAGS="-g -fstack-check -DDEBUG=1"
 RLS_CFLAGS="-DNDEBUG=1"
+PLUGINS=""
+APP_RESOURCES=""
+APP_LDFLAGS=""
+DLL_LDFLAGS="-shared -Wl,-soname,\$(@F)"
 
 dnl ---------------------------------------------------------------------------
 dnl Check for OS specifics
 dnl ---------------------------------------------------------------------------
 
 case "$host" in
-	*-mingw32)
-		RLS_LDFLAGS="-Wl,--strip-all"
-		DBG_LDFLAGS=""
-		APP_LDFLAGS=""
+	*-mingw32|*-pc-msys)
+		app_cv_osname="windows"
 
-		DBG_DATADIR=""
-		RLS_DATADIR=""
-
-		EXEEXT=".exe"
-
-		DLLPREFIX=""
+		CFLAGS="$CFLAGS -pthread -D_WIN32_WINNT=0x0600"
+		LIBS="$LIBS -lws2_32 -lwtsapi32 -lcomdlg32"
 		DLLEXT=".dll"
 
-		CFLAGS="$CFLAGS -Wall -Werror -D_WIN32_WINNT=0x0600"
-		LDFLAGS="-static-libgcc -static-libstdc++ $LDFLAGS"
-		LDSTATIC="-Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic"
-		LIBS="$LIBS -lws2_32 -lntdll -lwtsapi32"
+		app_win32_revision=$(date +%-y.%-m.%-d.%-H)
+		AC_SUBST(WIN32_VERSION,$app_win32_revision)
 
-		LOGDIR=.
+		app_win32_file_version=$(date +%-y,%-m,%-d,%-H)
+		AC_SUBST(WIN32_FILE_VERSION,$app_win32_file_version)
+
+		AC_CONFIG_FILES(src/native/windows/resources.rc)
+
+		if test "$host_cpu" = "x86_64"; then
+			app_cv_programfiles="PROGRAMFILES64"
+			app_cv_winarch="64"
+		else
+			app_cv_programfiles="PROGRAMFILES"
+			app_cv_winarch="32"
+		fi
+
+		AC_SUBST(PROGRAMFILES,$app_cv_programfiles)
+		AC_SUBST(WINARCH,$app_cv_winarch)
 		;;
 
  	*)
-		RLS_LDFLAGS=""
-		DBG_LDFLAGS=""
-		APP_LDFLAGS=""
-
-		DBG_DATADIR="-DDATADIR=."
-		DBG_CFLAGS="-fstack-check $DBG_CFLAGS"
-
-		RLS_DATADIR="-DDATADIR=\$(datarootdir)/\$(PACKAGE_NAME)"
-
-		EXEEXT=""
-
-		DLLPREFIX="lib"
-		DLLEXT=".so"
-
-		CFLAGS="$CFLAGS -Wall -Werror"
-
-		# LIBS="-Wl,--no-allow-shlib-undefined,--as-needed,--no-undefined -pthread $LIBS"
-		LIBS="-pthread $LIBS"
-
+		CFLAGS="$CFLAGS -pthread"
+		LDFLAGS="$LDFLAGS -pthread"
+		app_cv_datadir="/usr/share"
+		app_cv_confdir="/etc"
+		app_cv_osname="linux"
 		LOGDIR="/var/log"
-
+		DLLEXT=".so"
 
 esac
 
+AC_SUBST(DATADIR,$app_cv_datadir)
+AC_SUBST(CONFDIR,$app_cv_confdir)
+AC_SUBST(OSNAME,$app_cv_osname)
 AC_SUBST(LIBS)
-
-AC_SUBST(DBG_DATADIR)
-AC_SUBST(DBG_CFLAGS)
-
-AC_SUBST(RLS_DATADIR)
-AC_SUBST(RLS_CFLAGS)
-
-AC_SUBST(DBG_LDFLAGS)
-AC_SUBST(RLS_LDFLAGS)
-AC_SUBST(APP_LDFLAGS)
-
-AC_SUBST(EXEEXT)
+AC_SUBST(LOGDIR)
 AC_SUBST(DLLEXT)
 AC_SUBST(DLLPREFIX)
-
-AC_SUBST(LOGDIR)
-AC_SUBST(LDSTATIC)
+AC_SUBST(LDFLAGS)
+AC_SUBST(DLL_LDFLAGS)
 
 dnl ---------------------------------------------------------------------------
 dnl Check for other programs
 dnl ---------------------------------------------------------------------------
-AC_PATH_TOOL([STRIP], [strip])
-AC_PATH_TOOL([RPMBUILD], [rpmbuild], [no])
-AC_PATH_TOOL([MAKENSIS], [makensis], [no])
-AC_PATH_TOOL([VALGRIND], [valgrind], [no])
+
+AC_PATH_TOOL([AR], [ar], [ar])
 AC_PATH_TOOL([WINDRES], [windres], [no])
-AC_PATH_TOOL([ZIP], [zip], [zip])
-AC_PATH_TOOL([MCS], [mcs], [mcs])
-AC_PATH_TOOL([VBNC], [vbnc2], [vbnc2])
-AC_PATH_TOOL([GACUTIL], [gacutil], [gacutil])
-AC_PATH_TOOL([SN], [sn], [sn])
-AC_PATH_PROG([MONO], [mono], [no])
+AC_PATH_TOOL([VALGRIND], [valgrind], [no])
+
+PKG_CHECK_EXISTS
 
 dnl ---------------------------------------------------------------------------
 dnl Version info
 dnl ---------------------------------------------------------------------------
 
-AC_DEFINE(PACKAGE_RELEASE,APP_LEVEL)
-AC_SUBST(PACKAGE_RELEASE, APP_LEVEL)
+AC_SUBST(PACKAGE_DESCRIPTION,".NET Bindings for lib3270/pw3270")
+app_cv_zipname=$PACKAGE
 
 app_vrs_major=$(echo $VERSION | cut -d. -f1)
 app_vrs_minor=$(echo $VERSION | cut -d. -f2)
-
-AC_SUBST(PACKAGE_MAJOR_VERSION,$app_vrs_major)
-AC_SUBST(PACKAGE_MINOR_VERSION,$app_vrs_minor)
 
 AC_DEFINE_UNQUOTED(PACKAGE_MAJOR_VERSION, $app_vrs_major)
 AC_DEFINE_UNQUOTED(PACKAGE_MINOR_VERSION, $app_vrs_minor)
@@ -143,64 +146,32 @@ AC_DEFINE_UNQUOTED(PACKAGE_MINOR_VERSION, $app_vrs_minor)
 AC_SUBST(PACKAGE_MAJOR_VERSION,$app_vrs_major)
 AC_SUBST(PACKAGE_MINOR_VERSION,$app_vrs_minor)
 
-app_cv_description="C# Bindings for lib3270/pw3270"
-app_cv_zipname=$PACKAGE
+AC_ARG_WITH([release], [AS_HELP_STRING([--with-release], [Set release])], [ app_cv_release="$withval" ],[ app_cv_release="`date +%-y`.`date +%-m`.`date +%-d`" ])
 
-AC_DEFINE_UNQUOTED(PACKAGE_DESCRIPTION,"$app_cv_description")
-AC_SUBST(PACKAGE_DESCRIPTION,"$app_cv_description")
+app_rls_major=$(echo $app_cv_release.0.0 | cut -d. -f1)
+app_rls_minor=$(echo $app_cv_release.0.0 | cut -d. -f2)
 
-dnl ---------------------------------------------------------------------------
-dnl Check for integer types & library functions
-dnl ---------------------------------------------------------------------------
+AC_DEFINE_UNQUOTED(PACKAGE_RELEASE, $app_cv_release)
+AC_DEFINE_UNQUOTED(PACKAGE_MAJOR_RELEASE, $app_rls_major)
+AC_DEFINE_UNQUOTED(PACKAGE_MINOR_RELEASE, $app_rls_minor)
 
-AC_CHECK_TYPES([pid_t, uint8_t, uint16_t, uint32_t, int32_t, uint64_t, int64_t])
+AC_SUBST(PACKAGE_RELEASE,$app_cv_release)
+AC_SUBST(PACKAGE_MAJOR_RELEASE,$app_rls_major)
+AC_SUBST(PACKAGE_MINOR_RELEASE,$app_rls_minor)
 
-dnl ---------------------------------------------------------------------------
-dnl Check for libintl
-dnl ---------------------------------------------------------------------------
+case "$host" in
+        *-mingw32|*-pc-msys)
+                AC_SUBST(NATIVE_SONAME,lib3270-mono.dll)
+                ;;
 
-AC_PATH_TOOL([XGETTEXT], [xgettext], [no])
-AC_PATH_TOOL([MSGCAT], [msgcat], [no])
-AC_PATH_TOOL([MSGINIT], [msginit], [no])
-AC_PATH_TOOL([MSGMERGE], [msgmerge], [no])
-AC_PATH_TOOL([MSGFMT], [msgfmt], [no])
+        s390x-*)
+                AC_SUBST(NATIVE_SONAME,lib3270-mono.so)
+                ;;
 
-AC_CHECK_HEADER(libintl.h, [
-	AC_DEFINE(HAVE_LIBINTL, 1)
-])
+        *)
+                AC_SUBST(NATIVE_SONAME,lib3270-mono.so.$app_vrs_major.$app_vrs_minor)
 
-dnl --------------------------------------------------
-dnl test for clock_gettime
-dnl --------------------------------------------------
-
-AC_CHECK_FUNCS(clock_gettime, [], [
-  AC_CHECK_LIB(rt, clock_gettime, [
-    AC_DEFINE(HAVE_CLOCK_GETTIME, 1)
-    LIBS="$LIBS -lrt"
-  ])
-])
-
-dnl --------------------------------------------------
-dnl test for in_addr_t
-dnl --------------------------------------------------
-AC_MSG_CHECKING(for in_addr_t in netinet/in.h)
-AC_EGREP_HEADER(in_addr_t, netinet/in.h,
- [ AC_DEFINE([HAVE_IN_ADDR_T], [1], [Define to 1 if in_addr_t is available.]) AC_MSG_RESULT(yes) ],
- AC_MSG_RESULT(no))
-
-dnl ---------------------------------------------------------------------------
-dnl test for reentrant time routines
-dnl ---------------------------------------------------------------------------
-
-AC_MSG_CHECKING(for localtime_r in time.h)
-AC_EGREP_HEADER(localtime_r, time.h,
- [ AC_DEFINE([HAVE_LOCALTIME_R], [1], [Define to 1 if localtime_r is available.]) AC_MSG_RESULT(yes) ],
- AC_MSG_RESULT(no))
-
-AC_MSG_CHECKING(for gmtime_r in time.h)
-AC_EGREP_HEADER(gmtime_r, time.h,
- [ AC_DEFINE([HAVE_GMTIME_R], [1], [Define to 1 if gmtime_r is available.]) AC_MSG_RESULT(yes) ],
- AC_MSG_RESULT(no))
+esac
 
 dnl ---------------------------------------------------------------------------
 dnl Check for C++ 2011 support
@@ -224,126 +195,82 @@ AS_VAR_POPDEF([CACHEVAR])dnl
 AX_CHECK_COMPILE_FLAG([-std=gnu++11], [CFLAGS="$CFLAGS -std=gnu++11"])
 
 dnl ---------------------------------------------------------------------------
-dnl Check for ELF symbol visibility support
+dnl Check for libintl
 dnl ---------------------------------------------------------------------------
-m4_define([GLIB_CHECK_COMPILE_WARNINGS],
-[m4_ifvaln([$1], [AC_LANG_CONFTEST([$1])])dnl
-rm -f conftest.$ac_objext
-glib_ac_compile_save="$ac_compile"
-ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext'
-AS_IF([_AC_EVAL_STDERR($ac_compile) &&
-         AC_TRY_COMMAND([(if test -s conftest.err; then false ; else true; fi)])],
-      [$2],
-      [echo "$as_me: failed program was:" >&AS_MESSAGE_LOG_FD
-cat conftest.$ac_ext >&AS_MESSAGE_LOG_FD
-m4_ifvaln([$3],[$3])dnl])
-ac_compile="$glib_ac_compile_save"
-rm -f conftest.$ac_objext conftest.err m4_ifval([$1], [conftest.$ac_ext])[]dnl
-])# GLIB_CHECK_COMPILE_WARNINGS
 
-AC_MSG_CHECKING(for GNUC visibility attribute)
-GLIB_CHECK_COMPILE_WARNINGS([
-void
-__attribute__ ((visibility ("hidden")))
-     f_hidden (void)
-{
-}
-void
-__attribute__ ((visibility ("internal")))
-     f_internal (void)
-{
-}
-void
-__attribute__ ((visibility ("protected")))
-     f_protected (void)
-{
-}
-void
-__attribute__ ((visibility ("default")))
-     f_default (void)
-{
-}
-int main (int argc, char **argv)
-{
-        f_hidden();
-        f_internal();
-        f_protected();
-        f_default();
-        return 0;
-}
-],g_have_gnuc_visibility=yes,g_have_gnuc_visibility=no)
-AC_MSG_RESULT($g_have_gnuc_visibility)
-if test x$g_have_gnuc_visibility = xyes; then
-  AC_DEFINE(HAVE_GNUC_VISIBILITY, 1, [supports GCC visibility attributes])
+INTL_LIBS=""
+
+AC_PATH_TOOL([XGETTEXT], [xgettext], [no])
+AC_PATH_TOOL([MSGCAT], [msgcat], [no])
+AC_PATH_TOOL([MSGINIT], [msginit], [no])
+AC_PATH_TOOL([MSGMERGE], [msgmerge], [no])
+AC_PATH_TOOL([MSGFMT], [msgfmt], [no])
+
+AC_SUBST(INTL_LIBS)
+
+dnl ---------------------------------------------------------------------------
+dnl Check for IPC3270
+dnl ---------------------------------------------------------------------------
+
+AC_ARG_WITH([static-ipc3270],
+        [AS_HELP_STRING([--with-static-ipc3270], [Uses static version of ipc3270])],
+[
+	app_cv_static_ipc3270=$withval
+],[
+	app_cv_static_ipc3270="auto"
+])
+
+if test "$app_cv_static_ipc3270" == "auto"; then
+	case "$host" in
+	*-mingw32|*-pc-msys)
+		app_cv_static_ipc3270="yes"
+		;;
+
+	*)
+		app_cv_static_ipc3270="no"
+
+	esac
+
 fi
 
-dnl ---------------------------------------------------------------------------
-dnl Check for compiler visibility flag
-dnl ---------------------------------------------------------------------------
-AC_MSG_CHECKING(whether $CC accepts -fvisibility=hidden)
-
-SAVED_CFLAGS="${CFLAGS}"
-CFLAGS="-fvisibility=hidden"
-GLIB_CHECK_COMPILE_WARNINGS([
-int main (int argc, char **argv)
-{
-        return 0;
-}
-],app_cv_fvisibility_ok=yes,app_cv_fvisibility_ok=no)
-AC_MSG_RESULT($app_cv_fvisibility_ok)
-
-CFLAGS="${SAVED_CFLAGS}"
-
-dnl AC_CACHE_VAL(app_cv_fvisibility_ok,
-dnl [ac_save_cc="$CC"
-dnl CC="$CC -fvisibility=hidden"
-dnl AC_TRY_RUN([int main() { return 0; }],
-dnl   app_cv_fvisibility_ok=yes,
-dnl   app_cv_fvisibility_ok=no,
-dnl   app_cv_fvisibility_ok=no)
-dnl CC="$ac_save_cc"])
-dnl AC_MSG_RESULT($app_cv_fvisibility_ok)
-if test $app_cv_fvisibility_ok = yes; then
-  CFLAGS="$CFLAGS -fvisibility=hidden"
+if test "$app_cv_static_ipc3270" == "yes"; then
+	LDFLAGS="-static -static-libgcc -static-libstdc++ $LDFLAGS"
+	PKG_CHECK_MODULES( [IPC3270], [ipc3270-static], AC_DEFINE(USING_STATIC_IPC3270), AC_MSG_ERROR([IPC3270 not present.]))
+else
+	PKG_CHECK_MODULES( [IPC3270], [ipc3270], AC_DEFINE(USING_SHARED_IPC3270), AC_MSG_ERROR([IPC3270 not present.]))
 fi
 
-dnl ---------------------------------------------------------------------------
-dnl Check for D-Bus
-dnl ---------------------------------------------------------------------------
-
-PKG_CHECK_MODULES( [DBUS], [dbus-1], AC_DEFINE(HAVE_DBUS), AC_MSG_NOTICE([ No DBUS support.]) )
-AC_SUBST(DBUS_LIBS)
-AC_SUBST(DBUS_CFLAGS)
+AC_SUBST(IPC3270_LIBS)
+AC_SUBST(IPC3270_CFLAGS)
 
 dnl ---------------------------------------------------------------------------
 dnl Check for pic
 dnl ---------------------------------------------------------------------------
+
 AC_ARG_ENABLE([pic],
 	[AS_HELP_STRING([--disable-pic], [disable support for PIC libraries (required to compile on 64bits)])],
 [
 	app_cv_pic="$enableval"
 ],[
 
-	case "$host" in
-		*-mingw32)
-			app_cv_pic="no"
+	case "$host_cpu" in
+	x86_64)
+		app_cv_pic="yes"
 		;;
 
- 	s390x-*)
-			app_cv_pic="yes"
+	aarch64)
+		app_cv_pic="yes"
 		;;
 
 	*)
-		if test "$host_cpu" = "x86_64"; then
-			app_cv_pic="yes"
-		else
-			app_cv_pic="no"
-		fi
+		app_cv_pic="no"
 	esac
+
 ])
 
 if test "$app_cv_pic" == "yes"; then
 	CFLAGS="$CFLAGS -fPIC"
+	CXXFLAGS="$CXXFLAGS -fPIC"
 fi
 
 dnl ---------------------------------------------------------------------------
@@ -357,27 +284,22 @@ if test "$app_cv_trace" == "yes"; then
 fi
 
 dnl ---------------------------------------------------------------------------
-dnl Output config
-dnl ---------------------------------------------------------------------------
-
-AC_SUBST(DLLFLAGS)
-AC_SUBST(BASEDIR,$ac_pwd)
-
-AC_DEFINE_UNQUOTED(ZIPNAME, $app_cv_zipname)
-AC_SUBST(ZIPNAME,$app_cv_zipname)
-
-
-dnl ---------------------------------------------------------------------------
 dnl Configure which files to generate.
 dnl ---------------------------------------------------------------------------
 
-AC_CONFIG_FILES(Makefile)
+dnl AC_CONFIG_FILES(Makefile)
 AC_CONFIG_FILES(src/native/Makefile)
-AC_CONFIG_FILES(src/pw3270-sharp/Makefile)
-AC_CONFIG_FILES(src/pw3270-sharp/pw3270-sharp.pc)
+dnl AC_CONFIG_FILES(src/pw3270-sharp/Makefile)
+dnl AC_CONFIG_FILES(src/pw3270-sharp/pw3270-sharp.pc)
 
 dnl ---------------------------------------------------------------------------
 dnl Output the generated config.status script.
 dnl ---------------------------------------------------------------------------
+AC_DEFINE_UNQUOTED(ZIPNAME, $app_cv_zipname)
+AC_SUBST(ZIPNAME,$app_cv_zipname)
+
+AC_SUBST(BASEDIR,$ac_pwd)
+
 AC_OUTPUT
+
 
