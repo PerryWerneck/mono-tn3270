@@ -27,79 +27,105 @@
  *
  */
 
+ /**
+  * @file actions.cc
+  *
+  * @brief Actions wrapper.
+  *
+  * @author Perry Werneck <perry.werneck@gmail.com>
+  *
+  */
+
  #include "private.h"
 
 /*---[ Implement ]----------------------------------------------------------------------------------*/
 
-int tn3270_enter(h3270::session *ses) {
-	try {
-		return ses->enter();
-	} catch(std::exception &e) {
-		tn3270_lasterror = e.what();
-		return -1;
+static int do_action(TN3270::Session *ses, TN3270::Action action) {
+
+	if(ses) {
+
+		try {
+
+			ses->push(action);
+			return 0;
+
+		} catch(const exception &e) {
+
+			tn3270_lasterror = e.what();
+			return -1;
+
+		}
+
 	}
+
+	return -1;
+
 }
 
-int tn3270_pfkey(h3270::session *ses, int key) {
-	try {
-		return ses->pfkey(key);
-	} catch(std::exception &e) {
-		tn3270_lasterror = e.what();
-		return -1;
-	}
+int tn3270_enter(TN3270::Session *ses) {
+	return do_action(ses,TN3270::ENTER);
 }
 
-int tn3270_pakey(h3270::session *ses, int key) {
+int tn3270_pfkey(TN3270::Session *ses, int key) {
+
 	try {
-		return ses->pakey(key);
-	} catch(std::exception &e) {
+
+		ses->pfkey(key);
+		return 0;
+
+	} catch(const exception &e) {
+
 		tn3270_lasterror = e.what();
-		return -1;
+
 	}
+	return -1;
+
 }
 
-int tn3270_action(h3270::session *ses, const char *name) {
+int tn3270_pakey(TN3270::Session *ses, int key) {
+
 	try {
-		return ses->action(name);
-	} catch(std::exception &e) {
+
+		ses->pakey(key);
+		return 0;
+
+	} catch(const exception &e) {
+
 		tn3270_lasterror = e.what();
-		return -1;
+
 	}
+	return -1;
 }
 
-int tn3270_erase(h3270::session *ses) {
+int tn3270_action(TN3270::Session *ses, const char *name) {
+
 	try {
-		return ses->erase();
-	} catch(std::exception &e) {
+
+		ses->action(name);
+		return 0;
+
+	} catch(const exception &e) {
+
 		tn3270_lasterror = e.what();
-		return -1;
+
 	}
+	return -1;
+
 }
 
-int tn3270_erase_eof(h3270::session *ses) {
-	try {
-		return ses->erase_eof();
-	} catch(std::exception &e) {
-		tn3270_lasterror = e.what();
-		return -1;
-	}
+int tn3270_erase(TN3270::Session *ses) {
+	return do_action(ses,TN3270::ERASE);
 }
 
-int tn3270_erase_eol(h3270::session *ses) {
-	try {
-		return ses->erase_eol();
-	} catch(std::exception &e) {
-		tn3270_lasterror = e.what();
-		return -1;
-	}
+int tn3270_erase_eof(TN3270::Session *ses) {
+	return do_action(ses,TN3270::ERASE_EOF);
 }
 
-int tn3270_erase_input(h3270::session *ses) {
-	try {
-		return ses->erase_input();
-	} catch(std::exception &e) {
-		tn3270_lasterror = e.what();
-		return -1;
-	}
+int tn3270_erase_eol(TN3270::Session *ses) {
+	return do_action(ses,TN3270::ERASE_EOL);
+}
+
+int tn3270_erase_input(TN3270::Session *ses) {
+	return do_action(ses,TN3270::ERASE_INPUT);
 }
 

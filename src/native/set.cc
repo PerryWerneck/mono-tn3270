@@ -31,64 +31,68 @@
 
 /*---[ Implement ]----------------------------------------------------------------------------------*/
 
-int tn3270_set_unlock_delay(h3270::session *ses, int ms) {
+int tn3270_set_unlock_delay(TN3270::Session *ses, int ms) {
 	try {
-		ses->set_unlock_delay((unsigned short) ms);
-	} catch(std::exception &e) {
+		ses->setUnlockDelay((unsigned short) ms);
+	} catch(const exception &e) {
 		tn3270_lasterror = e.what();
 		return -1;
 	}
 	return 0;
 }
 
-int tn3270_set_cursor_position(h3270::session *ses, int row, int col) {
+int tn3270_set_cursor_position(TN3270::Session *ses, int row, int col) {
 	try {
-		ses->set_cursor_position(row,col);
-	} catch(std::exception &e) {
+		ses->setCursor((unsigned short) row, (unsigned short) col);
+	} catch(const exception &e) {
 		tn3270_lasterror = e.what();
 		return -1;
 	}
 	return 0;
 }
 
-int tn3270_set_cursor_addr(h3270::session *ses, int addr) {
+int tn3270_set_cursor_addr(TN3270::Session *ses, int addr) {
 	try {
-		ses->set_cursor_addr(addr);
-	} catch(std::exception &e) {
+		ses->setCursor((unsigned short) addr);
+	} catch(const exception &e) {
 		tn3270_lasterror = e.what();
 		return -1;
 	}
 	return 0;
 }
 
-int tn3270_set_charset(h3270::session *ses, const char* str) {
-
-	if(!ses) {
-		return EINVAL;
-	}
+int tn3270_set_charset(TN3270::Session *ses, const char* str) {
 
 	try {
-		trace_to_file("%s: \"%s\" -> \"%s\"",__FUNCTION__,ses->get_display_charset().c_str(),str);
-		ses->set_display_charset(NULL, str);
-	} catch(std::exception &e) {
+
+		ses->setCharSet(str);
+
+	} catch(const exception &e) {
+
+		tn3270_lasterror = e.what();
+		return -1;
+
+	}
+
+	return 0;
+
+}
+
+int tn3270_set_url(TN3270::Session *ses, const char *url) {
+
+	try {
+
+		ses->setHostURL(url);
+
+	} catch(const exception &e) {
 		tn3270_lasterror = e.what();
 		return -1;
 	}
+
 	return 0;
 }
 
-int tn3270_set_url(h3270::session *ses, const char *url) {
-	try {
-		debug("%s(%s)",__FUNCTION__,url);
-		ses->set_url(url);
-	} catch(std::exception &e) {
-		tn3270_lasterror = e.what();
-		return -1;
-	}
-	return 0;
-}
-
-int tn3270_set_error_message(h3270::session *ses, const char *str) {
+int tn3270_set_error_message(TN3270::Session *ses, const char *str) {
 	tn3270_lasterror = str;
 	return 0;
 }

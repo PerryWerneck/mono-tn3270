@@ -31,6 +31,16 @@
  * http://tirania.org/blog/archive/2011/Dec-19.html
  *
  */
+
+/**
+ * @file private.h
+ *
+ * @brief Internal definitions for the .NET Native module.
+ *
+ * @author Perry Werneck <perry.werneck@gmail.com>
+ *
+ */
+
 #ifndef PRIVATE_H_INCLUDED
 
 	#define PRIVATE_H_INCLUDED
@@ -65,77 +75,82 @@
 		#define debug( fmt, ... )	/* */
 	#endif // DEBUG
 
+	/*
 	#ifdef ENABLE_TRACE_TO_FILE
 		DLL_PRIVATE void write_trace(const char *fmt, ...);
-		#define trace_to_file( ... )	write_trace(__VA_ARGS__)
+		#define trace( ... )	write_trace(__VA_ARGS__)
 	#else
-		#define trace_to_file( ... )	/* */
+		#define trace( ... )
 	#endif // ENABLE_TRACE_TO_FILE
+	*/
 
-	#include <pw3270/pw3270cpp.h>
+	#include <lib3270/ipc.h>
 	#include <cerrno>
 	#include <cstring>
 
-	DLL_PRIVATE std::string tn3270_lasterror;
+	using std::string;
+	using std::exception;
+
+	DLL_PRIVATE string tn3270_lasterror;
 
 	extern "C" {
 
- 		DLL_PUBLIC h3270::session * tn3270_create_session(const char *name);
+ 		DLL_PUBLIC TN3270::Session * tn3270_create_session(const char *name);
 
-		DLL_PUBLIC int tn3270_destroy_session(h3270::session *ses);
+		DLL_PUBLIC int tn3270_destroy_session(TN3270::Session *ses);
 
-		DLL_PUBLIC int tn3270_get_version(h3270::session *ses, char* str, int strlen);
-		DLL_PUBLIC int tn3270_get_revision(h3270::session *ses, char* str, int strlen);
+		DLL_PUBLIC int tn3270_get_version(TN3270::Session *ses, char* str, int strlen);
+		DLL_PUBLIC int tn3270_get_revision(TN3270::Session *ses, char* str, int strlen);
 
-		DLL_PUBLIC int tn3270_connect(h3270::session *ses, const char *host, time_t wait);
-		DLL_PUBLIC int tn3270_disconnect(h3270::session *ses);
-		DLL_PUBLIC int tn3270_is_connected(h3270::session *ses);
-		DLL_PUBLIC int tn3270_is_ready(h3270::session *ses);
+		DLL_PUBLIC int tn3270_connect(TN3270::Session *ses, const char *host, time_t wait);
+		DLL_PUBLIC int tn3270_disconnect(TN3270::Session *ses);
+		DLL_PUBLIC int tn3270_is_connected(TN3270::Session *ses);
+		DLL_PUBLIC int tn3270_is_ready(TN3270::Session *ses);
 
-		DLL_PUBLIC int tn3270_set_url(h3270::session *ses, const char *url);
-		DLL_PUBLIC int tn3270_get_url(h3270::session *ses, char* str, int strlen);
+		DLL_PUBLIC int tn3270_set_url(TN3270::Session *ses, const char *url);
+		DLL_PUBLIC int tn3270_get_url(TN3270::Session *ses, char* str, int strlen);
 
-		DLL_PUBLIC int tn3270_set_error_message(h3270::session *ses, const char *url);
-		DLL_PUBLIC int tn3270_get_error_message(h3270::session *ses, char* str, int strlen);
+		DLL_PUBLIC int tn3270_set_error_message(TN3270::Session *ses, const char *url);
+		DLL_PUBLIC int tn3270_get_error_message(TN3270::Session *ses, char* str, int strlen);
 
-		DLL_PUBLIC int tn3270_set_cursor_addr(h3270::session *ses, int addr);
- 		DLL_PUBLIC int tn3270_get_cursor_addr(h3270::session *ses);
+		DLL_PUBLIC int tn3270_set_cursor_addr(TN3270::Session *ses, int addr);
+ 		DLL_PUBLIC int tn3270_get_cursor_addr(TN3270::Session *ses);
 
-		DLL_PUBLIC int tn3270_action(h3270::session *ses, const char *name);
+		DLL_PUBLIC int tn3270_action(TN3270::Session *ses, const char *name);
 
-		DLL_PUBLIC int tn3270_erase(h3270::session *ses);
-		DLL_PUBLIC int tn3270_erase_eof(h3270::session *ses);
-		DLL_PUBLIC int tn3270_erase_eol(h3270::session *ses);
-		DLL_PUBLIC int tn3270_erase_input(h3270::session *ses);
+		DLL_PUBLIC int tn3270_erase(TN3270::Session *ses);
+		DLL_PUBLIC int tn3270_erase_eof(TN3270::Session *ses);
+		DLL_PUBLIC int tn3270_erase_eol(TN3270::Session *ses);
+		DLL_PUBLIC int tn3270_erase_input(TN3270::Session *ses);
 
-		DLL_PUBLIC int tn3270_wait_for_ready(h3270::session *ses, int seconds);
-		DLL_PUBLIC int tn3270_wait(h3270::session *ses, int seconds);
+		DLL_PUBLIC int tn3270_wait_for_ready(TN3270::Session *ses, int seconds);
+		DLL_PUBLIC int tn3270_wait(TN3270::Session *ses, int seconds);
 
-		DLL_PUBLIC int tn3270_get_cstate(h3270::session *ses);
-		DLL_PUBLIC int tn3270_get_program_message(h3270::session *ses);
-		DLL_PUBLIC int tn3270_get_secure(h3270::session *ses);
+		DLL_PUBLIC int tn3270_get_cstate(TN3270::Session *ses);
+		DLL_PUBLIC int tn3270_get_program_message(TN3270::Session *ses);
+		DLL_PUBLIC int tn3270_get_secure(TN3270::Session *ses);
 
-		DLL_PUBLIC int tn3270_get_contents(h3270::session *ses, char* str, int strlen);
-		DLL_PUBLIC int tn3270_get_string(h3270::session *ses, int addr, char* str, int strlen);
-		DLL_PUBLIC int tn3270_get_string_at(h3270::session *ses, int row, int col, char* str, int strlen);
+		DLL_PUBLIC int tn3270_get_contents(TN3270::Session *ses, char* str, int strlen);
+		DLL_PUBLIC int tn3270_get_string(TN3270::Session *ses, int addr, char* str, int strlen);
+		DLL_PUBLIC int tn3270_get_string_at(TN3270::Session *ses, int row, int col, char* str, int strlen);
 
-		DLL_PUBLIC int tn3270_set_string_at(h3270::session *ses, int row, int col, const char* str);
+		DLL_PUBLIC int tn3270_set_string_at(TN3270::Session *ses, int row, int col, const char* str);
 
-		DLL_PUBLIC int tn3270_wait_for_string_at(h3270::session *ses, int row, int col, const char *key, int timeout);
-		DLL_PUBLIC int tn3270_cmp_string_at(h3270::session *ses, int row, int col, const char* str);
+		DLL_PUBLIC int tn3270_wait_for_string_at(TN3270::Session *ses, int row, int col, const char *key, int timeout);
+		DLL_PUBLIC int tn3270_cmp_string_at(TN3270::Session *ses, int row, int col, const char* str);
 
-		DLL_PUBLIC int tn3270_set_unlock_delay(h3270::session *ses, int ms);
-		DLL_PUBLIC int tn3270_set_cursor_position(h3270::session *ses, int row, int col);
+		DLL_PUBLIC int tn3270_set_unlock_delay(TN3270::Session *ses, int ms);
+		DLL_PUBLIC int tn3270_set_cursor_position(TN3270::Session *ses, int row, int col);
 
-		DLL_PUBLIC int tn3270_enter(h3270::session *ses);
-		DLL_PUBLIC int tn3270_pfkey(h3270::session *ses, int key);
-		DLL_PUBLIC int tn3270_pakey(h3270::session *ses, int key);
+		DLL_PUBLIC int tn3270_enter(TN3270::Session *ses);
+		DLL_PUBLIC int tn3270_pfkey(TN3270::Session *ses, int key);
+		DLL_PUBLIC int tn3270_pakey(TN3270::Session *ses, int key);
 
-		DLL_PUBLIC int tn3270_get_width(h3270::session *ses);
-		DLL_PUBLIC int tn3270_get_height(h3270::session *ses);
-		DLL_PUBLIC int tn3270_get_length(h3270::session *ses);
+		DLL_PUBLIC int tn3270_get_width(TN3270::Session *ses);
+		DLL_PUBLIC int tn3270_get_height(TN3270::Session *ses);
+		DLL_PUBLIC int tn3270_get_length(TN3270::Session *ses);
 
-		DLL_PUBLIC int tn3270_set_charset(h3270::session *ses, const char* str);
+		DLL_PUBLIC int tn3270_set_charset(TN3270::Session *ses, const char* str);
 
 	}
 

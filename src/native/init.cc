@@ -41,16 +41,17 @@
  * @return Identificador da sessão criada.
  *
  */
- h3270::session * tn3270_create_session(const char *name) {
-
- 	trace_to_file("%s(%s)",__FUNCTION__,name ? name : "");
+ TN3270::Session * tn3270_create_session(const char *name) {
 
  	try {
-		return h3270::session::create(name);
- 	} catch(std::exception &e) {
+
+		return TN3270::Session::create(name);
+
+ 	} catch(const exception &e) {
+
  		tn3270_lasterror = e.what();
-		trace_to_file("%s(%s)",__FUNCTION__,e.what());
  	}
+
  	return nullptr;
  }
 
@@ -58,36 +59,18 @@
   * @brief Destrói uma sessão.
   *
   */
- int tn3270_destroy_session(h3270::session *ses) {
-
- 	trace_to_file("%s",__FUNCTION__);
+ int tn3270_destroy_session(TN3270::Session *ses) {
 
  	try {
+
 		delete ses;
- 	} catch(std::exception &e) {
+
+ 	} catch(const exception &e) {
+
  		tn3270_lasterror = e.what();
  		return -1;
+
  	}
 	return 0;
  }
 
-#ifdef ENABLE_TRACE_TO_FILE
- void write_trace(const char *fmt, ...) {
-
-	FILE *trace = fopen(PACKAGE_NAME ".trace","a");
-	if(trace) {
-		va_list arg_ptr;
-		va_start(arg_ptr, fmt);
-		vfprintf(trace, fmt, arg_ptr);
-		fprintf(trace,"\n");
-		va_end(arg_ptr);
-		fclose(trace);
-	}
-#ifdef DEBUG
-	else {
-		perror(PACKAGE_NAME ".trace");
-	}
-#endif // DEBUG
-
- }
-#endif // ENABLE_TRACE_TO_FILE

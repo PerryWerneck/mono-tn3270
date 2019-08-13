@@ -31,7 +31,7 @@
 
 /*---[ Implement ]----------------------------------------------------------------------------------*/
 
-int tn3270_get_contents(h3270::session *ses, char* str, int sz) {
+int tn3270_get_contents(TN3270::Session *ses, char* str, int sz) {
 
 	if(!ses) {
 		return -1;
@@ -39,7 +39,7 @@ int tn3270_get_contents(h3270::session *ses, char* str, int sz) {
 
 	try {
 
-		std::string contents = ses->get_contents();
+		std::string contents = ses->toString(0,sz);
 
 		memset(str,0,sz);
 		strncpy(str,contents.c_str(),sz);
@@ -48,7 +48,7 @@ int tn3270_get_contents(h3270::session *ses, char* str, int sz) {
 			return contents.size();
 		}
 
-	} catch(std::exception &e) {
+	} catch(const exception &e) {
 		tn3270_lasterror = e.what();
 		return -1;
 	}
@@ -57,7 +57,7 @@ int tn3270_get_contents(h3270::session *ses, char* str, int sz) {
 
 }
 
-int tn3270_get_string(h3270::session *ses, int addr, char* str, int strlen) {
+int tn3270_get_string(TN3270::Session *ses, int addr, char* str, int strlen) {
 
 	if(!ses) {
 		return -1;
@@ -65,8 +65,8 @@ int tn3270_get_string(h3270::session *ses, int addr, char* str, int strlen) {
 
 	try {
 		memset(str,0,strlen);
-		strncpy(str,ses->get_string(addr,strlen).c_str(),strlen);
-	} catch(std::exception &e) {
+		strncpy(str,ses->toString(addr,strlen).c_str(),strlen);
+	} catch(const exception &e) {
 		tn3270_lasterror = e.what();
 		return -1;
 	}
@@ -74,67 +74,76 @@ int tn3270_get_string(h3270::session *ses, int addr, char* str, int strlen) {
 	return 0;
 }
 
-int tn3270_get_string_at(h3270::session *ses, int row, int col, char* str, int sz) {
+int tn3270_get_string_at(TN3270::Session *ses, int row, int col, char* str, int sz) {
 
 	if(!ses) {
 		return -1;
 	}
 
 	try {
+
 		memset(str,0,sz+1);
-		strncpy(str,ses->get_string_at(row,col,sz).c_str(),sz);
-		trace_to_file("%s(%d,%d,%d):\n%s\n",__FUNCTION__,row,col,sz,str);
-	} catch(std::exception &e) {
+		strncpy(str,ses->toString(row,col,(size_t) sz).c_str(),sz);
+
+	} catch(const exception &e) {
 		tn3270_lasterror = e.what();
 		return -1;
 	}
 	return (int) strlen(str);
 }
 
-int tn3270_set_string_at(h3270::session *ses, int row, int col, const char* str) {
+int tn3270_set_string_at(TN3270::Session *ses, int row, int col, const char* str) {
 
 	if(!ses) {
 		return -1;
 	}
 
 	try {
-		trace_to_file("%s(%d,%d):\n%s\n",__FUNCTION__,row,col,str);
-		debug("%s(%d,%d,\"%s\")",__FUNCTION__,row,col,str);
-		ses->set_string_at(row,col,str);
-	} catch(std::exception &e) {
+
+		ses->push(row,col,str);
+
+	} catch(const exception &e) {
 		tn3270_lasterror = e.what();
 		return -1;
 	}
 	return 0;
 }
 
-int tn3270_wait_for_string_at(h3270::session *ses, int row, int col, const char *key, int timeout) {
+int tn3270_wait_for_string_at(TN3270::Session *ses, int row, int col, const char *key, int timeout) {
 
+	/*
 	if(ses) {
 
 		try {
-			return ses->wait_for_string_at(row,col,key,timeout);
-		} catch(std::exception &e) {
+
+			return ses->wait(row,col,key,timeout);
+
+		} catch(const exception &e) {
+
 			tn3270_lasterror = e.what();
+
 		}
 
 	}
+	*/
 
 	return -1;
 
 }
 
-int tn3270_cmp_string_at(h3270::session *ses, int row, int col, const char* str) {
+int tn3270_cmp_string_at(TN3270::Session *ses, int row, int col, const char* str) {
 
+	/*
 	if(ses) {
 
 		try {
 			return ses->cmp_string_at(row,col,str);
-		} catch(std::exception &e) {
+		} catch(const exception &e) {
 			tn3270_lasterror = e.what();
 		}
 
 	}
+	*/
 
 	return -1;
 }
