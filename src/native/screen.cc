@@ -65,7 +65,7 @@ int tn3270_get_string(TN3270::Session *ses, int addr, char* str, int strlen) {
 
 	try {
 		memset(str,0,strlen);
-		strncpy(str,ses->toString(addr,strlen).c_str(),strlen);
+		strncpy(str,ses->toString(addr,(size_t) strlen).c_str(),strlen);
 	} catch(const exception &e) {
 		tn3270_lasterror = e.what();
 		return -1;
@@ -74,7 +74,7 @@ int tn3270_get_string(TN3270::Session *ses, int addr, char* str, int strlen) {
 	return 0;
 }
 
-int tn3270_get_string_at(TN3270::Session *ses, int row, int col, char* str, int sz) {
+int tn3270_get_string_at(TN3270::Session *ses, int row, int col, char* str, int length) {
 
 	if(!ses) {
 		return -1;
@@ -82,8 +82,8 @@ int tn3270_get_string_at(TN3270::Session *ses, int row, int col, char* str, int 
 
 	try {
 
-		memset(str,0,sz+1);
-		strncpy(str,ses->toString(row,col,(size_t) sz).c_str(),sz);
+		memset(str,0,length);
+		strncpy(str,ses->toString(row,col,(size_t) length).c_str(),length);
 
 	} catch(const exception &e) {
 		tn3270_lasterror = e.what();
@@ -111,7 +111,6 @@ int tn3270_set_string_at(TN3270::Session *ses, int row, int col, const char* str
 
 int tn3270_wait_for_string_at(TN3270::Session *ses, int row, int col, const char *key, int timeout) {
 
-	/*
 	if(ses) {
 
 		try {
@@ -125,7 +124,6 @@ int tn3270_wait_for_string_at(TN3270::Session *ses, int row, int col, const char
 		}
 
 	}
-	*/
 
 	return -1;
 
@@ -133,17 +131,15 @@ int tn3270_wait_for_string_at(TN3270::Session *ses, int row, int col, const char
 
 int tn3270_cmp_string_at(TN3270::Session *ses, int row, int col, const char* str) {
 
-	/*
 	if(ses) {
 
 		try {
-			return ses->cmp_string_at(row,col,str);
+			return ses->compare(row,col,str,strlen(str));
 		} catch(const exception &e) {
 			tn3270_lasterror = e.what();
 		}
 
 	}
-	*/
 
 	return -1;
 }

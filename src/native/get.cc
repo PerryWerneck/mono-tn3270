@@ -36,7 +36,7 @@
   * @brief Obtém a versão da biblioteca.
   *
   */
- int tn3270_get_version(TN3270::Session *ses, char* str, int strlen) {
+ int tn3270_get_version(TN3270::Session *ses, char * str, int strlen) {
 
  	if(!ses) {
 		return -1;
@@ -116,19 +116,19 @@
 
  int tn3270_get_secure(TN3270::Session *ses) {
 
-	/*
  	if(!ses) {
 		return -1;
  	}
 
 	try {
 
-		return (int) ses->get_secure();
+		return (int) ses->getSSLState();
 
  	} catch(const exception &e) {
+
  		tn3270_lasterror = e.what();
+
  	}
- 	*/
 
 	return -1;
 
