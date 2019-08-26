@@ -16,17 +16,16 @@
 # Please submit bugfixes or comments via http://bugs.opensuse.org/
 #
 
-%define vrslib %(pkg-config --modversion lib3270)
-%define libname pw3270-sharp
+%define libname tn3270-sharp
 
 Summary:	Mono binding for pw3270/lib3270
 Name:		lib3270-mono-bindings
-Version:	5.1
+Version:	5.2
 Release:	0
-License:	GPL-2.0
+License:	LGPL-3.0
 Source:		%{name}-%{version}.tar.xz
 URL:		https://portal.softwarepublico.gov.br/social/pw3270/
-Group: 		Development/Languages/Mono
+Group: 		Development/Languages/Other
 
 BuildRoot:	/var/tmp/%{name}-%{version}
 
@@ -39,11 +38,7 @@ BuildRequires:  gcc-c++
 BuildRequires:  m4
 BuildRequires:  pkgconfig
 BuildRequires:  fdupes
-BuildRequires:	pkgconfig(pw3270)
-BuildRequires:	pkgconfig(lib3270)
-BuildRequires:	gettext-devel
-
-Requires:	lib3270 = %{vrslib}
+BuildRequires:  pkgconfig(ipc3270)
 
 %description
 
@@ -80,17 +75,21 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(-,root,root)
 
-%doc README.md
+%doc README.md LICENCA LICENSE AUTHORS
 
-%{_libdir}/lib3270-mono.*
 /usr/lib/mono/gac/%{libname}
+
+%dir /usr/lib/mono/%{libname}-5.2
+/usr/lib/mono/%{libname}-5.2/tn3270-sharp.dll
+
+%{_libdir}/lib3270-mono.so
+%{_libdir}/lib3270-mono.so.5
+%{_libdir}/lib3270-mono.so.5.2
+%{_libdir}/pkgconfig/tn3270-sharp.pc
 
 %dir /usr/share/gapi-2.0
 %dir /usr/share/gapi-2.0/%{libname}
-/usr/share/gapi-2.0/%{libname}/%{libname}.xml
-
-%{_libdir}/pkgconfig/%{libname}.pc
-/usr/lib/mono/%{name}-*
+/usr/share/gapi-2.0/%{libname}/tn3270-sharp.xml
 
 %post
 /sbin/ldconfig
