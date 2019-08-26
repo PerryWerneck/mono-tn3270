@@ -18,7 +18,7 @@
  * programa; se não, escreva para a Free Software Foundation, Inc., 51 Franklin
  * St, Fifth Floor, Boston, MA  02110-1301  USA
  *
- * Este programa está nomeado como set.cc e possui - linhas de código.
+ * Este programa está nomeado como init.cc e possui - linhas de código.
  *
  * Contatos:
  *
@@ -27,72 +27,60 @@
  *
  */
 
- #include "private.h"
+ #include <native.h>
 
 /*---[ Implement ]----------------------------------------------------------------------------------*/
 
-int tn3270_set_unlock_delay(TN3270::Session *ses, int ms) {
-	try {
-		ses->setUnlockDelay((unsigned short) ms);
-	} catch(const exception &e) {
-		tn3270_lasterror = e.what();
-		return -1;
-	}
-	return 0;
-}
+ std::string tn3270_lasterror = "";
 
-int tn3270_set_cursor_position(TN3270::Session *ses, int row, int col) {
-	try {
-		ses->setCursor((unsigned short) row, (unsigned short) col);
-	} catch(const exception &e) {
-		tn3270_lasterror = e.what();
-		return -1;
-	}
-	return 0;
-}
+/**
+ * @brief Cria uma sessão tn3270.
+ *
+ * @param name	Nome da janela ou "" para criar uma sessão oculta.
+ *
+ * @return Identificador da sessão criada.
+ *
+ */
+ TN3270::Host * tn3270_create_session(const char *name) {
 
-int tn3270_set_cursor_addr(TN3270::Session *ses, int addr) {
-	try {
-		ses->setCursor((unsigned short) addr);
-	} catch(const exception &e) {
-		tn3270_lasterror = e.what();
-		return -1;
-	}
-	return 0;
-}
+ 	try {
 
-int tn3270_set_charset(TN3270::Session *ses, const char* str) {
+		return new TN3270::Host(name);
 
-	try {
+ 	} catch(const exception &e) {
 
-		ses->setCharSet(str);
+ 		tn3270_lasterror = e.what();
 
-	} catch(const exception &e) {
+ 	} catch(...) {
 
-		tn3270_lasterror = e.what();
-		return -1;
+ 		tn3270_lasterror = "Unexpected error";
 
-	}
+ 	}
 
-	return 0;
+ 	return nullptr;
+ }
 
-}
+ /**
+  * @brief Destrói uma sessão.
+  *
+  */
+ int tn3270_destroy_session(TN3270::Host *ses) {
 
-int tn3270_set_url(TN3270::Session *ses, const char *url) {
+ 	try {
 
-	try {
+		delete ses;
+ 		return 0;
 
-		ses->setHostURL(url);
+ 	} catch(const exception &e) {
 
-	} catch(const exception &e) {
-		tn3270_lasterror = e.what();
-		return -1;
-	}
+ 		tn3270_lasterror = e.what();
 
-	return 0;
-}
+ 	} catch(...) {
 
-int tn3270_set_error_message(TN3270::Session *ses, const char *str) {
-	tn3270_lasterror = str;
-	return 0;
-}
+ 		tn3270_lasterror = "Unexpected error";
+
+ 	}
+
+	return -1;
+ }
+

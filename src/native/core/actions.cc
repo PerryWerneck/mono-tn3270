@@ -36,96 +36,89 @@
   *
   */
 
- #include "private.h"
+ #include <native.h>
 
 /*---[ Implement ]----------------------------------------------------------------------------------*/
 
-static int do_action(TN3270::Session *ses, TN3270::Action action) {
+ static int action(TN3270::Host *ses, std::function<void(TN3270::Host &ses)> worker) noexcept {
 
-	if(ses) {
+ 	try {
 
-		try {
-
-			ses->push(action);
-			return 0;
-
-		} catch(const exception &e) {
-
-			tn3270_lasterror = e.what();
-			return -1;
-
+		if(!ses->isConnected()) {
+			tn3270_lasterror = "Not connected";
 		}
 
-	}
-
-	return -1;
-
-}
-
-int tn3270_enter(TN3270::Session *ses) {
-	return do_action(ses,TN3270::ENTER);
-}
-
-int tn3270_pfkey(TN3270::Session *ses, int key) {
-
-	try {
-
-		ses->pfkey(key);
+		worker(*ses);
 		return 0;
 
-	} catch(const exception &e) {
+	} catch(const std::system_error &e) {
 
-		tn3270_lasterror = e.what();
+		tn3270_set_error(ses,e);
 
-	}
-	return -1;
+	} catch(const std::exception &e) {
 
-}
+		tn3270_set_error(ses,e);
 
-int tn3270_pakey(TN3270::Session *ses, int key) {
+	} catch(...) {
 
-	try {
-
-		ses->pakey(key);
-		return 0;
-
-	} catch(const exception &e) {
-
-		tn3270_lasterror = e.what();
+		tn3270_set_error(ses,"Unexpected error");
 
 	}
-	return -1;
-}
 
-int tn3270_action(TN3270::Session *ses, const char *name) {
-
-	try {
-
-		ses->action(name);
-		return 0;
-
-	} catch(const exception &e) {
-
-		tn3270_lasterror = e.what();
-
-	}
 	return -1;
 
+ }
+
+
+static int action(TN3270::Host *ses, TN3270::Action id) noexcept {
+
+	return action(ses, [id](TN3270::Host &ses) {
+		ses.push(id);
+	});
+
 }
 
-int tn3270_erase(TN3270::Session *ses) {
-	return do_action(ses,TN3270::ERASE);
+int tn3270_pfkey(TN3270::Host *ses, int key) {
+
+	return action(ses, [key](TN3270::Host &ses) {
+		ses.pfkey(key);
+	});
+
 }
 
-int tn3270_erase_eof(TN3270::Session *ses) {
-	return do_action(ses,TN3270::ERASE_EOF);
+int tn3270_pakey(TN3270::Host *ses, int key) {
+
+	return action(ses, [key](TN3270::Host &ses) {
+		ses.pakey(key);
+	});
+
 }
 
-int tn3270_erase_eol(TN3270::Session *ses) {
-	return do_action(ses,TN3270::ERASE_EOL);
+int tn3270_action(TN3270::Host *ses, const char *name) {
+
+	return action(ses, [name](TN3270::Host &ses) {
+		ses.action(name);
+	});
+
 }
 
-int tn3270_erase_input(TN3270::Session *ses) {
-	return do_action(ses,TN3270::ERASE_INPUT);
+int tn3270_enter(TN3270::Host *ses) {
+	return action(ses,TN3270::ENTER);
+}
+
+int tn3270_erase(TN3270::Host *ses) {
+	return action(ses,TN3270::ERASE);
+}
+
+int tn3270_erase_eof(TN3270::Host *ses) {
+	return action(ses,TN3270::ERASE_EOF);
+}
+
+int tn3270_erase_eol(TN3270::Host *ses) {
+	return action(ses,TN3270::ERASE_EOL);
+}
+
+int tn3270_erase_input(TN3270::Host *ses) {
+	return action(ses,TN3270::ERASE_INPUT);
 }
 

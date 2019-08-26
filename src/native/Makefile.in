@@ -27,15 +27,15 @@
 #---[ Library configuration ]------------------------------------------------------------
 
 LIBNAME=lib3270-mono
-SONAME=@SONAME@
+SONAME=@NATIVE_SONAME@
 
 SOURCES= \
-	$(wildcard *.cc) \
+	$(wildcard core/*.cc) \
 	$(wildcard @OSNAME@/*.rc) \
 	$(wildcard @OSNAME@/*.cc)
 
 TEST_SOURCES= \
-	$(wildcard src/testprogram/*.cc)
+	$(wildcard testprogram/*.cc)
 
 #---[ Tools ]----------------------------------------------------------------------------
 
@@ -83,7 +83,6 @@ BINRLS=$(BINDIR)/Release
 
 DEPENDS= \
 	Makefile \
-	*.h \
 	$(BASEDIR)/src/include/*.h
 
 

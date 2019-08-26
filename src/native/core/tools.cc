@@ -18,7 +18,7 @@
  * programa; se não, escreva para a Free Software Foundation, Inc., 51 Franklin
  * St, Fifth Floor, Boston, MA  02110-1301  USA
  *
- * Este programa está nomeado como init.cc e possui - linhas de código.
+ * Este programa está nomeado como actions.cc e possui - linhas de código.
  *
  * Contatos:
  *
@@ -27,50 +27,95 @@
  *
  */
 
- #include "private.h"
+ /**
+  * @file
+  *
+  * @brief
+  *
+  * @author
+  *
+  */
+
+ #include <native.h>
 
 /*---[ Implement ]----------------------------------------------------------------------------------*/
 
- std::string tn3270_lasterror = "";
+int call(TN3270::Host *ses, std::function<int(TN3270::Host &ses)> worker) noexcept {
 
-/**
- * @brief Cria uma sessão tn3270.
- *
- * @param name	Nome da janela ou "" para criar uma sessão oculta.
- *
- * @return Identificador da sessão criada.
- *
- */
- TN3270::Session * tn3270_create_session(const char *name) {
+  	if(!ses) {
+
+ 		return tn3270_set_error(ses, "Invalid session handle");
+
+ 	}
 
  	try {
 
-		return TN3270::Session::create(name);
+		return worker(*ses);
 
  	} catch(const exception &e) {
 
- 		tn3270_lasterror = e.what();
+ 		tn3270_set_error(ses, e);
+
+ 	} catch(...) {
+
+ 		tn3270_set_error(ses, "Unexpected error");
+
  	}
 
- 	return nullptr;
- }
+	return -1;
 
- /**
-  * @brief Destrói uma sessão.
-  *
-  */
- int tn3270_destroy_session(TN3270::Session *ses) {
+}
+
+int call(TN3270::Host *ses, char* str, int length, std::function<string(TN3270::Host &ses, int length)> worker) {
+
+	if(!(str && length)) {
+
+ 		return tn3270_set_error(ses, "The output buffer is invalid");
+
+	}
+
+  	if(!ses) {
+
+ 		return tn3270_set_error(ses, "Invalid session handle");
+
+ 	}
 
  	try {
 
-		delete ses;
+		std::string contents = worker(*ses, length);
+
+		memset(str,0,length);
+		strncpy(str,contents.c_str(),length);
+		if(contents.size() < ((size_t) length)) {
+			str[contents.size()] = 0;
+			return contents.size();
+		}
+
+		return length;
 
  	} catch(const exception &e) {
 
- 		tn3270_lasterror = e.what();
- 		return -1;
+ 		tn3270_set_error(ses, e);
+
+ 	} catch(...) {
+
+ 		tn3270_set_error(ses, "Unexpected error");
 
  	}
-	return 0;
- }
+
+	return -1;
+
+
+}
+
+int tn3270_set_error(TN3270::Host *ses, const char *str) noexcept {
+	tn3270_lasterror = str;
+	return -1;
+}
+
+int tn3270_set_error(TN3270::Host *ses, const std::exception &e) noexcept {
+	tn3270_lasterror = e.what();
+	return -1;
+}
+
 

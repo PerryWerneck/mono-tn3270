@@ -32,13 +32,15 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="actions.cc" />
-		<Unit filename="get.cc" />
-		<Unit filename="init.cc" />
-		<Unit filename="network.cc" />
-		<Unit filename="private.h" />
-		<Unit filename="screen.cc" />
-		<Unit filename="set.cc" />
+		<Unit filename="../include/native.h" />
+		<Unit filename="core/actions.cc" />
+		<Unit filename="core/get.cc" />
+		<Unit filename="core/init.cc" />
+		<Unit filename="core/network.cc" />
+		<Unit filename="core/screen.cc" />
+		<Unit filename="core/set.cc" />
+		<Unit filename="core/tools.cc" />
+		<Unit filename="testprogram/testprogram.cc" />
 		<Unit filename="windows/resources.rc.in" />
 		<Extensions>
 			<code_completion />
