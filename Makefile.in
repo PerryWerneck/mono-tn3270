@@ -78,6 +78,37 @@ $(BINDBG)/%.exe: \
 
 	@$(VBNC) -reference:$(BINDBG)/$(LIBNAME) -debug -out:$@ $<
 
+install-%: \
+	src/%/Makefile \
+	all
+
+	@make -C `dirname $<` DESTDIR=$(DESTDIR) install
+
+#---[ Release Targets ]------------------------------------------------------------------
+
+all: \
+	$(BINRLS)/$(LIBNAME)
+
+Release: \
+	$(BINRLS)/$(LIBNAME)
+
+
+$(BINRLS)/$(GLUELIB): \
+	src/native/* \
+	src/native/core/*
+
+	@make -C src/native $@
+
+$(BINRLS)/$(LIBNAME): \
+	$(BINRLS)/$(GLUELIB) \
+	src/core/*
+
+	@make -C src/core $@
+
+install: \
+	install-native \
+	install-core
+
 #---[ Debug Targets ]--------------------------------------------------------------------
 
 Debug: \
