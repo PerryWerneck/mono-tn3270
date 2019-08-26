@@ -127,6 +127,10 @@ dnl ---------------------------------------------------------------------------
 AC_PATH_TOOL([AR], [ar], [ar])
 AC_PATH_TOOL([WINDRES], [windres], [no])
 AC_PATH_TOOL([VALGRIND], [valgrind], [no])
+AC_PATH_TOOL([MCS], [mcs], [no])
+AC_PATH_TOOL([GACUTIL], [gacutil], [no])
+AC_PATH_TOOL([SN], [sn], [no])
+AC_PATH_TOOL([VBNC], [vbnc], [no])
 
 PKG_CHECK_EXISTS
 
@@ -287,10 +291,10 @@ dnl ---------------------------------------------------------------------------
 dnl Configure which files to generate.
 dnl ---------------------------------------------------------------------------
 
-dnl AC_CONFIG_FILES(Makefile)
+AC_CONFIG_FILES(Makefile)
 AC_CONFIG_FILES(src/native/Makefile)
-dnl AC_CONFIG_FILES(src/pw3270-sharp/Makefile)
-dnl AC_CONFIG_FILES(src/pw3270-sharp/pw3270-sharp.pc)
+AC_CONFIG_FILES(src/core/Makefile)
+AC_CONFIG_FILES(src/core/tn3270-sharp.pc)
 
 dnl ---------------------------------------------------------------------------
 dnl Output the generated config.status script.

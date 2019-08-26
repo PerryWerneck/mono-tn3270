@@ -24,8 +24,8 @@
 # erico.mendonca@gmail.com	(Erico Mascarenhas de Mendonça)
 #
 
-GLUELIB=lib3270-mono@DLLEXT@
-LIBNAME=pw3270-sharp.dll
+GLUELIB=@NATIVE_SONAME@
+LIBNAME=tn3270-sharp.dll
 TESTPROGRAM?=sample
 
 #---[ Configuration values ]-------------------------------------------------------------
@@ -67,181 +67,42 @@ RPMBUILD=@RPMBUILD@
 #---[ Rules ]----------------------------------------------------------------------------
 
 $(BINDBG)/%.exe: \
-	testprograms/%.cs \
+	src/testprograms/%.cs \
 	$(BINDBG)/$(LIBNAME)
 	
 	@$(MCS) -reference:$(BINDBG)/$(LIBNAME) -debug -out:$@ $<
 
 $(BINDBG)/%.exe: \
-	testprograms/%.vb \
+	src/testprograms/%.vb \
 	$(BINDBG)/$(LIBNAME)
 
 	@$(VBNC) -reference:$(BINDBG)/$(LIBNAME) -debug -out:$@ $<
 
-$(BINRLS)/%.exe: \
-	testprograms/%.cs
-
-	@$(MCS) -reference:$(BINRLS)/$(LIBNAME) -out:$@ $<
-
-%.tar.bz2: \
-	%.tar
-
-	@echo $< ...
-	@bzip2 --compress -9 --stdout $< > $@
-	@chmod 0644 $@
-
-%.tar.gz: \
-	%.tar
-
-	@echo $< ...
-	@gzip -9 --stdout $< > $@
-	@chmod 0644 $@
-
-install-%: \
-	src/%/Makefile \
-	all
-
-	@make -C `dirname $<` DESTDIR=$(DESTDIR) install
-
-#---[ Targets ]--------------------------------------------------------------------------
-
-all: \
-	$(BINRLS)/$(GLUELIB) \
-	$(BINRLS)/$(LIBNAME)
-
-install: \
-	install-native \
-	install-pw3270-sharp
-
-
-Release: \
-	$(BINRLS)/$(GLUELIB) \
-	$(BINRLS)/$(LIBNAME)
-
-zip: \
-	@ZIPNAME@-@PACKAGE_VERSION@.@host@.zip
-
-@ZIPNAME@-@PACKAGE_VERSION@.@host@.zip: \
-	$(BINRLS)/$(GLUELIB) \
-	$(BINRLS)/$(LIBNAME) \
-	$(BINRLS)/sample.exe
-
-	@zip -9 -j $@ \
-		$(BINRLS)/$(GLUELIB) \
-		$(BINRLS)/$(LIBNAME) \
-		$(BINRLS)/*.xml \
-		testprograms/sample.cs \
-		testprograms/vbsample.vb \
-		src/pw3270-sharp/pw3270-sharp.cs \
-		$(BINRLS)/sample.exe
-
-rpm: \
-	$(PACKAGE_TARNAME)-$(PACKAGE_VERSION).tar.bz2
-
-ifneq ($(RPMBUILD),no)
-	@$(MKDIR) $(BASEDIR)/rpm
-	@$(MKDIR) $(BASEDIR)/rpm/SPECS
-	@$(MKDIR) $(BASEDIR)/rpm/SOURCES
-	@$(MKDIR) $(BASEDIR)/rpm/SRPMS
-	@$(MKDIR) $(BASEDIR)/rpm/RPMS
-	@$(MKDIR) $(BASEDIR)/rpm/BUILD
-	@$(MKDIR) $(BASEDIR)/rpm/BUILDROOT
-	@umask 002 ; $(RPMBUILD) \
-		--define="_topdir $(BASEDIR)/rpm" \
-		--define="_packager $(USER)@$(HOSTNAME)" \
-		--clean \
-		-ta $(PACKAGE_TARNAME)-$(PACKAGE_VERSION).tar.bz2
-endif
-
-bz2: \
-	$(PACKAGE_TARNAME)-$(PACKAGE_VERSION).tar.bz2
-
-$(PACKAGE_TARNAME)-$(PACKAGE_VERSION).tar: \
-	$(SRCDIR)
-
-	@$(AMTAR) \
-		--verbose \
-		--format=ustar \
-		--create \
-		--exclude-vcs \
-		--directory $(BASEDIR)/.src \
-		--owner=root \
-		--group=root \
-		--file=$@ \
-		$(PACKAGE_TARNAME)-@PACKAGE_VERSION@
-
-
-$(SRCDIR): \
-	clean
-
-	@$(MKDIR) $(SRCDIR)
-	@cp *.ac $(SRCDIR)
-	@cp *.in $(SRCDIR)
-	@cp *.cbp $(SRCDIR)
-	@cp *.sh $(SRCDIR)
-	@cp rpm/*.spec $(SRCDIR)
-	@cp README.md $(SRCDIR)
-	@cp LICENCA $(SRCDIR)
-	@cp LICENSE $(SRCDIR)
-	@cp AUTHORS $(SRCDIR)
-
-	@$(MKDIR) $(SRCDIR)/testprograms
-	@cp testprograms/* $(SRCDIR)/testprograms
-
-	@$(MKDIR) $(SRCDIR)/scripts
-	@cp scripts/* $(SRCDIR)/scripts
-
-	@$(MKDIR) $(SRCDIR)/src/include
-	@cp src/include/*.in $(SRCDIR)/src/include
-
-	@$(MKDIR) $(SRCDIR)/src/native  
-	@cp src/native/*.in $(SRCDIR)/src/native
-	@cp src/native/*.cc $(SRCDIR)/src/native
-	@cp src/native/*.h $(SRCDIR)/src/native
-
-	@$(MKDIR) $(SRCDIR)/src/pw3270-sharp
-	@cp src/pw3270-sharp/*.in $(SRCDIR)/src/pw3270-sharp
-	@cp src/pw3270-sharp/*.cs $(SRCDIR)/src/pw3270-sharp
-
-
-$(BINRLS)/$(GLUELIB): \
-	src/native/*.cc \
-	src/native/*.h \
-	src/include/*.h
-
-	@make -C src/native $@
-
-$(BINRLS)/$(LIBNAME): \
-	src/pw3270-sharp/*.cs \
-	src/include/*.h
-
-	@make -C src/pw3270-sharp $@
+#---[ Debug Targets ]--------------------------------------------------------------------
 
 Debug: \
-	$(BINDBG)/$(GLUELIB) \
-	$(BINDBG)/$(LIBNAME) \
-	$(BINDBG)/sample.exe
+	$(BINDBG)/$(LIBNAME)
 
-
-run: \
-	$(BINDBG)/$(GLUELIB) \
-	$(BINDBG)/$(LIBNAME) \
-	$(BINDBG)/$(TESTPROGRAM).exe
-
-	@$(MONO) $(BINDBG)/$(TESTPROGRAM).exe
 
 $(BINDBG)/$(GLUELIB): \
-	src/native/*.cc \
-	src/native/*.h \
-	src/include/*.h
+	src/native/* \
+	src/native/core/*
 
 	@make -C src/native $@
 
 $(BINDBG)/$(LIBNAME): \
-	src/pw3270-sharp/*.cs \
-	src/include/*.h
+	$(BINDBG)/$(GLUELIB) \
+	src/core/*
 
-	@make -C src/pw3270-sharp $@
+	@make -C src/core $@
+
+#---[ Test targets ]---------------------------------------------------------------------
+
+ipc-test: \
+	$(BINDBG)/ipc.exe
+
+
+#---[ Clean Targets ]--------------------------------------------------------------------
 
 cleanDebug: \
 	clean

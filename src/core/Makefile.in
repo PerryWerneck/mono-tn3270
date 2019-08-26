@@ -24,7 +24,7 @@
 # erico.mendonca@gmail.com	(Erico Mascarenhas de Mendonça)
 #
 
-MODULE_NAME=pw3270-sharp
+MODULE_NAME=tn3270-sharp
 
 SOURCES=$(MODULE_NAME).cs
 LIBNAME=$(MODULE_NAME).dll
