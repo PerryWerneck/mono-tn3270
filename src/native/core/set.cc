@@ -27,68 +27,62 @@
  *
  */
 
- #include "private.h"
+ #include <native.h>
 
 /*---[ Implement ]----------------------------------------------------------------------------------*/
 
-int tn3270_set_unlock_delay(h3270::session *ses, int ms) {
-	try {
-		ses->set_unlock_delay((unsigned short) ms);
-	} catch(std::exception &e) {
-		tn3270_lasterror = e.what();
-		return -1;
-	}
-	return 0;
+int tn3270_set_unlock_delay(TN3270::Host *ses, int ms) {
+
+	return call(ses,[ms](TN3270::Host &ses) {
+
+		ses.setUnlockDelay(ms);
+		return 0;
+
+	});
+
 }
 
-int tn3270_set_cursor_position(h3270::session *ses, int row, int col) {
-	try {
-		ses->set_cursor_position(row,col);
-	} catch(std::exception &e) {
-		tn3270_lasterror = e.what();
-		return -1;
-	}
-	return 0;
+int tn3270_set_cursor_position(TN3270::Host *ses, int row, int col) {
+
+	return call(ses,[row,col](TN3270::Host &ses) {
+
+		ses.setCursor((unsigned short) row, (unsigned short) row);
+		return 0;
+
+	});
+
+
 }
 
-int tn3270_set_cursor_addr(h3270::session *ses, int addr) {
-	try {
-		ses->set_cursor_addr(addr);
-	} catch(std::exception &e) {
-		tn3270_lasterror = e.what();
-		return -1;
-	}
-	return 0;
+int tn3270_set_cursor_addr(TN3270::Host *ses, int addr) {
+
+	return call(ses,[addr](TN3270::Host &ses) {
+
+		ses.setCursor(addr);
+		return 0;
+
+	});
+
 }
 
-int tn3270_set_charset(h3270::session *ses, const char* str) {
+int tn3270_set_charset(TN3270::Host *ses, const char* str) {
 
-	if(!ses) {
-		return EINVAL;
-	}
+	return call(ses,[str](TN3270::Host &ses) {
 
-	try {
-		trace_to_file("%s: \"%s\" -> \"%s\"",__FUNCTION__,ses->get_display_charset().c_str(),str);
-		ses->set_display_charset(NULL, str);
-	} catch(std::exception &e) {
-		tn3270_lasterror = e.what();
-		return -1;
-	}
-	return 0;
+		ses.setCharSet(str);
+		return 0;
+
+	});
+
 }
 
-int tn3270_set_url(h3270::session *ses, const char *url) {
-	try {
-		debug("%s(%s)",__FUNCTION__,url);
-		ses->set_url(url);
-	} catch(std::exception &e) {
-		tn3270_lasterror = e.what();
-		return -1;
-	}
-	return 0;
+int tn3270_set_url(TN3270::Host *ses, const char *url) {
+
+	return call(ses,[url](TN3270::Host &ses) {
+
+		ses.setHostURL(url);
+		return 0;
+
+	});
 }
 
-int tn3270_set_error_message(h3270::session *ses, const char *str) {
-	tn3270_lasterror = str;
-	return 0;
-}

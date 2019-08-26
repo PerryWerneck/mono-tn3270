@@ -27,97 +27,76 @@
  *
  */
 
- #include "private.h"
+ #include <native.h>
 
 /*---[ Implement ]----------------------------------------------------------------------------------*/
 
-int tn3270_connect(h3270::session *ses, const char *host, time_t wait) {
+int tn3270_connect(TN3270::Host *ses, const char *url, time_t timeout) {
 
-	if(ses) {
+	return call(ses,[url,timeout](TN3270::Host &ses){
 
-		try {
-			debug("%s(%s,%d)",__FUNCTION__,host,(int) wait);
-			return ses->connect(host,wait);
-		} catch(std::exception &e) {
-			tn3270_lasterror = e.what();
+		ses.connect(url);
+
+		if(timeout) {
+			ses.waitForReady(timeout);
 		}
 
-	}
+		return 0;
 
-	return -1;
-}
-
-int tn3270_disconnect(h3270::session *ses) {
-
-	if(ses) {
-
-		try {
-			return ses->disconnect();
-		} catch(std::exception &e) {
-			tn3270_lasterror = e.what();
-		}
-
-	}
-
-	return -1;
-}
-
-int tn3270_is_connected(h3270::session *ses) {
-
-	if(ses) {
-
-		try {
-			return (int) ses->is_connected();
-		} catch(std::exception &e) {
-			tn3270_lasterror = e.what();
-		}
-
-	}
-
-	return -1;
-}
-
-int tn3270_is_ready(h3270::session *ses) {
-
-	if(ses) {
-
-		try {
-			return (int) ses->is_ready();
-		} catch(std::exception &e) {
-			tn3270_lasterror = e.what();
-		}
-
-	}
-
-	return -1;
-}
-
-int tn3270_wait_for_ready(h3270::session *ses, int seconds) {
-
-	if(ses) {
-
-		try {
-			return (int) ses->wait_for_ready(seconds);
-		} catch(std::exception &e) {
-			tn3270_lasterror = e.what();
-		}
-
-	}
-	return -1;
+	});
 
 }
 
-int tn3270_wait(h3270::session *ses, int seconds) {
+int tn3270_disconnect(TN3270::Host *ses) {
 
-	if(ses) {
+	return call(ses,[](TN3270::Host &ses){
 
-		try {
-			return (int) ses->wait(seconds);
-		} catch(std::exception &e) {
-			tn3270_lasterror = e.what();
-		}
+		ses.disconnect();
+		return 0;
 
-	}
-	return -1;
+	});
+
+}
+
+int tn3270_is_connected(TN3270::Host *ses) {
+
+	return call(ses,[](TN3270::Host &ses){
+
+		return (ses.isConnected() ? 1 : 0);
+
+	});
+
+}
+
+int tn3270_is_ready(TN3270::Host *ses) {
+
+	return call(ses,[](TN3270::Host &ses){
+
+		return (int) (ses.isReady() ? 1 : 0);
+
+	});
+
+}
+
+int tn3270_wait_for_ready(TN3270::Host *ses, int seconds) {
+
+	return call(ses,[seconds](TN3270::Host &ses){
+
+		ses.waitForReady(seconds);
+		return 0;
+
+	});
+
+}
+
+int tn3270_wait(TN3270::Host *ses, int seconds) {
+
+	return call(ses,[seconds](TN3270::Host &ses){
+
+		ses.wait(seconds);
+		return 0;
+
+	});
+
 }
 

@@ -27,79 +27,95 @@
  *
  */
 
- #include "private.h"
+ /**
+  * @file
+  *
+  * @brief
+  *
+  * @author
+  *
+  */
+
+ #include <native.h>
 
 /*---[ Implement ]----------------------------------------------------------------------------------*/
 
-int tn3270_enter(h3270::session *ses) {
-	try {
-		return ses->enter();
-	} catch(std::exception &e) {
-		tn3270_lasterror = e.what();
-		return -1;
-	}
+int call(TN3270::Host *ses, std::function<int(TN3270::Host &ses)> worker) noexcept {
+
+  	if(!ses) {
+
+ 		return tn3270_set_error(ses, "Invalid session handle");
+
+ 	}
+
+ 	try {
+
+		return worker(*ses);
+
+ 	} catch(const exception &e) {
+
+ 		tn3270_set_error(ses, e);
+
+ 	} catch(...) {
+
+ 		tn3270_set_error(ses, "Unexpected error");
+
+ 	}
+
+	return -1;
+
 }
 
-int tn3270_pfkey(h3270::session *ses, int key) {
-	try {
-		return ses->pfkey(key);
-	} catch(std::exception &e) {
-		tn3270_lasterror = e.what();
-		return -1;
+int call(TN3270::Host *ses, char* str, int length, std::function<string(TN3270::Host &ses, int length)> worker) {
+
+	if(!(str && length)) {
+
+ 		return tn3270_set_error(ses, "The output buffer is invalid");
+
 	}
+
+  	if(!ses) {
+
+ 		return tn3270_set_error(ses, "Invalid session handle");
+
+ 	}
+
+ 	try {
+
+		std::string contents = worker(*ses, length);
+
+		memset(str,0,length);
+		strncpy(str,contents.c_str(),length);
+		if(contents.size() < ((size_t) length)) {
+			str[contents.size()] = 0;
+			return contents.size();
+		}
+
+		return length;
+
+ 	} catch(const exception &e) {
+
+ 		tn3270_set_error(ses, e);
+
+ 	} catch(...) {
+
+ 		tn3270_set_error(ses, "Unexpected error");
+
+ 	}
+
+	return -1;
+
+
 }
 
-int tn3270_pakey(h3270::session *ses, int key) {
-	try {
-		return ses->pakey(key);
-	} catch(std::exception &e) {
-		tn3270_lasterror = e.what();
-		return -1;
-	}
+int tn3270_set_error(TN3270::Host *ses, const char *str) noexcept {
+	tn3270_lasterror = str;
+	return -1;
 }
 
-int tn3270_action(h3270::session *ses, const char *name) {
-	try {
-		return ses->action(name);
-	} catch(std::exception &e) {
-		tn3270_lasterror = e.what();
-		return -1;
-	}
+int tn3270_set_error(TN3270::Host *ses, const std::exception &e) noexcept {
+	tn3270_lasterror = e.what();
+	return -1;
 }
 
-int tn3270_erase(h3270::session *ses) {
-	try {
-		return ses->erase();
-	} catch(std::exception &e) {
-		tn3270_lasterror = e.what();
-		return -1;
-	}
-}
-
-int tn3270_erase_eof(h3270::session *ses) {
-	try {
-		return ses->erase_eof();
-	} catch(std::exception &e) {
-		tn3270_lasterror = e.what();
-		return -1;
-	}
-}
-
-int tn3270_erase_eol(h3270::session *ses) {
-	try {
-		return ses->erase_eol();
-	} catch(std::exception &e) {
-		tn3270_lasterror = e.what();
-		return -1;
-	}
-}
-
-int tn3270_erase_input(h3270::session *ses) {
-	try {
-		return ses->erase_input();
-	} catch(std::exception &e) {
-		tn3270_lasterror = e.what();
-		return -1;
-	}
-}
 
