@@ -16,6 +16,9 @@
 # Please submit bugfixes or comments via http://bugs.opensuse.org/
 #
 
+%define MAJOR_VERSION 5
+%define MINOR_VERSION 2
+
 %define libname tn3270-sharp
 
 Summary:	Mono binding for pw3270/lib3270
@@ -24,7 +27,7 @@ Version:	5.2
 Release:	0
 License:	LGPL-3.0
 Source:		%{name}-%{version}.tar.xz
-URL:		https://portal.softwarepublico.gov.br/social/pw3270/
+URL:		https://github.com/PerryWerneck/lib3270-mono-bindings.git
 Group: 		Development/Languages/Other
 
 BuildRoot:	/var/tmp/%{name}-%{version}
@@ -79,12 +82,12 @@ rm -rf $RPM_BUILD_ROOT
 
 /usr/lib/mono/gac/%{libname}
 
-%dir /usr/lib/mono/%{libname}-5.2
-/usr/lib/mono/%{libname}-5.2/tn3270-sharp.dll
+%dir /usr/lib/mono/%{libname}-%{MAJOR_VERSION}.%{MINOR_VERSION}
+/usr/lib/mono/%{libname}-%{MAJOR_VERSION}.%{MINOR_VERSION}/tn3270-sharp.dll
 
 %{_libdir}/lib3270-mono.so
-%{_libdir}/lib3270-mono.so.5
-%{_libdir}/lib3270-mono.so.5.2
+%{_libdir}/lib3270-mono.so.%{MAJOR_VERSION}
+%{_libdir}/lib3270-mono.so.%{MAJOR_VERSION}.%{MINOR_VERSION}
 %{_libdir}/pkgconfig/tn3270-sharp.pc
 
 %dir /usr/share/gapi-2.0
