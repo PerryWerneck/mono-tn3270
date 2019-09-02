@@ -213,6 +213,27 @@ AC_PATH_TOOL([MSGFMT], [msgfmt], [no])
 AC_SUBST(INTL_LIBS)
 
 dnl ---------------------------------------------------------------------------
+dnl Environment
+dnl ---------------------------------------------------------------------------
+
+AC_ARG_VAR(GACROOT, [ The root for gacutil (default is /usr/lib) ] )
+
+if test -z "$GACROOT"; then
+	GACROOT="/usr/lib"
+fi
+
+AC_SUBST(GACROOT)
+
+
+AC_ARG_VAR(GAPIROOT, [ The root for gapi (default is /usr/share/gapi-2.0) ] )
+
+if test -z "$GAPIROOT"; then
+	GAPIROOT="/usr/share/gapi-2.0"
+fi
+
+AC_SUBST(GAPIROOT)
+
+dnl ---------------------------------------------------------------------------
 dnl Check for IPC3270
 dnl ---------------------------------------------------------------------------
 
