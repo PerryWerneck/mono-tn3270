@@ -233,6 +233,15 @@ fi
 
 AC_SUBST(GAPIROOT)
 
+AC_ARG_VAR(MONOLIBPATH, [ The path for mono libraries (default is /usr/lib/mono) ] )
+
+if test -z "$MONOLIBPATH"; then
+	MONOLIBPATH="/usr/lib/mono"
+fi
+
+AC_SUBST(MONOLIBPATH)
+
+
 dnl ---------------------------------------------------------------------------
 dnl Check for IPC3270
 dnl ---------------------------------------------------------------------------
