@@ -27,13 +27,13 @@
  *
  */
 
-using pw3270;
+using tn3270;
 
 class sample {
 
 	static void Main(string[] args) {
 
-		pw3270.Session host = new pw3270.Session("");
+		tn3270.Session host = new tn3270.Session("");
 
 		System.Console.WriteLine("Using pw3270 version " + host.Version + " revision " + host.Revision);
 		System.Console.WriteLine("Screen size is " + host.Width + "x" + host.Height + " (" + host.Length + ")");

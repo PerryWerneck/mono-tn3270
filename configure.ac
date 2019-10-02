@@ -328,7 +328,7 @@ dnl ---------------------------------------------------------------------------
 AC_CONFIG_FILES(Makefile)
 AC_CONFIG_FILES(src/native/Makefile)
 AC_CONFIG_FILES(src/core/Makefile)
-AC_CONFIG_FILES(src/core/tn3270-sharp.pc)
+AC_CONFIG_FILES(src/core/mono-tn3270.pc)
 
 dnl ---------------------------------------------------------------------------
 dnl Output the generated config.status script.
