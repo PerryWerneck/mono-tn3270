@@ -43,14 +43,19 @@
 		<Linker>
 			<Add library="pw3270cpp" />
 		</Linker>
+		<Unit filename="src/include/config.h" />
 		<Unit filename="src/include/config.h.in" />
-		<Unit filename="src/native/actions.cc" />
-		<Unit filename="src/native/get.cc" />
-		<Unit filename="src/native/init.cc" />
-		<Unit filename="src/native/network.cc" />
+		<Unit filename="src/include/native.h" />
+		<Unit filename="src/native/core/actions.cc" />
+		<Unit filename="src/native/core/get.cc" />
+		<Unit filename="src/native/core/init.cc" />
+		<Unit filename="src/native/core/network.cc" />
+		<Unit filename="src/native/core/screen.cc" />
+		<Unit filename="src/native/core/set.cc" />
+		<Unit filename="src/native/core/tools.cc" />
 		<Unit filename="src/native/private.h" />
-		<Unit filename="src/native/screen.cc" />
-		<Unit filename="src/native/set.cc" />
+		<Unit filename="src/native/testprogram/testprogram.cc" />
+		<Unit filename="src/native/windows/resources.rc" />
 		<Unit filename="src/pw3270-sharp/pw3270-sharp.cs" />
 		<Unit filename="testprograms/sample.cs" />
 		<Extensions>

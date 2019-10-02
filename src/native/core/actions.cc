@@ -70,7 +70,7 @@
  }
 
 
-static int action(TN3270::Host *ses, TN3270::Action id) noexcept {
+static int action(TN3270::Host *ses, TN3270::KeyboardAction id) noexcept {
 
 	return action(ses, [id](TN3270::Host &ses) {
 		ses.push(id);

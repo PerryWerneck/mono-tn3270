@@ -31,7 +31,7 @@ AC_PREREQ(2.61)
 
 dnl Initialise automake with the package name, version and
 dnl bug-reporting address.
-AC_INIT([lib3270-mono-bindings], [5.2], [perry.werneck@gmail.com])
+AC_INIT([mono-tn3270], [5.2], [perry.werneck@gmail.com])
 
 dnl Place auxilliary scripts here.
 AC_CONFIG_AUX_DIR([scripts])
@@ -138,7 +138,7 @@ dnl ---------------------------------------------------------------------------
 dnl Version info
 dnl ---------------------------------------------------------------------------
 
-AC_SUBST(PACKAGE_DESCRIPTION,".NET Bindings for lib3270/pw3270")
+AC_SUBST(PACKAGE_DESCRIPTION,"A .NET library for TN3270")
 app_cv_zipname=$PACKAGE
 
 app_vrs_major=$(echo $VERSION | cut -d. -f1)
