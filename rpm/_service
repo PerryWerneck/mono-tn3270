@@ -2,10 +2,10 @@
 
 	<!-- https://github.com/openSUSE/obs-service-tar_scm/blob/master/tar_scm.py -->
 	<service name="tar_scm">
-        <param name="changesgenerate">enable</param>
-        <param name="changesauthor">perry.werneck@gmail.com</param>
+		<param name="changesgenerate">enable</param>
+		<param name="changesauthor">perry.werneck@gmail.com</param>
 		<param name="versionformat">@PARENT_TAG@</param>
-		<param name="url">https://github.com/PerryWerneck/lib3270-mono-bindings.git</param>
+		<param name="url">https://github.com/PerryWerneck/mono-tn3270.git</param>
 		<param name="scm">git</param>
 	</service>
 
@@ -15,6 +15,7 @@
 		<param name="files">*/rpm/*.spec</param>
 	</service -->
   
+	<!--
 	<service name="extract_file">
 		<param name="archive">*.tar</param>
 		<param name="files">*/debian/*.dsc</param>
@@ -44,11 +45,7 @@
 		<param name="outfilename">debian.compat</param>
 	</service>
 
-	<!-- service name="extract_file">
-		<param name="archive">*.tar</param>
-		<param name="files">*/debian/shlibs</param>
-		<param name="outfilename">debian.shlibs</param>
-	</service -->
+	-->
   
    	<!-- service name="extract_file">
 		<param name="archive">*.tar</param>
