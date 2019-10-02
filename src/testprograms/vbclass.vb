@@ -32,95 +32,95 @@ Imports System.Runtime.InteropServices
 
 Public Class pw3270
 
-	<DllImport("lib3270-mono", CallingConvention := CallingConvention.Cdecl)> _
+	<DllImport("mono-tn3270", CallingConvention := CallingConvention.Cdecl)> _
 	Private Shared Function tn3270_create_session(ByVal Name As String) As IntPtr
 	End Function
 
-	<DllImport("lib3270-mono", CallingConvention := CallingConvention.Cdecl)> _
+	<DllImport("mono-tn3270", CallingConvention := CallingConvention.Cdecl)> _
 	Private Shared Function tn3270_destroy_session(ByVal hSession As IntPtr) as Long
 	End Function
 
-	<DllImport("lib3270-mono", CallingConvention := CallingConvention.Cdecl)> _
+	<DllImport("mono-tn3270", CallingConvention := CallingConvention.Cdecl)> _
 	Private Shared Function tn3270_get_version(ByVal hSession As IntPtr, ByVal buffer As StringBuilder, ByVal strlen as Integer) as Integer
 	End Function
 
-	<DllImport("lib3270-mono", CallingConvention := CallingConvention.Cdecl)> _
+	<DllImport("mono-tn3270", CallingConvention := CallingConvention.Cdecl)> _
 	Private Shared Function tn3270_get_revision(ByVal hSession As IntPtr, ByVal buffer As StringBuilder, ByVal strlen as Integer) as Integer
 	End Function
 
-	<DllImport("lib3270-mono", CallingConvention := CallingConvention.Cdecl)> _
+	<DllImport("mono-tn3270", CallingConvention := CallingConvention.Cdecl)> _
 	Private Shared Function tn3270_connect(ByVal hSession As IntPtr, ByVal buffer As String, ByVal seconds as Integer) as Integer
 	End Function
 
-	<DllImport("lib3270-mono", CallingConvention := CallingConvention.Cdecl)> _
+	<DllImport("mono-tn3270", CallingConvention := CallingConvention.Cdecl)> _
 	Private Shared Function tn3270_is_connected(ByVal hSession As IntPtr) as Integer
 	End Function
 
-	<DllImport("lib3270-mono", CallingConvention := CallingConvention.Cdecl)> _
+	<DllImport("mono-tn3270", CallingConvention := CallingConvention.Cdecl)> _
 	Private Shared Function tn3270_disconnect(ByVal hSession As IntPtr) as Integer
 	End Function
 
-	<DllImport("lib3270-mono", CallingConvention := CallingConvention.Cdecl)> _
+	<DllImport("mono-tn3270", CallingConvention := CallingConvention.Cdecl)> _
 	Private Shared Function tn3270_wait_for_ready(ByVal hSession As IntPtr, ByVal seconds as Integer) as Integer
 	End Function
 
-	<DllImport("lib3270-mono", CallingConvention := CallingConvention.Cdecl)> _
+	<DllImport("mono-tn3270", CallingConvention := CallingConvention.Cdecl)> _
 	Private Shared Function tn3270_wait(ByVal hSession As IntPtr, ByVal seconds as Integer) as Integer
 	End Function
 
-	<DllImport("lib3270-mono", CallingConvention := CallingConvention.Cdecl)> _
+	<DllImport("mono-tn3270", CallingConvention := CallingConvention.Cdecl)> _
 	Private Shared Function tn3270_get_cstate(ByVal hSession As IntPtr) as Integer
 	End Function
 
-	<DllImport("lib3270-mono", CallingConvention := CallingConvention.Cdecl)> _
+	<DllImport("mono-tn3270", CallingConvention := CallingConvention.Cdecl)> _
 	Private Shared Function tn3270_get_program_message(ByVal hSession As IntPtr) as Integer
 	End Function
 
-	<DllImport("lib3270-mono", CallingConvention := CallingConvention.Cdecl)> _
+	<DllImport("mono-tn3270", CallingConvention := CallingConvention.Cdecl)> _
 	Private Shared Function tn3270_get_secure(ByVal hSession As IntPtr) as Integer
 	End Function
 
-	<DllImport("lib3270-mono", CallingConvention := CallingConvention.Cdecl)> _
+	<DllImport("mono-tn3270", CallingConvention := CallingConvention.Cdecl)> _
 	Private Shared Function tn3270_get_string(ByVal hSession As IntPtr, ByVal addr as Integer, ByVal buffer As StringBuilder, ByVal strlen as Integer) as Integer
 	End Function
 
-	<DllImport("lib3270-mono", CallingConvention := CallingConvention.Cdecl)> _
+	<DllImport("mono-tn3270", CallingConvention := CallingConvention.Cdecl)> _
 	Private Shared Function tn3270_get_string_at(ByVal hSession As IntPtr, ByVal row as Integer, ByVal col as Integer, ByVal buffer As StringBuilder, ByVal strlen as Integer) as Integer
 	End Function
 
-	<DllImport("lib3270-mono", CallingConvention := CallingConvention.Cdecl)> _
+	<DllImport("mono-tn3270", CallingConvention := CallingConvention.Cdecl)> _
 	Private Shared Function tn3270_set_string_at(ByVal hSession As IntPtr, ByVal row as Integer, ByVal col as Integer, ByVal buffer As String) as Integer
 	End Function
 
-	<DllImport("lib3270-mono", CallingConvention := CallingConvention.Cdecl)> _
+	<DllImport("mono-tn3270", CallingConvention := CallingConvention.Cdecl)> _
 	Private Shared Function tn3270_wait_for_string_at(ByVal hSession As IntPtr, ByVal row as Integer, ByVal col as Integer, ByVal key As String, ByVal timeout as Integer) as Integer
 	End Function
 
-	<DllImport("lib3270-mono", CallingConvention := CallingConvention.Cdecl)> _
+	<DllImport("mono-tn3270", CallingConvention := CallingConvention.Cdecl)> _
 	Private Shared Function tn3270_cmp_string_at(ByVal hSession As IntPtr, ByVal row as Integer, ByVal col as Integer, ByVal buffer As String) as Integer
 	End Function
 
-	<DllImport("lib3270-mono", CallingConvention := CallingConvention.Cdecl)> _
+	<DllImport("mono-tn3270", CallingConvention := CallingConvention.Cdecl)> _
 	Private Shared Function tn3270_set_unlock_delay(ByVal hSession As IntPtr, ByVal ms as Integer) as Integer
 	End Function
 
-	<DllImport("lib3270-mono", CallingConvention := CallingConvention.Cdecl)> _
+	<DllImport("mono-tn3270", CallingConvention := CallingConvention.Cdecl)> _
 	Private Shared Function tn3270_set_cursor_position(ByVal hSession As IntPtr, ByVal row as Integer, ByVal col as Integer) as Integer
 	End Function
 
-	<DllImport("lib3270-mono", CallingConvention := CallingConvention.Cdecl)> _
+	<DllImport("mono-tn3270", CallingConvention := CallingConvention.Cdecl)> _
 	Private Shared Function tn3270_set_cursor_addr(ByVal hSession As IntPtr, ByVal addr as Integer) as Integer
 	End Function
 
-	<DllImport("lib3270-mono", CallingConvention := CallingConvention.Cdecl)> _
+	<DllImport("mono-tn3270", CallingConvention := CallingConvention.Cdecl)> _
 	Private Shared Function tn3270_enter(ByVal hSession As IntPtr) as Integer
 	End Function
 
-	<DllImport("lib3270-mono", CallingConvention := CallingConvention.Cdecl)> _
+	<DllImport("mono-tn3270", CallingConvention := CallingConvention.Cdecl)> _
 	Private Shared Function tn3270_pfkey(ByVal hSession As IntPtr, ByVal key as Integer) as Integer
 	End Function
 
-	<DllImport("lib3270-mono", CallingConvention := CallingConvention.Cdecl)> _
+	<DllImport("mono-tn3270", CallingConvention := CallingConvention.Cdecl)> _
 	Private Shared Function tn3270_pakey(ByVal hSession As IntPtr, ByVal key as Integer) as Integer
 	End Function
 

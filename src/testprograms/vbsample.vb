@@ -34,7 +34,7 @@ Public Module modmain
 	' Application's entry point.
 	Sub Main()
 
-		dim host as new pw3270.Session("")
+		dim host as new tn3270.Session("")
 
 		Console.WriteLine("Using pw3270 version " + host.getVersion() + " revision " + host.GetRevision())
 		Console.WriteLine("Screen size is " + host.GetWidth() + "x" + host.GetHeigth())

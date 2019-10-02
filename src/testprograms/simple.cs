@@ -35,16 +35,16 @@ using System.Runtime.InteropServices;
 
 class test {
 
-	[DllImport ("lib3270-mono")]
+	[DllImport ("mono-tn3270")]
 	extern static IntPtr tn3270_create_session(string name);
 
-	[DllImport ("lib3270-mono")]
+	[DllImport ("mono-tn3270")]
 	extern static void tn3270_destroy_session(IntPtr session);
 
-	[DllImport ("lib3270-mono")]
+	[DllImport ("mono-tn3270")]
 	extern static void tn3270_get_version(IntPtr session, StringBuilder str, int strlen);
 
-	[DllImport ("lib3270-mono")]
+	[DllImport ("mono-tn3270")]
 	extern static void tn3270_get_revision(IntPtr session, StringBuilder str, int strlen);
 
 	static void Main(string[] args) {

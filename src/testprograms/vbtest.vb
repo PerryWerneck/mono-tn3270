@@ -7,19 +7,19 @@ Imports System.Runtime.InteropServices
 Public Module modmain
 
 
-	<DllImport("lib3270-mono", CallingConvention := CallingConvention.Cdecl)> _
+	<DllImport("mono-tn3270", CallingConvention := CallingConvention.Cdecl)> _
 	Private Shared Function tn3270_create_session(ByVal Name As String) As IntPtr
 	End Function
 
-	<DllImport("lib3270-mono", CallingConvention := CallingConvention.Cdecl)> _
+	<DllImport("mono-tn3270", CallingConvention := CallingConvention.Cdecl)> _
 	Private Shared Function tn3270_destroy_session(ByVal hSession As IntPtr) as Long
 	End Function
 
-	<DllImport("lib3270-mono", CallingConvention := CallingConvention.Cdecl)> _
+	<DllImport("mono-tn3270", CallingConvention := CallingConvention.Cdecl)> _
 	Private Shared Function tn3270_get_version(ByVal hSession As IntPtr, ByVal buffer As StringBuilder, ByVal strlen as Integer) as Long
 	End Function
 
-	<DllImport("lib3270-mono", CallingConvention := CallingConvention.Cdecl)> _
+	<DllImport("mono-tn3270", CallingConvention := CallingConvention.Cdecl)> _
 	Private Shared Function tn3270_get_revision(ByVal hSession As IntPtr, ByVal buffer As StringBuilder, ByVal strlen as Integer) as Long
 	End Function
 

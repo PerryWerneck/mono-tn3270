@@ -27,15 +27,15 @@
  *
  */
 
-using pw3270;
+using tn3270;
 
 class ipc {
 
 	static void Main(string[] args) {
 
-		pw3270.Session host = new pw3270.Session("pw3270:A");
+		tn3270.Session host = new tn3270.Session(":A");
 
-		System.Console.WriteLine("Using pw3270 version " + host.Version + " revision " + host.Revision);
+		System.Console.WriteLine("Using tn3270 version " + host.Version + " revision " + host.Revision);
 		System.Console.WriteLine("Screen size is " + host.Width + "x" + host.Height + " (" + host.Length + ")");
 
 		// host.CharSet = "ISO-8859-1";

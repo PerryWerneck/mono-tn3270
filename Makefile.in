@@ -25,7 +25,7 @@
 #
 
 GLUELIB=@NATIVE_SONAME@
-LIBNAME=tn3270-sharp.dll
+LIBNAME=tn3270.dll
 TESTPROGRAM?=sample
 
 #---[ Configuration values ]-------------------------------------------------------------
@@ -70,19 +70,30 @@ $(BINDBG)/%.exe: \
 	src/testprograms/%.cs \
 	$(BINDBG)/$(LIBNAME)
 	
-	@$(MCS) -reference:$(BINDBG)/$(LIBNAME) -debug -out:$@ $<
+	@$(MCS) \
+		-reference:$(BINDBG)/$(LIBNAME) \
+		-debug \
+		-out:$@ \
+		$<
 
 $(BINDBG)/%.exe: \
 	src/testprograms/%.vb \
 	$(BINDBG)/$(LIBNAME)
 
-	@$(VBNC) -reference:$(BINDBG)/$(LIBNAME) -debug -out:$@ $<
+	@$(VBNC) \
+		-reference:$(BINDBG)/$(LIBNAME) \
+		-debug \
+		-out:$@ \
+		$<
 
 install-%: \
 	src/%/Makefile \
 	all
 
-	@make -C `dirname $<` DESTDIR=$(DESTDIR) install
+	@make \
+		-C `dirname $<` \
+		DESTDIR=$(DESTDIR) \
+		install
 
 #---[ Release Targets ]------------------------------------------------------------------
 
@@ -97,13 +108,17 @@ $(BINRLS)/$(GLUELIB): \
 	src/native/* \
 	src/native/core/*
 
-	@make -C src/native $@
+	@make \
+		-C src/native \
+		$@
 
 $(BINRLS)/$(LIBNAME): \
 	$(BINRLS)/$(GLUELIB) \
 	src/core/*
 
-	@make -C src/core $@
+	@make \
+		-C src/core \
+		$@
 
 install: \
 	install-native \
@@ -119,13 +134,17 @@ $(BINDBG)/$(GLUELIB): \
 	src/native/* \
 	src/native/core/*
 
-	@make -C src/native $@
+	@make \
+		-C src/native \
+		$@
 
 $(BINDBG)/$(LIBNAME): \
 	$(BINDBG)/$(GLUELIB) \
 	src/core/*
 
-	@make -C src/core $@
+	@make \
+		-C src/core \
+		$@
 
 #---[ Test targets ]---------------------------------------------------------------------
 

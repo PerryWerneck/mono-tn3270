@@ -43,114 +43,114 @@ namespace tn3270 {
 	public class Session {
 
 		/// <summary>
-		/// lib3270 session handle
+		/// TN3270 Session handle
 		/// </summary>
 		private IntPtr hSession;
 
-		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
+		[DllImport ("mono-tn3270",CallingConvention=CallingConvention.Cdecl)]
 		extern static IntPtr tn3270_create_session(string name);
 
-		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
+		[DllImport ("mono-tn3270",CallingConvention=CallingConvention.Cdecl)]
 		extern static int tn3270_destroy_session(IntPtr session);
 
-		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
+		[DllImport ("mono-tn3270",CallingConvention=CallingConvention.Cdecl)]
 		extern static int tn3270_get_version(IntPtr session, StringBuilder str, int strlen);
 
-		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
+		[DllImport ("mono-tn3270",CallingConvention=CallingConvention.Cdecl)]
 		extern static int tn3270_get_revision(IntPtr session, StringBuilder str, int strlen);
 
-		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
+		[DllImport ("mono-tn3270",CallingConvention=CallingConvention.Cdecl)]
 		extern static int tn3270_connect(IntPtr Session, string host, int wait);
 
-		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
+		[DllImport ("mono-tn3270",CallingConvention=CallingConvention.Cdecl)]
 		extern static int tn3270_is_connected(IntPtr Session);
 
-		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
+		[DllImport ("mono-tn3270",CallingConvention=CallingConvention.Cdecl)]
 		extern static int tn3270_is_ready(IntPtr Session);
 
-		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
+		[DllImport ("mono-tn3270",CallingConvention=CallingConvention.Cdecl)]
 		extern static int tn3270_disconnect(IntPtr Session);
 
-		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
+		[DllImport ("mono-tn3270",CallingConvention=CallingConvention.Cdecl)]
 		extern static int tn3270_wait_for_ready(IntPtr Session, int seconds);
 
-		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
+		[DllImport ("mono-tn3270",CallingConvention=CallingConvention.Cdecl)]
 		extern static int tn3270_wait(IntPtr Session, int seconds);
 
-		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
+		[DllImport ("mono-tn3270",CallingConvention=CallingConvention.Cdecl)]
 		extern static int tn3270_get_cstate(IntPtr Session);
 
-		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
+		[DllImport ("mono-tn3270",CallingConvention=CallingConvention.Cdecl)]
 		extern static int tn3270_get_program_message(IntPtr Session);
 
-		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
+		[DllImport ("mono-tn3270",CallingConvention=CallingConvention.Cdecl)]
 		extern static int tn3270_get_secure(IntPtr Session);
 
-		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
+		[DllImport ("mono-tn3270",CallingConvention=CallingConvention.Cdecl)]
 		extern static int tn3270_get_contents(IntPtr Session, StringBuilder str, int strlen);
 
-		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
+		[DllImport ("mono-tn3270",CallingConvention=CallingConvention.Cdecl)]
 		extern static int tn3270_get_string(IntPtr Session, int addr, StringBuilder str, int strlen);
 
-		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
+		[DllImport ("mono-tn3270",CallingConvention=CallingConvention.Cdecl)]
 		extern static int tn3270_get_string_at(IntPtr Session, int row, int col, StringBuilder str, int strlen);
 
-		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
+		[DllImport ("mono-tn3270",CallingConvention=CallingConvention.Cdecl)]
 		extern static int tn3270_set_string_at(IntPtr Session, int row, int col, string str);
 
-		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
+		[DllImport ("mono-tn3270",CallingConvention=CallingConvention.Cdecl)]
 		extern static int tn3270_wait_for_string_at(IntPtr Session, int row, int col, string key, int timeout);
 
-		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
+		[DllImport ("mono-tn3270",CallingConvention=CallingConvention.Cdecl)]
 		extern static int tn3270_cmp_string_at(IntPtr Session, int row, int col, string str);
 
-		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
+		[DllImport ("mono-tn3270",CallingConvention=CallingConvention.Cdecl)]
 		extern static int tn3270_set_unlock_delay(IntPtr Session, int ms);
 
-		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
+		[DllImport ("mono-tn3270",CallingConvention=CallingConvention.Cdecl)]
 		extern static int tn3270_set_cursor_position(IntPtr Session, int row, int col);
 
-		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
+		[DllImport ("mono-tn3270",CallingConvention=CallingConvention.Cdecl)]
  		extern static int tn3270_set_cursor_addr(IntPtr Session, int addr);
 
-		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
+		[DllImport ("mono-tn3270",CallingConvention=CallingConvention.Cdecl)]
  		extern static int tn3270_get_cursor_addr(IntPtr Session);
 
-		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
+		[DllImport ("mono-tn3270",CallingConvention=CallingConvention.Cdecl)]
 		extern static int tn3270_enter(IntPtr Session);
 
-		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
+		[DllImport ("mono-tn3270",CallingConvention=CallingConvention.Cdecl)]
 		extern static int tn3270_pfkey(IntPtr Session, int key);
 
-		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
+		[DllImport ("mono-tn3270",CallingConvention=CallingConvention.Cdecl)]
 		extern static int tn3270_pakey(IntPtr Session, int key);
 
-		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
+		[DllImport ("mono-tn3270",CallingConvention=CallingConvention.Cdecl)]
 		extern static int tn3270_get_width(IntPtr Session);
 
-		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
+		[DllImport ("mono-tn3270",CallingConvention=CallingConvention.Cdecl)]
 		extern static int tn3270_get_height(IntPtr Session);
 
-		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
+		[DllImport ("mono-tn3270",CallingConvention=CallingConvention.Cdecl)]
 		extern static int tn3270_get_length(IntPtr Session);
 
-		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
+		[DllImport ("mono-tn3270",CallingConvention=CallingConvention.Cdecl)]
 		extern static int tn3270_set_charset(IntPtr Session, string str);
 
-		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
+		[DllImport ("mono-tn3270",CallingConvention=CallingConvention.Cdecl)]
 		extern static int tn3270_set_url(IntPtr Session, string str);
 
-		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
+		[DllImport ("mono-tn3270",CallingConvention=CallingConvention.Cdecl)]
 		extern static int tn3270_get_url(IntPtr Session, StringBuilder str, int strlen);
 
-		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
+		[DllImport ("mono-tn3270",CallingConvention=CallingConvention.Cdecl)]
 		extern static int tn3270_set_error_message(IntPtr Session, string str);
 
-		[DllImport ("lib3270-mono",CallingConvention=CallingConvention.Cdecl)]
+		[DllImport ("mono-tn3270",CallingConvention=CallingConvention.Cdecl)]
 		extern static int tn3270_get_error_message(IntPtr Session, StringBuilder str, int strlen);
 
 		/// <summary>
-		/// Create a new session with lib3270/pw3270
+		/// Create a new session with mono-tn327070
 		/// </summary>
 		///
 		/// <param name="name">Session name or empty string for a hidden session</param>
@@ -169,7 +169,7 @@ namespace tn3270 {
 		}
 
 		/// <summary>
-		/// Get lib3270/pw3270 Version identifier
+		/// Get mono-tn327070 Version identifier
 		/// </summary>
 		///
 		/// <returns>
@@ -197,7 +197,7 @@ namespace tn3270 {
 		}
 
 		/// <summary>
-		/// Get lib3270/pw3270 Revision number
+		/// Get mono-tn327070 Revision number
 		/// </summary>
 		///
 		/// <returns>
@@ -595,11 +595,11 @@ namespace tn3270 {
 		}
 
 		/// <summary>
-		/// Last lib3270 error message
+		/// Last mono-tn3270r message
 		/// </summary>
 		///
 		/// <returns>
-		/// Last lib3270 error message
+		/// Last mono-tn3270r message
 		/// </returns>
 		///
 		public string Error {

@@ -165,15 +165,11 @@ AC_SUBST(PACKAGE_MINOR_RELEASE,$app_rls_minor)
 
 case "$host" in
         *-mingw32|*-pc-msys)
-                AC_SUBST(NATIVE_SONAME,lib3270-mono.dll)
-                ;;
-
-        s390x-*)
-                AC_SUBST(NATIVE_SONAME,lib3270-mono.so)
+                AC_SUBST(NATIVE_SONAME,mono-tn3270.dll)
                 ;;
 
         *)
-                AC_SUBST(NATIVE_SONAME,lib3270-mono.so.$app_vrs_major.$app_vrs_minor)
+                AC_SUBST(NATIVE_SONAME,mono-tn3270.so.$app_vrs_major.$app_vrs_minor)
 
 esac
 
