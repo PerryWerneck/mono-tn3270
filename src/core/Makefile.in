@@ -83,7 +83,7 @@ install: \
 	$(INSTALL_PROGRAM) $(BINRLS)/$(LIBNAME) $(DESTDIR)@MONOLIBPATH@/$(MODULE_NAME)-@PACKAGE_MAJOR_VERSION@.@PACKAGE_MINOR_VERSION@
 
 	$(MKDIR) $(DESTDIR)/$(libdir)/pkgconfig
-	$(INSTALL_DATA) $(MODULE_NAME).pc $(DESTDIR)/$(libdir)/pkgconfig
+	$(INSTALL_DATA) mono-tn3270.pc $(DESTDIR)/$(libdir)/pkgconfig
 
 Debug: \
 	$(BINDBG)/$(LIBNAME)

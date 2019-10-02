@@ -1,11 +1,10 @@
 prefix=${pcfiledir}/../..
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
-gapidir=${prefix}/share/tn3270-sharp-@PACKAGE_MAJOR_VERSION@.@PACKAGE_MINOR_VERSION@
-
+gapidir=@GAPIROOT@
 
 Name: tn3270-sharp
 Description: .NET Bindings for pw3270
 Version: @PACKAGE_MAJOR_VERSION@.@PACKAGE_MINOR_VERSION@
-Cflags: -I:${gapidir}/tn3270-sharp.xml
-Libs: -r:${libdir}/mono/tn3270-sharp-@PACKAGE_MAJOR_VERSION@.@PACKAGE_MINOR_VERSION@/tn3270-sharp.dll
+Cflags: -I:${gapidir}/tn3270/tn3270.xml
+Libs: -r:/usr/lib/mono/tn3270-@PACKAGE_MAJOR_VERSION@.@PACKAGE_MINOR_VERSION@/tn3270.dll
