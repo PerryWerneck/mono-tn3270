@@ -152,7 +152,7 @@ DLL_PUBLIC int tn3270_get_version(TN3270::Host *ses, char * str, int strlen) {
 
  	return call(ses, str, length, [](TN3270::Host &ses, int length) {
 
-		return ses.getLUName();
+		return ses.getAssociatedLUName();
 
 	});
 
